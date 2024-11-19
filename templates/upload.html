@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF or Enter Text</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            width: 50%;
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #444;
+            font-size: 1.4em;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="file"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 12px 25px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            margin-right: 10px;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        button[type="reset"] {
+            background-color: #f44336;
+            color: white;
+        }
+        button[type="reset"]:hover {
+            background-color: #da190b;
+        }
+        .text-output {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            border-radius: 5px;
+            white-space: pre-wrap;  /* Allows wrapping */
+            word-wrap: break-word;  /* Ensures breaking of long words */
+            text-align: left;
+            font-size: 1.1em;
+            max-width: 100%;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            max-height: 300px;  /* Limits the height of the output */
+            overflow-y: auto;   /* Adds vertical scrolling if content exceeds max-height */
+        }
+        .error {
+            color: #f44336;
+            font-size: 1em;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Upload a PDF File or Enter Text</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form action="/" method="post" enctype="multipart/form-data">
+            <!-- Form 1: PDF Upload or Text Input -->
+            <h3>Upload a Source PDF or Enter Text</h3>
+            <label for="source_file">Select PDF:</label>
+            <input type="file" name="source_file" id="source_file" accept="application/pdf">
+
+            <label for="source_url">Source URL:</label>
+            <textarea name="source_url" id="source_url" rows="4" cols="50">{{ source_url if source_url else '' }}</textarea>
+            
+            <label for="source_text">Source data:</label>
+            <textarea name="source_text" id="source_text" rows="4" cols="50">{{ source_text if source_text else '' }}</textarea>
+
+            <!-- Form 2: Mandatory Text Input -->
+            <h3>Enter Information to be verified</h3>
+            <label for="to_verify">Enter info:</label>
+            <textarea name="to_verify" id="to_verify" rows="4" cols="50" required>{{ to_verify if to_verify else '' }}</textarea>
+
+            <div>
+                <button type="submit">Submit</button>
+                <button type="submit" name="reset" value="true">Reset</button>
+            </div>
+        </form>
+
+        {% if short_answer and output %}
+            <div class="text-output" id="output-text">
+                <h3>Is the information correct?: {{ short_answer }}</h3>
+                <pre>{{ output }}</pre>
+            </div>
+        {% endif %}
+
+        <script>
+            // Function to automatically add breaks to long lines without breaking words
+            function wrapText() {
+                var preElements = document.querySelectorAll('pre');
+                preElements.forEach(function(pre) {
+                    var text = pre.textContent; // Get the raw text inside <pre>
+                    
+                    // Replace spaces and punctuation marks with a break after a certain number of characters
+                    var wrappedText = text.replace(/(.{1,80}(?:\s|$))/g, "$1\n"); // Break lines after 80 characters, but don't break words
+                    
+                    pre.textContent = wrappedText; // Set the wrapped text back into <pre>
+                });
+            }
+        
+            // Call wrapText to format text in pre tags after page loads
+            window.onload = function() {
+                wrapText();
+            }
+        </script>
+        
+    </div>
+</body>
+</html>
