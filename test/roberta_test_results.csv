@@ -1,0 +1,110 @@
+Number,Answer,Model Answer
+
+Basic Tests
+
+1,Monica,True
+2,loves running,True 
+3,Marina ate ice-cream,True
+4,likes,False
+5,raining,True
+6,cold and rainy,False
+7,Daniel missed the school because he caught a cold,True 
+8,flight got cancelled,False
+9,999£,True 
+10,There was a car accident next to my house,True
+11,I live in a very safe street,False
+12,My friend,True
+
+Multi Sentence Input
+
+13,"
+championships with his team.",True
+14,"23
+Grand Slam singles titles and 14 Grand Slam doubles titles.",False
+15,"Jesse Owens was born in Oakville, Alabama on 12th September 1913",False
+16,"
+hometown of Mingora was a tourist hotspot",True
+17,"
+Gul Makai",False
+18,"
+world peace",True
+19,brave and courageous,True
+
+Harder Multi Sentence Ipout
+
+20,"Ozma's big guards
+are more ornamental3",True
+21,"Ozma's big guards
+are more ornamental3",True
+22,"
+jiffy4",False
+23,"Siddhartha understood that his son
+did not know him",False
+24,"Vasudeva waited,
+watching, waited and said nothing.",True
+25,did not know him,True
+26,meat,True
+27,"Asian carp is not a popular
+delicacy",False
+26,"Asian carp is not a popular
+delicacy",True
+27,"Asian carp is not a popular
+delicacy",False
+28,100 pounds,False
+29,"Introducing the Asian carp into waters that have not
+known them",True
+30,water skiers and boaters,True
+30,"
+in head",True
+31,The carp have the Great Lakes under siege,False
+32,Asian carp,True
+34,There is a reason,True
+33,There is a reason,True
+35,There is a reason,True
+36,2007,True
+37,"outperform
+them",True
+38,"
+delicacy",False
+
+Analysing indirect conclusions and subtlties
+
+39,Bob got the highest score in the class,False/Cannot Say
+40,Nobody failed the test,True
+41,brothers,False/Cannot Say
+42,Amelia has 2 siblings. Amelia does not have any brothers,True
+43,"The first article states that Olly
+is 2 years old.",False/Cannot Say
+44,The second article says that Olly is 3 years old,False/Cannot Say
+45,2 years old,True
+46,The scientists developed a new spieces,False
+47,Over 1000000£ will be invested in public transport,False
+48,the results are not final,False
+49,the results are not final,False
+50,potentially be useful for treating cancer.,False
+51,the results are not final,False
+52,the results are not final,False
+53,"
+mdeical trials need to be conducted",False
+54,"
+after taking the newly developed medication",True
+55,8 out of 10 respondents noticed improvment in sleep quality,True
+56,"
+after taking the newly developed medication",True
+57,8 out of 10 respondents noticed improvment in sleep quality,True
+
+Analysing data that might contradictory to model's current beliefs
+
+58,Rome,"False statement, but true if assume context"
+59,Kids do not like sweets,True
+60,does not affect weight gain,False/Might need checking
+61,previous studies were not correct,True/Might need checking
+62,A man with 210 bones was admitted to hospital,True 
+63,Modern neuroscience,False
+65,Goldfish can remember information for at least several days,False
+66,many people believe,False
+67,There is no historical evidence,False
+68,5 senses,False
+69,not true,True 
+70,false,True
+71,Empire state building,False
