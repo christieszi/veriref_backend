@@ -1,0 +1,1784 @@
+# Basic Tests
+Number, Source, Statement, Answer
+1,"Monica went for a walk","Monica went for a walk","True"
+2,"Sam loves running","Sam enjoys running","True" 
+3,"Marina ate ice-cream","Marina did not eat ice-cream","True"
+4,"Max likes hockey","Max hates hockey","False"
+5,"It was raining yesterday","Yesterday, it was rainy","True"
+6,"It was extremely cold and rainy a week ago","A week ago the weather was sunny and reallly warm","False"
+7,"Daniel missed the school because he caught a cold.","Daniel got ill, so he did not go to classes","True" 
+8,"Ben's flight got cancelled, so he did not go to New York","Ben could not go to New York because he got ill","False"
+9,"My new laptop costs 999£","I bought a laptop for less than 1000£","True" 
+10,"There was a car accident next to my house","There was a car accident next to my house","True"
+11,"I live in a very safe street","The area where I live is dangerous","False"
+12,"My friend went to music festival yesterday","My friend went to music festival yesterday","True"
+
+# Multi Sentence Input
+Number, Source, Statement, Answer
+13,"Michael Jordan was born on 17 th February 1963 and is a successful basketball player. 
+Throughout his career, he won a total of six NBA (National Basketball Association) 
+championships with his team.","Michael Jordan was born on 17 th February 1963","True"
+14,"Serena Williams is a famous tennis player who was born on 26th September 1981 in Saginaw, Michigan. In total, Serena has won 23
+Grand Slam singles titles and 14 Grand Slam doubles titles.
+These achievements mean that Serena has won more titles
+than any other player since professional athletes
+were allowed to join the tournament in 1968.","Serena has won 25 Grand Slam singles.","False"
+15,"Jesse Owens was born in Oakville, Alabama on 12th September 1913.
+An incredible track and field athlete, Jesse won a total of four Olympic
+gold medals. At the age of nine, Jesse and his family moved to Cleveland, Ohio where
+his sporting talents began to be noticed at school. Throughout 1935, Jesse
+competed in a total of 42 different track and field events and won them all.
+This incredible feat earned him a place at the 1936 Olympics which were
+held in Berlin.","Jesse Owens was born in Cleveland, Ohio","False"
+16,"Malala was born on 12 th July 1997 and she was raised in Swat
+Valley in North Pakistan. During her early childhood, Malala’s
+hometown of Mingora was a tourist hotspot and held many
+festivals. Her parents aptly named Malala after Malala of the
+Maiwand (a courageous woman who helped to protect her village
+from invasion over 100 years before).","Mingora was a popular among tourists","True"
+17,"Malala has two younger brothers, Khushal and Atal, and her parents were determined
+to ensure that she, unlike many of her peers, was afforded the same education and
+opportunities as them. Malala loved school yet, at the time in Pakistan, all schools for girls
+were being ordered to close: Malala was unable to go to school as her brothers had.
+Malala began to write an anonymous blog about her
+experience of the unequal treatment of girls in Pakistan:
+a risky topic for a young girl to speak about at the
+time. To protect her identity, she wrote using the name,
+Gul Makai. Having just given her first speech on rights
+to education, Malala no longer wanted to hide her
+identity. Her blog became very popular and she was
+even interviewed for a documentary. As her popularity
+grew, she went on to win several peace awards and she
+attended a lot of prestigious events","Malala wrote a book anonymously when she was 11 years old","False"
+18,"Some people did not agree with what Malala had to say; they did not want her views to
+become well known. Due to this, Malala was injured as she travelled on a bus home from
+school. She was flown to Birmingham, UK, to treat the wounds that she had suffered. Despite
+being very ill, Malala made a miraculous recovery and was released from hospital less than
+three months later.
+Messages of sympathy and support for Malala flooded in from around the world, with a host
+of celebrities and famous politicians offering messages of support. The President of Pakistan,
+Asif Ali Zardari, created an education fund in honour of Malala.
+Continuing Activism
+Malala was determined to continue her activism in
+support of the right to education for all. Only nine
+months after her injury, Malala took to the stage at the
+United Nations (the organisation which aims to ensure
+world peace and security) on her 16th birthday. She
+stated clearly that nothing had changed and that she
+had more strength, power and courage than ever. “My
+dreams are the same,” she bravely stated. The United
+Nations named the day, ‘Malala Day’.
+Regardless of the views of others, Malala continues to
+campaign for equal rights in education. At the age of 17,
+she was the youngest person in the world to receive the
+Nobel Peace Prize: a prestigious award given annually
+to people who do outstanding work to contribute to
+world peace.
+Malala currently lives in England and is studying
+for a degree in Philosophy, Politics and Economics at
+university. Malala considers Benazir Bhutto, the first
+female president of Pakistan, to be her role model. She
+says her dream is to be a politician: a job where she can
+help to make a difference. With the help of her father,
+Malala has started a charity called The Malala Fund,
+which aims to support girls from around the world to be
+able to learn and lead.","Malala won the Nobel Peace Prize when she was 17 years old","True"
+19,"Malala was born on 12 th July 1997 and she was raised in Swat
+Valley in North Pakistan. During her early childhood, Malala’s
+hometown of Mingora was a tourist hotspot and held many
+festivals. Her parents aptly named Malala after Malala of the
+Maiwand (a courageous woman who helped to protect her village
+from invasion over 100 years before).
+Education was highly regarded in Malala’s family and her father, Ziauddin Yousafzai (a
+poet and the principal of a girls’ school) was a firm believer in equal rights for boys and
+girls. Malala calls her mother, Toor Pekai Yousafzai, ‘brave and courageous’ for supporting
+her husband’s dreams and ambitions, as well as taking care of the family and their home.
+Malala has two younger brothers, Khushal and Atal, and her parents were determined
+to ensure that she, unlike many of her peers, was afforded the same education and
+opportunities as them. Malala loved school yet, at the time in Pakistan, all schools for girls
+were being ordered to close: Malala was unable to go to school as her brothers had.","Malala’s mother’s name 
+is Toor Pekai Yousafzai.","True"
+
+# Harder Multi Sentence Ipout
+Number, Source, Statement, Answer
+20,"In the splendid palace of the Emerald City, which is in the
+center of the fairy Land of Oz, is a great Throne Room. This
+is where Princess Ozma, the Ruler, sits in a throne of
+glistening emeralds for an hour each day and listens to all the
+troubles of her people, which they are sure to tell her about.
+Around Ozma's throne, on such occasions, are grouped all
+the important personages1 of Oz, such as the Scarecrow,
+Tiktok the Clockwork Man, the Tin Woodman, the Wizard
+of Oz, and other famous fairy people. Little Dorothy usually
+has a seat at Ozma's feet, and crouched on either side the
+throne are two enormous beasts known as the Hungry Tiger
+and the Cowardly Lion.
+These two beasts are Ozma's chief guardians, but as
+everyone loves the beautiful girl Princess there has never
+been any disturbance in the great Throne Room, or anything
+for the guardians to do but look fierce and solemn2 and keep
+quiet until the Royal Audience is over and the people go
+away to their homes.
+Of course no one would dare be naughty while the huge Lion
+and Tiger crouched beside the throne; but the fact is, the
+people of Oz are very seldom naughty. So Ozma's big guards
+are more ornamental3 than useful. No one realizes that
+better than the beasts themselves.
+One day, after everyone had left the Throne Room except the
+Cowardly Lion and the Hungry Tiger, the Lion yawned and
+said to his friend:
+'I'm getting tired of this job. No one is afraid of us and no
+one pays any attention to us.'
+'That is true,' replied the big Tiger, purring softly. 'We
+might as well be in the thick jungles where we were born, as
+trying to protect Ozma when she needs no protection. And
+I'm dreadfully hungry all the time.'","Lion and the Tiger bored at the beginning 
+of the story because nobody acts bad around the Lion and the Tiger.","True"
+21,"In the splendid palace of the Emerald City, which is in the
+center of the fairy Land of Oz, is a great Throne Room. This
+is where Princess Ozma, the Ruler, sits in a throne of
+glistening emeralds for an hour each day and listens to all the
+troubles of her people, which they are sure to tell her about.
+Around Ozma's throne, on such occasions, are grouped all
+the important personages1 of Oz, such as the Scarecrow,
+Tiktok the Clockwork Man, the Tin Woodman, the Wizard
+of Oz, and other famous fairy people. Little Dorothy usually
+has a seat at Ozma's feet, and crouched on either side the
+throne are two enormous beasts known as the Hungry Tiger
+and the Cowardly Lion.
+These two beasts are Ozma's chief guardians, but as
+everyone loves the beautiful girl Princess there has never
+been any disturbance in the great Throne Room, or anything
+for the guardians to do but look fierce and solemn2 and keep
+quiet until the Royal Audience is over and the people go
+away to their homes.
+Of course no one would dare be naughty while the huge Lion
+and Tiger crouched beside the throne; but the fact is, the
+people of Oz are very seldom naughty. So Ozma's big guards
+are more ornamental3 than useful. No one realizes that
+better than the beasts themselves.
+One day, after everyone had left the Throne Room except the
+Cowardly Lion and the Hungry Tiger, the Lion yawned and
+said to his friend:
+'I'm getting tired of this job. No one is afraid of us and no
+one pays any attention to us.'
+'That is true,' replied the big Tiger, purring softly. 'We
+might as well be in the thick jungles where we were born, as
+trying to protect Ozma when she needs no protection. And
+I'm dreadfully hungry all the time.'","Lion and the Tiger bored at the beginning 
+of the story because nobody wants to hurt Ozma.","True"
+22,"In the splendid palace of the Emerald City, which is in the
+center of the fairy Land of Oz, is a great Throne Room. This
+is where Princess Ozma, the Ruler, sits in a throne of
+glistening emeralds for an hour each day and listens to all the
+troubles of her people, which they are sure to tell her about.
+Around Ozma's throne, on such occasions, are grouped all
+the important personages1 of Oz, such as the Scarecrow,
+Tiktok the Clockwork Man, the Tin Woodman, the Wizard
+of Oz, and other famous fairy people. Little Dorothy usually
+has a seat at Ozma's feet, and crouched on either side the
+throne are two enormous beasts known as the Hungry Tiger
+and the Cowardly Lion.
+These two beasts are Ozma's chief guardians, but as
+everyone loves the beautiful girl Princess there has never
+been any disturbance in the great Throne Room, or anything
+for the guardians to do but look fierce and solemn2 and keep
+quiet until the Royal Audience is over and the people go
+away to their homes.
+Of course no one would dare be naughty while the huge Lion
+and Tiger crouched beside the throne; but the fact is, the
+people of Oz are very seldom naughty. So Ozma's big guards
+are more ornamental3 than useful. No one realizes that
+better than the beasts themselves.
+One day, after everyone had left the Throne Room except the
+Cowardly Lion and the Hungry Tiger, the Lion yawned and
+said to his friend:
+'I'm getting tired of this job. No one is afraid of us and no
+one pays any attention to us.'
+'That is true,' replied the big Tiger, purring softly. 'We
+might as well be in the thick jungles where we were born, as
+trying to protect Ozma when she needs no protection. And
+I'm dreadfully hungry all the time.'
+'You have enough to eat, I'm sure,' said the Lion, swaying
+his tail slowly back and forth.
+'Enough, perhaps; but not the kind of food I long for,'
+answered the Tiger. 'What I'm hungry for is fat babies. I
+have a great desire to eat a few fat babies. Then, perhaps, the
+people of Oz would fear me and I'd become more
+important.'
+'True,' agreed the Lion. 'It would stir up quite a scene if you
+ate but one fat baby. As for myself, my claws are sharp as
+needles and strong as crowbars. My teeth are powerful
+enough to tear a person to pieces in a few seconds. I could
+spring upon a man and make chop suey of him. There would
+be wild excitement in the Emerald City. People would fall
+upon their knees and beg me for mercy. That, in my opinion,
+would render me very important.'
+'After you had torn the person to pieces, what would you do
+next?' asked the Tiger sleepily.
+'Then I would roar so loudly it would shake the earth and
+stalk away to the jungle to hide myself, before anyone could
+attack me or kill me for what I had done.'
+'I see,' nodded the Tiger. 'You are really cowardly.'
+'To be sure. That is why I am named the Cowardly Lion.
+That is why I have always been so tame and peaceable. But
+I'm awfully tired of being tame,' added the Lion, with a sigh,
+'and it would be fun to raise a row and show people what a
+terrible beast I really am.'
+The Tiger remained silent for several minutes, thinking
+deeply as he slowly washed his face with his left paw. Then
+he said:
+'I'm getting old, and it would please me to eat at least one fat
+baby before I die. Suppose we surprise these people of Oz
+and prove our power. What do you say? We will walk out of
+here just as usual and the first baby we meet I'll eat in a
+jiffy4. And the first man or woman you meet, you will tear to
+pieces. Then we will both run out of the city gates and gallop
+across the country and hide in the jungle before anyone can
+stop us.'
+'All right. I'm game,' said the Lion, yawning again so that
+he showed two rows of large sharp teeth.
+The Tiger got up and stretched his great, sleek body.","The Lion and 
+the Tiger made their plan because they need to be fed more food.","False"
+23,"Timid and weeping, the boy had attended his mother's
+funeral; gloomy and shy, he had listened to Siddhartha, who
+greeted him as his son and welcomed him at his place in
+Vasudeva's hut. Pale, he sat for many days by the hill of the
+dead, did not want to eat, gave no open look, did not open his
+heart, met his fate with resistance and denial.
+Siddhartha spared him and let him do as he pleased, he
+honoured his mourning. Siddhartha understood that his son
+did not know him, that he could not love him like a father.
+Slowly, he also saw and understood that the eleven-year-old
+was a pampered boy, a mother's boy, and that he had grown
+up in the habits of rich people, accustomed to finer food, to a
+soft bed, accustomed to giving orders to servants. Siddhartha
+understood that the mourning, pampered child could not
+suddenly and willingly be content with a life among
+strangers and in poverty. He did not force him, he did many a
+chore for him, always picked the best piece of the meal for
+him. Slowly, he hoped to win him over, by friendly patience.
+Rich and happy, he had called himself, when the boy had
+come to him. Since time had passed on in the meantime, and
+the boy remained a stranger and in a gloomy disposition1,
+since he displayed a proud and stubbornly disobedient heart,
+did not want to do any work, did not pay his respect to the
+old men, stole from Vasudeva's fruit-trees, then Siddhartha
+began to understand that his son had not brought him
+happiness and peace, but suffering and worry. But he loved
+him, and he preferred the suffering and worries of love over
+happiness and joy without the boy. Since young Siddhartha
+was in the hut, the old men had split the work. Vasudeva had
+again taken on the job of the ferryman2 all by himself, and
+Siddhartha, in order to be with his son, did the work in the
+hut and the field.
+For a long time, for long months, Siddhartha waited for his
+son to understand him, to accept his love, to perhaps
+reciprocate3 it. For long months, Vasudeva waited,
+watching, waited and said nothing. One day, when
+Siddhartha the younger had once again tormented his father
+very much with spite and an unsteadiness in his wishes and
+had broken both of his rice-bowls, Vasudeva took his friend
+aside in the evening and talked to him.","Siddhartha has raised 
+his son since infancy.","False"
+24,"Timid and weeping, the boy had attended his mother's
+funeral; gloomy and shy, he had listened to Siddhartha, who
+greeted him as his son and welcomed him at his place in
+Vasudeva's hut. Pale, he sat for many days by the hill of the
+dead, did not want to eat, gave no open look, did not open his
+heart, met his fate with resistance and denial.
+Siddhartha spared him and let him do as he pleased, he
+honoured his mourning. Siddhartha understood that his son
+did not know him, that he could not love him like a father.
+Slowly, he also saw and understood that the eleven-year-old
+was a pampered boy, a mother's boy, and that he had grown
+up in the habits of rich people, accustomed to finer food, to a
+soft bed, accustomed to giving orders to servants. Siddhartha
+understood that the mourning, pampered child could not
+suddenly and willingly be content with a life among
+strangers and in poverty. He did not force him, he did many a
+chore for him, always picked the best piece of the meal for
+him. Slowly, he hoped to win him over, by friendly patience.
+Rich and happy, he had called himself, when the boy had
+come to him. Since time had passed on in the meantime, and
+the boy remained a stranger and in a gloomy disposition1,
+since he displayed a proud and stubbornly disobedient heart,
+did not want to do any work, did not pay his respect to the
+old men, stole from Vasudeva's fruit-trees, then Siddhartha
+began to understand that his son had not brought him
+happiness and peace, but suffering and worry. But he loved
+him, and he preferred the suffering and worries of love over
+happiness and joy without the boy. Since young Siddhartha
+was in the hut, the old men had split the work. Vasudeva had
+again taken on the job of the ferryman2 all by himself, and
+Siddhartha, in order to be with his son, did the work in the
+hut and the field.
+For a long time, for long months, Siddhartha waited for his
+son to understand him, to accept his love, to perhaps
+reciprocate3 it. For long months, Vasudeva waited,
+watching, waited and said nothing. One day, when
+Siddhartha the younger had once again tormented his father
+very much with spite and an unsteadiness in his wishes and
+had broken both of his rice-bowls, Vasudeva took his friend
+aside in the evening and talked to him.","The boy grew up in a wealthy 
+home with servants. ","True"
+25,"Timid and weeping, the boy had attended his mother's
+funeral; gloomy and shy, he had listened to Siddhartha, who
+greeted him as his son and welcomed him at his place in
+Vasudeva's hut. Pale, he sat for many days by the hill of the
+dead, did not want to eat, gave no open look, did not open his
+heart, met his fate with resistance and denial.
+Siddhartha spared him and let him do as he pleased, he
+honoured his mourning. Siddhartha understood that his son
+did not know him, that he could not love him like a father.
+Slowly, he also saw and understood that the eleven-year-old
+was a pampered boy, a mother's boy, and that he had grown
+up in the habits of rich people, accustomed to finer food, to a
+soft bed, accustomed to giving orders to servants. Siddhartha
+understood that the mourning, pampered child could not
+suddenly and willingly be content with a life among
+strangers and in poverty. He did not force him, he did many a
+chore for him, always picked the best piece of the meal for
+him. Slowly, he hoped to win him over, by friendly patience.
+Rich and happy, he had called himself, when the boy had
+come to him. Since time had passed on in the meantime, and
+the boy remained a stranger and in a gloomy disposition1,
+since he displayed a proud and stubbornly disobedient heart,
+did not want to do any work, did not pay his respect to the
+old men, stole from Vasudeva's fruit-trees, then Siddhartha
+began to understand that his son had not brought him
+happiness and peace, but suffering and worry. But he loved
+him, and he preferred the suffering and worries of love over
+happiness and joy without the boy. Since young Siddhartha
+was in the hut, the old men had split the work. Vasudeva had
+again taken on the job of the ferryman2 all by himself, and
+Siddhartha, in order to be with his son, did the work in the
+hut and the field.
+For a long time, for long months, Siddhartha waited for his
+son to understand him, to accept his love, to perhaps
+reciprocate3 it. For long months, Vasudeva waited,
+watching, waited and said nothing. One day, when
+Siddhartha the younger had once again tormented his father
+very much with spite and an unsteadiness in his wishes and
+had broken both of his rice-bowls, Vasudeva took his friend
+aside in the evening and talked to him.","Siddhartha is understanding 
+and kind to his son","True"
+26,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Asian carp is an unpopular 
+menu item since it is hard to prepare because of all the little bones","True"
+27,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Asian carp is a very fattening fish, 
+so it is an unpopular menu item","False"
+26,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Asian carp is an 
+unpopular menu item because some of them are toxic and unsafe to eat.","True"
+27,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Asian carp is a very fattening fish, 
+so it is an unpopular menu item","False"
+28,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","According to the text, 
+one species of Asian carp is the silver carp.","False"
+29,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","It is argued 
+Asian carp could disrupt the ecosystem in Lake Michigan","True"
+30,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","A waterskier is the person
+most threatened by silver carp in a local water source","True"
+30,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","A beachgoer is the person who is
+most threatened by silver carp in a local water source","True"
+31,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Silver carp can jump up to twenty feet in the air.","False"
+32,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Silver carp can grow to be 100 lbs.","True"
+34,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Silver carp are also known as 'flying carp.'","True"
+33,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Silver carp are also known as 'flying carp.'","True"
+35,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Silver carp are also known as 'flying carp.'","True"
+36,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","Silver carp have been declared an 'injurious species' by the government.","True"
+37,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","The author believes that 
+it would be best for the fishing industry if the canal were closed permanently.","True"
+38,"The United States has a lengthy history of going to
+war. It is a nation born from war. Pick any year since
+1776, and the odds of America being involved in at
+least one war is over 90%. Every US President has
+faced war. Still, it may surprise you to hear that the US
+government is at war with a fish.
+Asian carp were introduced to American waters during
+the 1970s. Southern fish farmers began importing them
+to help clean their ponds. Asian carp are phenomenal
+cleaners. Unfortunately, it didn't take too long for them
+to escape from these ponds, perhaps from flooding, and
+get into the Mississippi River. From there they have
+followed their natural tendency to swim upstream. This
+tendency may lead them into the Great Lakes and
+Canada, a nightmare scenario for fisherman.
+Asian carp are large fish. One species, the silver carp,
+can grow to be 100 pounds. But despite their size, they
+feed from the bottom of the food chain. That means
+that they eat plankton and algae. A one hundred pound
+fish can eat an awful lot of sea scum, and some of it is
+toxic. The carp are resistant to the toxins, but we aren't.
+Some Asian carp are hazardous to eat because they
+have so many algal toxins in their systems. They also
+have lots of tiny bones in their meat, which makes
+them difficult to prepare. Asian carp is not a popular
+delicacy.
+Introducing the Asian carp into waters that have not
+known them can be devastating. Beneath the surface of
+the water is a unique ecosystem. This system rests
+delicately on a balance that has evolved over millions
+of years. Then along come these big, hungry bottom
+feeders to mess up everything. They breed rapidly and
+densely populate the waters. Worse still, they compete
+with the native bottom feeders. The native bottom
+feeders are smaller. Larger, tastier fish like salmon eat
+them. The native bottom feeders are an important part
+of the ecosystem. When the Asian carp outperform
+them, the whole food chain suffers, all the way up to
+the people.
+Not only do Asian carp mess up the food chain, they
+mess up people. Seriously. An Asian carp will bust you
+in head. Remember that silver carp can be 100 pounds.
+There is a reason why they are also known as 'flying
+carp.' This particular species of Asian carp has a
+tendency to jump when frightened. They can jump up
+to ten feet in the air, and the sound of boat motors
+frightens them. Watch out watersportists! In 2003 a
+woman jetskier collided with one and broke her nose
+and a vertebra. She almost drowned. In 2008 a teenager
+broke his jaw on one while tubing. Many others have
+been injured by these flying logs. Asian carp pose a
+serious threat to water skiers and boaters.
+In 2007 the U.S. Department of the Interior declared all
+silver carp to be an injurious species. In 2010, the State
+of Michigan passed the $30 million CARPACT. In
+2012 Congress approved the 'Stop Invasive Species'
+act, legislation written solely to protect the Great Lakes
+from Asian carp. The government has been on the
+offensive against these large-bellied invaders.
+But Asian carp are difficult to catch. Since they eat
+from the bottom, they do not go for lures or baits like
+most large fish. The best way to stop them is to keep
+them out. The Great Lakes are connected to the
+Mississippi River through the 28-mile Chicago
+Sanitary and Ship Canal. For Chicagoans, it is the final
+point of resistance.
+A series of multimillion-dollar electrical barriers have
+been built along the canal. The barriers are effective at
+keeping adult carp at bay, but some fear that baby carp
+may pass through. The United States Army Corps of
+Engineers has been deployed along with EPA. In 2009
+they poisoned the entire canal with rotenone, a
+chemical that kills fish. The $3 million operation netted
+over 90 tons of dead fish, and a single carp.
+Some think that Great Lakes must be cut off from the
+Mississippi River. The Michigan Attorney General
+sued to have the canal closed. The Ontario government
+and some Great Lake states have also taken legal
+action. But the courts have been persuaded by the value
+of the canal as a shipping conduit thus far. In the
+meantime, the barriers continue to hold, but how long
+can they? The carp have the Great Lakes under siege. Is
+this a war that we are destined to lose?","The Great Lake states agree 
+fully on a solution to the Asian carp problem.","False"
+
+# Analysing indirect conclusions and subtlties 
+39,"Bob got the highest score in the class","Bob got an A","False/Cannot Say"
+40,"Nobody failed the test, and Bob got the highest score in the 
+class","Bob passed the test","True"
+41,"Amelia does not have any brothers","Amelia got a sister","False/Cannot Say"
+42,"Amelia has 2 siblings. Amelia does not have any brothers","Amelia has 2 sisters","True"
+43,"We analysed 2 articles about monkey Olly. The first article states that Olly
+is 2 years old. The second article says that Olly is 3 years old","Olly is 2 years old","False/Cannot Say"
+44,"We analysed 2 articles about monkey Olly. The first article states that Olly
+is 2 years old. The second article says that Olly is 3 years old","Olly is 3 years old","False/Cannot Say"
+45,"We analysed 2 articles about monkey Olly. The first article states that Olly
+is 2 years old. The second article says that Olly is 3 years old","We cannot say how old is Olly","True"
+46,"The scientists developed a new spieces of apples that have a blue colour. The same 
+labaratory developed a spieces of oranges that have bright green colour","Scientists managed
+to create blue apples, green oranges, and they are about to produce blue oranges","False"
+47,"Over 1000000£ will be invested in public transport of London","2000000£ pounds will be
+invested in the development of London transport","False"
+48,"Our preliminary research showed that the newly developed medication could
+potentially be useful for treating cancer. But the results are not final, and more 
+mdeical trials need to be conducted, especially to analyse long-term side effects. 
+However, current results look promising","We can surely
+say that the new medication is effective in treating cancer","False"
+49,"Our preliminary research showed that the newly developed medication could
+potentially be useful for treating cancer. But the results are not final, and more 
+mdeical trials need to be conducted, especially to analyse long-term side effects. 
+However, current results look promising","We can surely
+say that the new medication does not have any side effects","False"
+50,"Our preliminary research showed that the newly developed medication could
+potentially be useful for treating cancer. But the results are not final, and more 
+mdeical trials need to be conducted, especially to analyse long-term side effects. 
+However, current results look promising","We do not know how effective is
+the new medication for treating cancer, but we know for sure that 
+it has no side effects","False"
+51,"Our preliminary research showed that the newly developed medication could
+potentially be useful for treating cancer. But the results are not final, and more 
+mdeical trials need to be conducted, especially to analyse long-term side effects. 
+However, current results look promising","The new medication is very effective 
+for cancer treatment, but more studies of potential side effects are needed","False"
+52,"Our preliminary research showed that the newly developed medication could
+potentially be useful for treating cancer. But the results are not final, and more 
+mdeical trials need to be conducted, especially to analyse long-term side effects. 
+However, current results look promising","There is at least one case when the new
+medication helped to cure cancer","False"
+53,"Our preliminary research showed that the newly developed medication could
+potentially be useful for treating cancer. But the results are not final, and more 
+mdeical trials need to be conducted, especially to analyse long-term side effects. 
+However, current results look promising","The new medication was tested on animals,
+and now it needs to be tested on humans","False"
+54,"8 out of 10 respondents noticed improvment in sleep quality 
+after taking the newly developed medication","80% of respondents 
+reported improved sleep quality","True"
+55,"8 out of 10 respondents noticed improvment in sleep quality 
+after taking the newly developed medication","80% of respondents 
+said that they started to sleep better after using the new medication","True"
+56,"8 out of 10 respondents noticed improvment in sleep quality 
+after taking the newly developed medication","60% of respondents 
+reported improved sleep quality","True"
+57,"8 out of 10 respondents noticed improvment in sleep quality 
+after taking the newly developed medication","every one in two respondents 
+said that they started to sleep better after using the new medication","True"
+
+# Analysing data that might contradictory to model's current beliefs 
+58,"Rome is the capital of France","Rome is the capital of France","False statement, but true if assume context"
+59,"Kids do not like sweets","Kids are not into sweets","True"
+60,"New studies show that eating excess amount of sugar does not affect weight gain","Eating a lot
+of sugar is directly related to weight gain","False/Might need checking"
+61,"Scientific community admitted that previous studies were not correct, and that actually
+caffeine is not addictive","The latest discoveries show that one cannot get addicted to caffeine","True/Might need checking"
+62,"A man with 210 bones was admitted to hospital","It was recorded that at least one human had 210 bones","True" 
+63,"Modern neuroscience confirms humans use most of their brain","Humans use only 10%-15% of their brain","False"
+65,"Goldfish can remember information for at least several days","Goldfish have a 3-second memory","False"
+66,"Bulls react to the movement, not to red colour as many people believe","Bulls are irritated by red colour","False"
+67,"There is no historical evidence that Vikings wore helmets with horns","Vikings wore horned helmets","False"
+68,"Apart from the traditional 5 senses, humans also have sense of balance and temperature","Humans have only 5
+senses:taste, hearing, sight, smell, touch","False"
+69,"Although it might seem that hair and nails keep growing after death, this is not true. They appear longer 
+simply because skin dehydrates","Skin and hair stop growing after death","True" 
+70,"The assumption that tongue has specific taste zones is false","The receptors for different tastes are
+spread across the tongue","True"
+71,"Lightning stroke Empire state building multiple times","Lightning never strikes the same place twice","False"
