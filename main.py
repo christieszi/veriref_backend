@@ -18,4 +18,3 @@ async def main(prompt,stream=False):
 
 if __name__ == "__main__":
     text= asyncio.run(main(model_utils.ask_question("Given the fact that Monica likes dogs. Is it correct that Monica likes cats? Reply with 'yes' or 'no'"),stream=True))
-    print(text)
