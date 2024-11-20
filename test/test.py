@@ -41,7 +41,7 @@ def test_model(input_filename, output_filename, model_func, with_assumption):
                 if with_assumption:
                     answer = model_func(source, statement)
                 else:
-                    answer = model_func("Given " + str(source) + ". Explain why the statement  " + str(statement) + " is true or false")
+                    answer = model_func("Given " + str(source) + ". Is the statemant that " + str(statement) + " correct?")
 
                 # Write the processed data to the new CSV
                 writer.writerow([number, answer, model_answer])
