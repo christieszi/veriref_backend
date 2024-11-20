@@ -10,6 +10,7 @@ import requests
 # Flask constructor
 app = Flask(__name__)   
 
+
 # Configure upload folder
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):

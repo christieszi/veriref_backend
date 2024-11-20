@@ -1,0 +1,12 @@
+stages:
+  - build
+
+build_job:
+  stage: build
+  tags:
+    - For-Build
+  script:
+    - echo "Build started...."
+    - cd /home/ec2-user/builds/t3_iyseHN/0/kz1021/veriref/
+    - docker build -t veriref-flask-app .
+    - docker run -p 5000:5000 veriref-flask-app
