@@ -9,4 +9,4 @@ build_job:
     - echo "Build started...."
     - cd /home/ec2-user/builds/t3_Kxqzci/0/kz1021/veriref/
     - docker build -t veriref-app .
-    - docker run -p 5000:5000 veriref-app .
+    - docker run -p 5000:5000 veriref-app
