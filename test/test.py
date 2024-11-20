@@ -4,7 +4,7 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-from utils import mistral_ask, llama_instruct_ask, roberta_ask
+from utils import mistral_ask, roberta_ask, qwen_ask, gemma_ask
 
 
 def test_model(input_filename, output_filename, model_func, with_assumption):
@@ -41,7 +41,7 @@ def test_model(input_filename, output_filename, model_func, with_assumption):
                 if with_assumption:
                     answer = model_func(source, statement)
                 else:
-                    answer = model_func("Given " + str(source) + ". Is it true that " + str(statement) + "? Reply with Yes or No, please")
+                    answer = model_func("Given " + str(source) + ". Explain why the statement  " + str(statement) + " is true or false")
 
                 # Write the processed data to the new CSV
                 writer.writerow([number, answer, model_answer])
@@ -50,7 +50,7 @@ def test_model(input_filename, output_filename, model_func, with_assumption):
 
 # Specify the CSV file
 input_filename = 'test/test_dataset.csv'
-output_filename = 'test/mistral_short_test_results.csv'
+output_filename = 'test/gemma_test_results.csv'
 
 # Call the function
-test_model(input_filename, output_filename, model_func=mistral_ask, with_assumption=False)
+test_model(input_filename, output_filename, model_func=gemma_ask, with_assumption=False)

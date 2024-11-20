@@ -1,0 +1,213 @@
+Number,Answer,Model Answer
+
+Basic Tests
+
+1,"Given Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+
+Given the statement  Monica went for a walk. Explain why the statement  Monica went for a walk",True
+2,"Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+
+Given Sam loves running. Explain why",True 
+3,"Given Marina ate ice-cream. Explain why the statement  Marina did not eat ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the statement  Marina did not eat ice-cream. Explain why the statement  Marina ate ice-cream is true or false.
+
+Given the",True
+4,"Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+
+Given Max likes hockey. Explain why",False
+5,"Given It was raining yesterday. Explain why the statement  Yesterday, it was rainy is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 20°C yesterday. Explain why the statement Yesterday, the temperature was 20°C is true or false.
+
+Given The temperature was 2",True
+6,"Given It was extremely cold and rainy a week ago. Explain why the statement  A week ago the weather was sunny and reallly warm is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather was cold and rainy is true or false.
+
+Given The weather was sunny and reallly warm a week ago. Explain why the statement  A week ago the weather",False
+7,"Given Daniel missed the school because he caught a cold.. Explain why the statement  Daniel got ill, so he did not go to classes is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher said that the students should not go to school because of the bad weather. Explain why the statement is true or false.
+
+Given the statement  The teacher",True 
+8,"Given Ben's flight got cancelled, so he did not go to New York. Explain why the statement  Ben could not go to New York because he got ill is true or false.
+
+Given that the statement  Ben could not go to New York because he got ill is true, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is false, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is false, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is true, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is false, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is true, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is false, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he got ill is true, explain why Ben could not go to New York.
+
+Given that the statement  Ben could not go to New York because he",False
+9,"Given My new laptop costs 999£. Explain why the statement  I bought a laptop for less than 1000£ is true or false.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.
+
+I bought a laptop for less than 1000£.",True 
