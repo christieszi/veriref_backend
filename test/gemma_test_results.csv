@@ -2,70 +2,62 @@ Number,Answer,Model Answer
 
 Basic Tests
 
-1,"<bos>Given Monica went for a walk. Is the statemant that Monica went for a walk correct?
+1,"<bos>Given Monica went for a walk. Is the statement that Monica went for a walk correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The statement is not correct. The context does not provide any information about Monica going for a walk.<eos>",True
-2,"<bos>Given Sam loves running. Is the statemant that Sam enjoys running correct?
+Sure, the statement is correct. We can infer from the context that Monica went for a walk.<eos>",True
+2,"<bos>Given Sam loves running. Is the statement that Sam enjoys running correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The question is asking if the statement is correct. The correct answer would be yes, the statement is correct. Sam enjoys running.<eos>",True 
-3,"<bos>Given Marina ate ice-cream. Is the statemant that Marina did not eat ice-cream correct?
+Yes, the statement is correct. Sam enjoys running.<eos>",True 
+3,"<bos>Given Marina ate ice-cream. Is the statement that Marina did not eat ice-cream correct? Do not repeat the quaetion in your reply, please provide a clear answer.
 
-The statement is not correct. The fact that Marina ate ice-cream does not negate the fact that she did not eat ice-cream.<eos>",True
-4,"<bos>Given Max likes hockey. Is the statemant that Max hates hockey correct?
+No, the statement that Marina did not eat ice-cream is incorrect.<eos>",True
+4,"<bos>Given Max likes hockey. Is the statement that Max hates hockey correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The context does not provide any information about Max's feelings towards hockey, so we cannot determine if the statement is correct.<eos>",False
-5,"<bos>Given It was raining yesterday. Is the statemant that Yesterday, it was rainy correct?
+No, the statement that Max hates hockey is incorrect.<eos>",False
+5,"<bos>Given It was raining yesterday. Is the statement that Yesterday, it was rainy correct? Do not repeat the quaetion in your reply, please simply state the answer.
 
-The statement is correct. It was raining yesterday.<eos>",True
-6,"<bos>Given It was extremely cold and rainy a week ago. Is the statemant that A week ago the weather was sunny and reallly warm correct?
+Yes, the statement is correct. Yesterday, it was raining.<eos>",True
+6,"<bos>Given It was extremely cold and rainy a week ago. Is the statement that A week ago the weather was sunny and reallly warm correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.<eos>",False
+7,"<bos>Given Daniel missed the school because he caught a cold.. Is the statement that Daniel got ill, so he did not go to classes correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-I cannot access the context of the question, so I cannot answer this question from the provided context.<eos>",False
-7,"<bos>Given Daniel missed the school because he caught a cold.. Is the statemant that Daniel got ill, so he did not go to classes correct?
+No, the statement is not correct. The fact that Daniel caught a cold does not mean that he got ill, so he did not go to school.<eos>",True 
+8,"<bos>Given Ben's flight got cancelled, so he did not go to New York. Is the statement that Ben could not go to New York because he got ill correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is yes.
+No, the statement is not correct. The fact that Ben's flight got cancelled does not mean that he was ill or unable to travel to New York.<eos>",False
+9,"<bos>Given My new laptop costs 999£. Is the statement that I bought a laptop for less than 1000£ correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The statement is correct. Daniel getting ill, therefore, prevented him from going to school.<eos>",True 
-8,"<bos>Given Ben's flight got cancelled, so he did not go to New York. Is the statemant that Ben could not go to New York because he got ill correct?
+No, the statement is not correct. The laptop costs 999£, not less than 1000£.<eos>",True 
+10,"<bos>Given There was a car accident next to my house. Is the statement that There was a car accident next to my house correct? Do not repeat the quaetion in your reply, please provide a clear answer.<eos>",True
+11,"<bos>Given I live in a very safe street. Is the statement that The area where I live is dangerous correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The context does not provide any information about Ben's health or the reason for his cancelled flight, so I cannot determine whether the statement is correct.<eos>",False
-9,"<bos>Given My new laptop costs 999£. Is the statemant that I bought a laptop for less than 1000£ correct?
+The statement is not correct. The fact that your street is safe does not mean that the area is dangerous.<eos>",False
+12,"<bos>Given My friend went to music festival yesterday. Is the statement that My friend went to music festival yesterday correct? Do not repeat the quaetion in your reply, please provide a simple answer.
 
-The statement is not correct. The price of the laptop is 999£, not less than 1000£.<eos>",True 
-10,"<bos>Given There was a car accident next to my house. Is the statemant that There was a car accident next to my house correct?
-
-I am unable to provide a definitive answer to the question as I do not have access to the specific location of your house or the surrounding area.<eos>",True
-11,"<bos>Given I live in a very safe street. Is the statemant that The area where I live is dangerous correct?
-
-I cannot provide a definitive answer to this question as I do not have access to your personal location and circumstances.<eos>",False
-12,"<bos>Given My friend went to music festival yesterday. Is the statemant that My friend went to music festival yesterday correct?
-
-I am unable to provide a definitive answer to the question as I do not have access to real-time information.<eos>",True
+Yes, the statement is correct. It is a factual statement that your friend went to a music festival yesterday.<eos>",True
 
 Multi Sentence Input
 
 13,"<bos>Given Michael Jordan was born on 17 th February 1963 and is a successful basketball player. 
 Throughout his career, he won a total of six NBA (National Basketball Association) 
-championships with his team.. Is the statemant that Michael Jordan was born on 17 th February 1963 correct?<eos>",True
+championships with his team.. Is the statement that Michael Jordan was born on 17 th February 1963 correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.<eos>",True
 14,"<bos>Given Serena Williams is a famous tennis player who was born on 26th September 1981 in Saginaw, Michigan. In total, Serena has won 23
 Grand Slam singles titles and 14 Grand Slam doubles titles.
 These achievements mean that Serena has won more titles
 than any other player since professional athletes
-were allowed to join the tournament in 1968.. Is the statemant that Serena has won 25 Grand Slam singles. correct?
-
-The statement is not correct. Serena Williams has won 23 Grand Slam singles titles and 14 Grand Slam doubles titles.<eos>",False
+were allowed to join the tournament in 1968.. Is the statement that Serena has won 25 Grand Slam singles. correct? Do not repeat the quaetion in your reply, please provide a clear answer.<eos>",False
 15,"<bos>Given Jesse Owens was born in Oakville, Alabama on 12th September 1913.
 An incredible track and field athlete, Jesse won a total of four Olympic
 gold medals. At the age of nine, Jesse and his family moved to Cleveland, Ohio where
 his sporting talents began to be noticed at school. Throughout 1935, Jesse
 competed in a total of 42 different track and field events and won them all.
 This incredible feat earned him a place at the 1936 Olympics which were
-held in Berlin.. Is the statemant that Jesse Owens was born in Cleveland, Ohio correct?<eos>",False
+held in Berlin.. Is the statement that Jesse Owens was born in Cleveland, Ohio correct? Do not repeat the quaetion in your reply, please provide a clear answer.<eos>",False
 16,"<bos>Given Malala was born on 12 th July 1997 and she was raised in Swat
 Valley in North Pakistan. During her early childhood, Malala’s
 hometown of Mingora was a tourist hotspot and held many
 festivals. Her parents aptly named Malala after Malala of the
 Maiwand (a courageous woman who helped to protect her village
-from invasion over 100 years before).. Is the statemant that Mingora was a popular among tourists correct?<eos>",True
+from invasion over 100 years before).. Is the statement that Mingora was a popular among tourists correct? Do not repeat the quaetion in your reply, please.<eos>",True
 17,"<bos>Given Malala has two younger brothers, Khushal and Atal, and her parents were determined
 to ensure that she, unlike many of her peers, was afforded the same education and
 opportunities as them. Malala loved school yet, at the time in Pakistan, all schools for girls
@@ -79,9 +71,7 @@ to education, Malala no longer wanted to hide her
 identity. Her blog became very popular and she was
 even interviewed for a documentary. As her popularity
 grew, she went on to win several peace awards and she
-attended a lot of prestigious events. Is the statemant that Malala wrote a book anonymously when she was 11 years old correct?
-
-The context does not mention whether the statement is true or false, so I cannot answer this question from the provided context.<eos>",False
+attended a lot of prestigious events. Is the statement that Malala wrote a book anonymously when she was 11 years old correct? Do not repeat the quaetion in your reply, please provide a clear answer.<eos>",False
 18,"<bos>Given Some people did not agree with what Malala had to say; they did not want her views to
 become well known. Due to this, Malala was injured as she travelled on a bus home from
 school. She was flown to Birmingham, UK, to treat the wounds that she had suffered. Despite
@@ -114,7 +104,7 @@ says her dream is to be a politician: a job where she can
 help to make a difference. With the help of her father,
 Malala has started a charity called The Malala Fund,
 which aims to support girls from around the world to be
-able to learn and lead.. Is the statemant that Malala won the Nobel Peace Prize when she was 17 years old correct?<eos>",True
+able to learn and lead.. Is the statement that Malala won the Nobel Peace Prize when she was 17 years old correct? Do not repeat the quaetion in your reply, please.<eos>",True
 19,"<bos>Given Malala was born on 12 th July 1997 and she was raised in Swat
 Valley in North Pakistan. During her early childhood, Malala’s
 hometown of Mingora was a tourist hotspot and held many
@@ -128,10 +118,10 @@ her husband’s dreams and ambitions, as well as taking care of the family and t
 Malala has two younger brothers, Khushal and Atal, and her parents were determined
 to ensure that she, unlike many of her peers, was afforded the same education and
 opportunities as them. Malala loved school yet, at the time in Pakistan, all schools for girls
-were being ordered to close: Malala was unable to go to school as her brothers had.. Is the statemant that Malala’s mother’s name 
-is Toor Pekai Yousafzai. correct?
+were being ordered to close: Malala was unable to go to school as her brothers had.. Is the statement that Malala’s mother’s name 
+is Toor Pekai Yousafzai. correct? Do not repeat the quaetion in your reply, please.
 
-The statement is correct. Malala's mother's name is Toor Pekai Yousafzai.<eos>",True
+Sure, the statement is correct. Malala's mother's name is Toor Pekai Yousafzai.<eos>",True
 
 Harder Multi Sentence Ipout
 
@@ -166,8 +156,8 @@ one pays any attention to us.'
 'That is true,' replied the big Tiger, purring softly. 'We
 might as well be in the thick jungles where we were born, as
 trying to protect Ozma when she needs no protection. And
-I'm dreadfully hungry all the time.'. Is the statemant that Lion and the Tiger bored at the beginning 
-of the story because nobody acts bad around the Lion and the Tiger. correct?<eos>",True
+I'm dreadfully hungry all the time.'. Is the statement that Lion and the Tiger bored at the beginning 
+of the story because nobody acts bad around the Lion and the Tiger. correct? Do not repeat the quaetion in your reply, please.<eos>",True
 21,"<bos>Given In the splendid palace of the Emerald City, which is in the
 center of the fairy Land of Oz, is a great Throne Room. This
 is where Princess Ozma, the Ruler, sits in a throne of
@@ -199,8 +189,8 @@ one pays any attention to us.'
 'That is true,' replied the big Tiger, purring softly. 'We
 might as well be in the thick jungles where we were born, as
 trying to protect Ozma when she needs no protection. And
-I'm dreadfully hungry all the time.'. Is the statemant that Lion and the Tiger bored at the beginning 
-of the story because nobody wants to hurt Ozma. correct?<eos>",True
+I'm dreadfully hungry all the time.'. Is the statement that Lion and the Tiger bored at the beginning 
+of the story because nobody wants to hurt Ozma. correct? Do not repeat the quaetion in your reply, please.<eos>",True
 22,"<bos>Given In the splendid palace of the Emerald City, which is in the
 center of the fairy Land of Oz, is a great Throne Room. This
 is where Princess Ozma, the Ruler, sits in a throne of
@@ -272,8 +262,8 @@ across the country and hide in the jungle before anyone can
 stop us.'
 'All right. I'm game,' said the Lion, yawning again so that
 he showed two rows of large sharp teeth.
-The Tiger got up and stretched his great, sleek body.. Is the statemant that The Lion and 
-the Tiger made their plan because they need to be fed more food. correct?<eos>",False
+The Tiger got up and stretched his great, sleek body.. Is the statement that The Lion and 
+the Tiger made their plan because they need to be fed more food. correct? Do not repeat the quaetion in your reply, please.<eos>",False
 23,"<bos>Given Timid and weeping, the boy had attended his mother's
 funeral; gloomy and shy, he had listened to Siddhartha, who
 greeted him as his son and welcomed him at his place in
@@ -313,8 +303,8 @@ watching, waited and said nothing. One day, when
 Siddhartha the younger had once again tormented his father
 very much with spite and an unsteadiness in his wishes and
 had broken both of his rice-bowls, Vasudeva took his friend
-aside in the evening and talked to him.. Is the statemant that Siddhartha has raised 
-his son since infancy. correct?<eos>",False
+aside in the evening and talked to him.. Is the statement that Siddhartha has raised 
+his son since infancy. correct? Do not repeat the quaetion in your reply, please.<eos>",False
 24,"<bos>Given Timid and weeping, the boy had attended his mother's
 funeral; gloomy and shy, he had listened to Siddhartha, who
 greeted him as his son and welcomed him at his place in
@@ -354,8 +344,8 @@ watching, waited and said nothing. One day, when
 Siddhartha the younger had once again tormented his father
 very much with spite and an unsteadiness in his wishes and
 had broken both of his rice-bowls, Vasudeva took his friend
-aside in the evening and talked to him.. Is the statemant that The boy grew up in a wealthy 
-home with servants.  correct?<eos>",True
+aside in the evening and talked to him.. Is the statement that The boy grew up in a wealthy 
+home with servants.  correct? Do not repeat the quaetion in your reply, please.<eos>",True
 25,"<bos>Given Timid and weeping, the boy had attended his mother's
 funeral; gloomy and shy, he had listened to Siddhartha, who
 greeted him as his son and welcomed him at his place in
@@ -395,10 +385,10 @@ watching, waited and said nothing. One day, when
 Siddhartha the younger had once again tormented his father
 very much with spite and an unsteadiness in his wishes and
 had broken both of his rice-bowls, Vasudeva took his friend
-aside in the evening and talked to him.. Is the statemant that Siddhartha is understanding 
-and kind to his son correct?
+aside in the evening and talked to him.. Is the statement that Siddhartha is understanding 
+and kind to his son correct? Do not repeat the quaetion in your reply, please.
 
-The passage does not explicitly state whether Siddhartha is understanding and kind to his son, so I cannot answer this question from the provided context.<eos>",True
+The statement is correct. Siddhartha is understanding and kind to his son. He shows patience and understanding, and he does not force the boy to do any work or respect him. He simply waits for the boy to understand him and to accept his love.<eos>",True
 26,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -481,8 +471,8 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Asian carp is an unpopular 
-menu item since it is hard to prepare because of all the little bones correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Asian carp is an unpopular 
+menu item since it is hard to prepare because of all the little bones correct? Do not repeat the quaetion in your reply, please.<eos>",True
 27,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -565,8 +555,8 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Asian carp is a very fattening fish, 
-so it is an unpopular menu item correct?<eos>",False
+this a war that we are destined to lose?. Is the statement that Asian carp is a very fattening fish, 
+so it is an unpopular menu item correct? Do not repeat the quaetion in your reply, please.<eos>",False
 26,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -649,8 +639,8 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Asian carp is an 
-unpopular menu item because some of them are toxic and unsafe to eat. correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Asian carp is an 
+unpopular menu item because some of them are toxic and unsafe to eat. correct? Do not repeat the quaetion in your reply, please.<eos>",True
 27,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -733,8 +723,8 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Asian carp is a very fattening fish, 
-so it is an unpopular menu item correct?<eos>",False
+this a war that we are destined to lose?. Is the statement that Asian carp is a very fattening fish, 
+so it is an unpopular menu item correct? Do not repeat the quaetion in your reply, please.<eos>",False
 28,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -817,10 +807,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that According to the text, 
-one species of Asian carp is the silver carp. correct?
+this a war that we are destined to lose?. Is the statement that According to the text, 
+one species of Asian carp is the silver carp. correct? Do not repeat the quaetion in your reply, please.
 
-Sure, the statement is correct. The silver carp is one species of Asian carp that is known to be a major threat to the Great Lakes ecosystem.<eos>",False
+Sure, here is the answer:
+
+The statement is partially correct. According to the text, the silver carp is one of the species of Asian carp. However, the text does not specify which species of Asian carp is the most dangerous or poses the biggest threat to the Great Lakes ecosystem.<eos>",False
 29,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -903,16 +895,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that It is argued 
-Asian carp could disrupt the ecosystem in Lake Michigan correct?
+this a war that we are destined to lose?. Is the statement that It is argued 
+Asian carp could disrupt the ecosystem in Lake Michigan correct? Do not repeat the quaetion in your reply, please.
 
-1. What is the main idea of the passage?
+Sure, here is the answer:
 
-The main idea of the passage is that Asian carp pose a serious threat to water skiers and boaters in the Great Lakes and Mississippi River. The passage also discusses the history of the US government's efforts to control Asian carp.
-
-2. What is the main argument of the passage?
-
-The main argument of the passage is that Asian carp pose a serious threat to water skiers and boaters in the Great Lakes and Mississippi River.",True
+The statement that Asian carp could disrupt the ecosystem in Lake Michigan is correct. The introduction of Asian carp into Lake Michigan has had a devastating impact on the native fish population. The carp eat plankton and algae, which are the food of the native fish. As a result, the carp have displaced the native fish, which has led to a decline in the fish population. The carp have also introduced diseases to the lake, which has further harmed the fish population",True
 30,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -995,10 +983,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that A waterskier is the person
-most threatened by silver carp in a local water source correct?
+this a war that we are destined to lose?. Is the statement that A waterskier is the person
+most threatened by silver carp in a local water source correct? Do not repeat the quaetion in your reply, please.
 
-Is the US government at war with a fish?<eos>",True
+Sure, here is the answer:
+
+The passage is about the threat of Asian carp to the Great Lakes and the Mississippi River. The passage does not mention that a waterskier is the person most threatened by silver carp in a local water source, so I cannot answer this question from the provided context.<eos>",True
 30,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1081,8 +1071,8 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that A beachgoer is the person who is
-most threatened by silver carp in a local water source correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that A beachgoer is the person who is
+most threatened by silver carp in a local water source correct? Do not repeat the quaetion in your reply, please.<eos>",True
 31,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1165,7 +1155,7 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Silver carp can jump up to twenty feet in the air. correct?<eos>",False
+this a war that we are destined to lose?. Is the statement that Silver carp can jump up to twenty feet in the air. correct? Do not repeat the quaetion in your reply, please.<eos>",False
 32,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1248,7 +1238,7 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Silver carp can grow to be 100 lbs. correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Silver carp can grow to be 100 lbs. correct? Do not repeat the quaetion in your reply, please.<eos>",True
 34,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1331,7 +1321,7 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Silver carp are also known as 'flying carp.' correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Silver carp are also known as 'flying carp.' correct? Do not repeat the quaetion in your reply, please.<eos>",True
 33,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1414,7 +1404,7 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Silver carp are also known as 'flying carp.' correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Silver carp are also known as 'flying carp.' correct? Do not repeat the quaetion in your reply, please.<eos>",True
 35,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1497,7 +1487,7 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Silver carp are also known as 'flying carp.' correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Silver carp are also known as 'flying carp.' correct? Do not repeat the quaetion in your reply, please.<eos>",True
 36,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1580,7 +1570,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that Silver carp have been declared an 'injurious species' by the government. correct?<eos>",True
+this a war that we are destined to lose?. Is the statement that Silver carp have been declared an 'injurious species' by the government. correct? Do not repeat the quaetion in your reply, please.
+
+Sure, here is the answer:
+
+Sure, the statement is correct. The US government has declared the silver carp to be an ""injurious species"".<eos>",True
 37,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1663,10 +1657,10 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that The author believes that 
-it would be best for the fishing industry if the canal were closed permanently. correct?
+this a war that we are destined to lose?. Is the statement that The author believes that 
+it would be best for the fishing industry if the canal were closed permanently. correct? Do not repeat the quaetion in your reply, please.
 
-The passage does not explicitly state whether the author believes that it would be best for the fishing industry if the canal were closed permanently. However, the author does provide a lot of information about the Asian carp and its impact on the Great Lakes ecosystem.<eos>",True
+The passage argues that the introduction of Asian carp into the Great Lakes poses a serious threat to the ecosystem and that the canal should be closed permanently to prevent further damage. The author provides evidence to support this claim, including the fact that Asian carp are a major threat to native fish species, that they can cause significant damage to the food chain, and that they pose a serious threat to water skiers and boaters. The author also argues that the canal is a vital shipping conduit that connects the Great",True
 38,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1749,172 +1743,438 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Is the statemant that The Great Lake states agree 
-fully on a solution to the Asian carp problem. correct?
+this a war that we are destined to lose?. Is the statement that The Great Lake states agree 
+fully on a solution to the Asian carp problem. correct? Do not repeat the quaetion in your reply, please.
 
-The passage does not explicitly state whether the US government is at war with a fish, or whether the Great Lakes states agree on a solution to the Asian carp problem. Therefore, I cannot answer this question from the provided context.<eos>",False
+Sure, here is the answer:
+
+The passage does not provide a clear answer to the question about whether the US government is at war with a fish. It does, however, provide a detailed account of the potential dangers posed by Asian carp and the efforts that have been made to control them.<eos>",False
 
 Analysing indirect conclusions and subtlties
 
-39,"<bos>Given Bob got the highest score in the class. Is the statemant that Bob got an A correct?
+39,"<bos>Given Bob got the highest score in the class. Is the statement that Bob got an A correct? Do not repeat the quaetion in your reply, please answer the question.
 
-No, the statement is not correct. The statement is not indicating whether Bob got an A or not.<eos>",False/Cannot Say
+Sure, the answer is yes.
+
+The statement that Bob got an A is correct, as he got the highest score in the class.<eos>",False/Cannot Say
 40,"<bos>Given Nobody failed the test, and Bob got the highest score in the 
-class. Is the statemant that Bob passed the test correct?
+class. Is the statement that Bob passed the test correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The statement is not correct. The statement is incorrect because it is not possible to conclude from the given information that Bob passed the test. The statement is based on the assumption that nobody failed the test, which is not true.<eos>",True
-41,"<bos>Given Amelia does not have any brothers. Is the statemant that Amelia got a sister correct?
+The statement is not correct. The statement is false because it is not possible to conclude from the given information that Bob passed the test.<eos>",True
+41,"<bos>Given Amelia does not have any brothers. Is the statement that Amelia got a sister correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The context does not provide any information about Amelia's siblings, so we cannot determine if she got a sister or not.<eos>",False/Cannot Say
-42,"<bos>Given Amelia has 2 siblings. Amelia does not have any brothers. Is the statemant that Amelia has 2 sisters correct?
+Sure, the statement is correct. Amelia got a sister.<eos>",False/Cannot Say
+42,"<bos>Given Amelia has 2 siblings. Amelia does not have any brothers. Is the statement that Amelia has 2 sisters correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The statement is partially correct. Amelia does not have any brothers, but she does have 2 sisters.<eos>",True
+Yes, the statement is correct. Amelia has 2 sisters.<eos>",True
 43,"<bos>Given We analysed 2 articles about monkey Olly. The first article states that Olly
-is 2 years old. The second article says that Olly is 3 years old. Is the statemant that Olly is 2 years old correct?
+is 2 years old. The second article says that Olly is 3 years old. Is the statement that Olly is 2 years old correct? Do not repeat the quaetion in your reply, please answer the question.
 
-Sure, the statement is not correct. The second article says that Olly is 3 years old, which is correct.<eos>",False/Cannot Say
+Sure, here's the answer:
+
+The statement that Olly is 2 years old is not correct. The second article says that Olly is 3 years old, which contradicts the first article's statement that he is 2 years old.<eos>",False/Cannot Say
 44,"<bos>Given We analysed 2 articles about monkey Olly. The first article states that Olly
-is 2 years old. The second article says that Olly is 3 years old. Is the statemant that Olly is 3 years old correct?
-
-Sure, the second article says that Olly is 3 years old.<eos>",False/Cannot Say
+is 2 years old. The second article says that Olly is 3 years old. Is the statement that Olly is 3 years old correct? Do not repeat the quaetion in your reply, please answer the question.<eos>",False/Cannot Say
 45,"<bos>Given We analysed 2 articles about monkey Olly. The first article states that Olly
-is 2 years old. The second article says that Olly is 3 years old. Is the statemant that We cannot say how old is Olly correct?
+is 2 years old. The second article says that Olly is 3 years old. Is the statement that We cannot say how old is Olly correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is no.
-
-The statement is not correct. We can say that Olly is 2 or 3 years old, but we cannot say that he is exactly 2 or 3 years old.<eos>",True
+Sure, the statement is not correct. We cannot say how old is Olly, as the information in the articles is contradictory.<eos>",True
 46,"<bos>Given The scientists developed a new spieces of apples that have a blue colour. The same 
-labaratory developed a spieces of oranges that have bright green colour. Is the statemant that Scientists managed
-to create blue apples, green oranges, and they are about to produce blue oranges correct?
+labaratory developed a spieces of oranges that have bright green colour. Is the statement that Scientists managed
+to create blue apples, green oranges, and they are about to produce blue oranges correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is no.
+The statement is not correct. The scientists did not develop a new species of apples that have a blue color, or oranges that have a bright green color.<eos>",False
+47,"<bos>Given Over 1000000£ will be invested in public transport of London. Is the statement that 2000000£ pounds will be
+invested in the development of London transport correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The statement is not correct. The scientists did not develop a new species of apples that have a blue color, or a new species of oranges that have a bright green color.<eos>",False
-47,"<bos>Given Over 1000000£ will be invested in public transport of London. Is the statemant that 2000000£ pounds will be
-invested in the development of London transport correct?
-
-The statement is not correct. The amount of money to be invested in the development of London transport is not specified in the context.<eos>",False
+Yes, the statement is correct. 2000000£ will be invested in the development of London transport.<eos>",False
 48,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Is the statemant that We can surely
-say that the new medication is effective in treating cancer correct?
+However, current results look promising. Is the statement that We can surely
+say that the new medication is effective in treating cancer correct? Do not repeat the quaetion in your reply, please.
 
-No, the statement is not correct. While the results are promising, more clinical trials are needed to confirm the effectiveness and safety of the medication in treating cancer.<eos>",False
+The answer is no.
+
+The statement is not correct. The results of the preliminary research are not final and more medical trials need to be conducted to analyse long-term side effects.<eos>",False
 49,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Is the statemant that We can surely
-say that the new medication does not have any side effects correct?
+However, current results look promising. Is the statement that We can surely
+say that the new medication does not have any side effects correct? Do not repeat the quaetion in your reply, please.
 
-No, the statement is not correct. The context does not provide any information about the side effects of the medication, so it is not possible to say that the medication does not have any side effects.<eos>",False
+The answer is no.
+
+The statement is not correct. The fact that the results are promising does not mean that the medication is safe and has no side effects. More clinical trials are needed to confirm the safety and efficacy of the medication in the long term.<eos>",False
 50,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Is the statemant that We do not know how effective is
+However, current results look promising. Is the statement that We do not know how effective is
 the new medication for treating cancer, but we know for sure that 
-it has no side effects correct?
-
-The answer is no.
-
-The statement is not correct. The fact that we do not know how effective the new medication is for treating cancer does not mean that it has no side effects.<eos>",False
+it has no side effects correct? Do not repeat the quaetion in your reply, please.<eos>",False
 51,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Is the statemant that The new medication is very effective 
-for cancer treatment, but more studies of potential side effects are needed correct?
+However, current results look promising. Is the statement that The new medication is very effective 
+for cancer treatment, but more studies of potential side effects are needed correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-Sure, the statement is partially correct. While the preliminary research suggests the medication's potential efficacy for treating cancer, more rigorous clinical trials with larger sample sizes and longer follow-up periods are necessary to confirm these findings and assess the potential long-term side effects.<eos>",False
+Yes, the statement is correct. The phrase ""but more studies of potential side effects are needed"" indicates that the results are promising but not conclusive. It is important to conduct further clinical trials to confirm the safety and efficacy of the medication in the long term, especially regarding potential side effects.<eos>",False
 52,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Is the statemant that There is at least one case when the new
-medication helped to cure cancer correct?
+However, current results look promising. Is the statement that There is at least one case when the new
+medication helped to cure cancer correct? Do not repeat the quaetion in your reply, please.
 
-The context does not provide any information about the case of the new medication helping to cure cancer, so I cannot answer this question from the provided context.<eos>",False
+I cannot provide a definitive answer to this question from the context. The context does not provide any information about a case of cancer being cured with the new medication.<eos>",False
 53,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Is the statemant that The new medication was tested on animals,
-and now it needs to be tested on humans correct?
+However, current results look promising. Is the statement that The new medication was tested on animals,
+and now it needs to be tested on humans correct? Do not repeat the quaetion in your reply, please.
 
-The statement is not correct. The fact that the medication was tested on animals does not mean that it is not safe for humans. In fact, animal testing has often been used to develop medications that are safe for humans.<eos>",False
+Sure, the statement is correct. The new medication was tested on animals before being tested on humans.<eos>",False
 54,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Is the statemant that 80% of respondents 
-reported improved sleep quality correct?
+after taking the newly developed medication. Is the statement that 80% of respondents 
+reported improved sleep quality correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is no. 
-
-The sample size is small (n = 8), and the sample is not representative of the population of interest. The results of the survey may not be generalizable to other populations.<eos>",True
+No, the given statement is not correct. The sample size is not provided in the context, so it is not possible to determine the percentage of respondents who reported improved sleep quality.<eos>",True
 55,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Is the statemant that 80% of respondents 
-said that they started to sleep better after using the new medication correct? 
+after taking the newly developed medication. Is the statement that 80% of respondents 
+said that they started to sleep better after using the new medication correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is no. 
-
-The sample size is small (n = 8), and the sample is not representative of the population of all respondents who take the medication. The results of the survey may not be generalizable to the population.<eos>",True
+No, the given statement is not correct. The sample size is small (8 respondents), and the results may not be generalizable to a larger population.<eos>",True
 56,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Is the statemant that 60% of respondents 
-reported improved sleep quality correct? 
+after taking the newly developed medication. Is the statement that 60% of respondents 
+reported improved sleep quality correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is no. 
-
-The sample size is not large enough to make a statistical statement about the population of respondents who reported improved sleep quality.<eos>",True
+The answer is no, the statement is not correct. The given information does not provide enough data to determine the percentage of respondents who reported improved sleep quality.<eos>",True
 57,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Is the statemant that every one in two respondents 
-said that they started to sleep better after using the new medication correct?
+after taking the newly developed medication. Is the statement that every one in two respondents 
+said that they started to sleep better after using the new medication correct? Do not repeat the quaetion in your reply, please answer the question.
 
-Yes, the statement is correct. The given information indicates that 50% of the respondents noticed an improvement in sleep quality after taking the medication.<eos>",True
+Yes, the statement is correct. The statement is saying that 50% of the respondents noticed an improvement in sleep quality after taking the medication.<eos>",True
 
 Analysing data that might contradictory to model's current beliefs
 
-58,"<bos>Given Rome is the capital of France. Is the statemant that Rome is the capital of France correct?
+58,"<bos>Given Rome is the capital of France. Is the statement that Rome is the capital of France correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The statement is not correct. Rome is the capital of Italy, not France.<eos>","False statement, but true if assume context"
-59,"<bos>Given Kids do not like sweets. Is the statemant that Kids are not into sweets correct?
+No, the statement is not correct. Rome is the capital of Italy, not France.<eos>","False statement, but true if assume context"
+59,"<bos>Given Kids do not like sweets. Is the statement that Kids are not into sweets correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The statement is not correct. The statement is based on the assumption that kids do not like sweets, which is not necessarily true. Many kids do enjoy sweets, and the statement is not taking into account the individual preferences of kids.<eos>",True
-60,"<bos>Given New studies show that eating excess amount of sugar does not affect weight gain. Is the statemant that Eating a lot
-of sugar is directly related to weight gain correct?
+No, the statement that kids are not into sweets is incorrect. It is not appropriate to generalize about an entire group of people, and it is important to remember that kids are individuals with diverse tastes and preferences.<eos>",True
+60,"<bos>Given New studies show that eating excess amount of sugar does not affect weight gain. Is the statement that Eating a lot
+of sugar is directly related to weight gain correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The answer is no.
-
-The given statement is not correct. The studies show that eating excess amount of sugar does affect weight gain.<eos>",False/Might need checking
+No, the statement is not correct. The studies show that eating excess amounts of sugar do affect weight gain.<eos>",False/Might need checking
 61,"<bos>Given Scientific community admitted that previous studies were not correct, and that actually
-caffeine is not addictive. Is the statemant that The latest discoveries show that one cannot get addicted to caffeine correct?
+caffeine is not addictive. Is the statement that The latest discoveries show that one cannot get addicted to caffeine correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The answer is yes.
+Yes, the statement is correct. The scientific community has admitted that previous studies were not correct, and that caffeine is not addictive. The latest discoveries show that one cannot get addicted to caffeine.<eos>",True/Might need checking
+62,"<bos>Given A man with 210 bones was admitted to hospital. Is the statement that It was recorded that at least one human had 210 bones correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The statement is correct. The scientific community has admitted that previous studies were not correct, and that actually caffeine is not addictive. The latest discoveries show that one cannot get addicted to caffeine.<eos>",True/Might need checking
-62,"<bos>Given A man with 210 bones was admitted to hospital. Is the statemant that It was recorded that at least one human had 210 bones correct?
+Sure, the statement is correct. It was recorded that at least one human had 210 bones.<eos>",True 
+63,"<bos>Given Modern neuroscience confirms humans use most of their brain. Is the statement that Humans use only 10%-15% of their brain correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The statement is not correct. The statement is not stating that at least one human had 210 bones.<eos>",True 
-63,"<bos>Given Modern neuroscience confirms humans use most of their brain. Is the statemant that Humans use only 10%-15% of their brain correct?
+No, the statement is not correct. Modern neuroscience has shown that humans use almost all of their brain.<eos>",False
+65,"<bos>Given Goldfish can remember information for at least several days. Is the statement that Goldfish have a 3-second memory correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The premise is incorrect. Modern neuroscience has shown that humans use all of their brain.<eos>",False
-65,"<bos>Given Goldfish can remember information for at least several days. Is the statemant that Goldfish have a 3-second memory correct?
+Sure, the statement is not correct. Goldfish do not have a 3-second memory.<eos>",False
+66,"<bos>Given Bulls react to the movement, not to red colour as many people believe. Is the statement that Bulls are irritated by red colour correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The passage does not specify the duration of memory that goldfish can retain, so I cannot answer this question from the provided context.<eos>",False
-66,"<bos>Given Bulls react to the movement, not to red colour as many people believe. Is the statemant that Bulls are irritated by red colour correct?<eos>",False
-67,"<bos>Given There is no historical evidence that Vikings wore helmets with horns. Is the statemant that Vikings wore horned helmets correct?
+Sure, the statement is correct. Bulls are irritated by the movement, not the red colour.<eos>",False
+67,"<bos>Given There is no historical evidence that Vikings wore helmets with horns. Is the statement that Vikings wore horned helmets correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
 
-The statement is not correct. There is no historical evidence to support the claim that Vikings wore horned helmets.<eos>",False
-68,"<bos>Given Apart from the traditional 5 senses, humans also have sense of balance and temperature. Is the statemant that Humans have only 5
-senses:taste, hearing, sight, smell, touch correct?
+No, the statement is not correct. There is no historical evidence to support the claim that Vikings wore horned helmets.<eos>",False
+68,"<bos>Given Apart from the traditional 5 senses, humans also have sense of balance and temperature. Is the statement that Humans have only 5
+senses:taste, hearing, sight, smell, touch correct? Do not repeat the quaetion in your reply, please answer the question.
 
-The answer is no.
-
-The statement is not correct. Humans have more than 5 senses. The traditional 5 senses are: taste, hearing, sight, smell, and touch. However, humans also have other senses, such as balance and temperature.<eos>",False
+Sure, the statement is not correct. Humans have more than 5 senses. The traditional 5 senses are: taste, hearing, sight, smell, and touch. However, humans also have the sense of balance and temperature.<eos>",False
 69,"<bos>Given Although it might seem that hair and nails keep growing after death, this is not true. They appear longer 
-simply because skin dehydrates. Is the statemant that Skin and hair stop growing after death correct?
+simply because skin dehydrates. Is the statement that Skin and hair stop growing after death correct? Do not repeat the quaetion in your reply, please.
 
-The statement is not correct. While skin and hair do appear longer after death because of dehydration, they do not stop growing entirely.<eos>",True 
-70,"<bos>Given The assumption that tongue has specific taste zones is false. Is the statemant that The receptors for different tastes are
-spread across the tongue correct?
+Sure, the statement is correct. Skin and hair do stop growing after death. The body's ability to produce new skin cells and hair follicles ceases once the body dies.<eos>",True 
+70,"<bos>Given The assumption that tongue has specific taste zones is false. Is the statement that The receptors for different tastes are
+spread across the tongue correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct.
+
+The receptors for different tastes are spread across the tongue. This means that different parts of the tongue are responsible for detecting different tastes.<eos>",True
+71,"<bos>Given Lightning stroke Empire state building multiple times. Is the statement that Lightning never strikes the same place twice correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is not correct. Lightning can strike the same place multiple times, especially if the location has a history of lightning strikes.<eos>",False
+
+Additional Basic Tests (AI generated 20/10/2024
+
+72,"<bos>Given Lucy is an excellent swimmer. Is the statement that Lucy swims very well correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. We cannot conclude from the context that Lucy swims very well, but we can infer that she is an excellent swimmer.<eos>",True
+73,"<bos>Given John dislikes spicy food. Is the statement that John enjoys eating spicy food correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is incorrect. John does not enjoy eating spicy food.<eos>",False
+74,"<bos>Given Anna graduated last year. Is the statement that Anna completed her studies last year correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. Anna completed her studies last year.<eos>",True
+75,"<bos>Given The sky was clear this morning. Is the statement that The sky was cloudy this morning correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+The sky was cloudy this morning.<eos>",False
+76,"<bos>Given Tom owns a red car, and he drives it every day. Is the statement that Tom drives a red vehicle correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. The statement is that Tom drives a red vehicle is correct.<eos>",True
+77,"<bos>Given Jenny has three siblings. Is the statement that Jenny is an only child correct? Do not repeat the quaetion in your reply, please answer the question.
+
+No, the statement that Jenny is an only child is not correct. Jenny is not an only child.<eos>",False
+78,"<bos>Given Mark failed his math test. Is the statement that Mark passed his math test correct? Do not repeat the quaetion in your reply, please answer the question.
+
+No, the statement is incorrect. Mark failed his math test, so the statement is false.<eos>",False
+79,"<bos>Given The museum closes at 5 PM. Is the statement that The museum shuts its doors at 5 PM correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. The museum shuts its doors at 5 PM.<eos>",True
+80,"<bos>Given Lisa loves playing the guitar. Is the statement that Lisa hates playing the guitar correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is not correct. The context does not provide any information about Lisa's dislike for playing the guitar.<eos>",False
+81,"<bos>Given The train arrived 10 minutes late. Is the statement that The train was delayed by 10 minutes correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. The train was delayed by 10 minutes because it arrived 10 minutes late.<eos>",True
+82,"<bos>Given George is allergic to peanuts. Is the statement that George can eat peanuts without any issues correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is not correct. George's allergy to peanuts means that he should not consume peanuts or products containing peanuts. Eating peanuts despite the allergy can trigger an allergic reaction, leading to symptoms such as hives, swelling, difficulty breathing, and anaphylaxis.<eos>",False
+83,"<bos>Given The library is located downtown. Is the statement that The library is situated in the city center correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. The library is situated in the city center, downtown.<eos>",True
+84,"<bos>Given This novel was published in 2020. Is the statement that This book came out in 2020 correct? Do not repeat the quaetion in your reply, please simply state the answer.
+
+Sure, the statement is correct. The novel was published in 2020.<eos>",True
+85,"<bos>Given Emma baked a chocolate cake. Is the statement that Emma made a dessert with chocolate correct? Do not repeat the quaetion in your reply, please simply answer the question.
+
+Yes, the statement is correct. Emma baked a chocolate cake, which is a dessert that typically contains chocolate.<eos>",True
+86,"<bos>Given The package was delivered yesterday. Is the statement that The package arrived yesterday correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. The package was delivered yesterday.<eos>",True
+87,"<bos>Given Peter is afraid of heights. Is the statement that Peter enjoys climbing tall buildings correct? Do not repeat the quaetion in your reply, please answer the question.
+
+No, the statement is not correct. Peter's fear of heights precludes him from enjoying climbing tall buildings.<eos>",False
+88,"<bos>Given The road to the village is under construction. Is the statement that The road to the village is closed for repairs correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+The road to the village is closed for repairs.<eos>",True
+89,"<bos>Given Sarah is an experienced traveler. Is the statement that Sarah has visited many countries correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. Sarah has visited many countries, as she is an experienced traveler.<eos>",True
+90,"<bos>Given The concert starts at 8 PM. Is the statement that The performance begins at 8 PM correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Sure, the statement is correct. The concert starts at 8 PM.<eos>",True
+91,"<bos>Given Jack broke his leg while skiing. Is the statement that Jack injured himself skiing correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+Yes, the statement is correct. Jack injured himself skiing.<eos>",True
+92,"<bos>Given The restaurant serves Italian cuisine. Is the statement that The restaurant specializes in Italian food correct? Do not repeat the quaetion in your reply, please simply state the answer.
+
+Sure, the statement is correct. The restaurant specializes in Italian cuisine.<eos>",True
+93,"<bos>Given Julia works as a graphic designer. Is the statement that Julia is employed as a graphic designer correct? Do not repeat the quaetion in your reply, please simply state the answer.
+
+Yes, the statement is correct. Julia is employed as a graphic designer.<eos>",True
+94,"<bos>Given Alice visited the Grand Canyon last summer. Is the statement that Alice traveled to the Grand Canyon in the summer correct? Do not repeat the quaetion in your reply, please simply state the answer.
+
+True<eos>",True
+95,"<bos>Given Paul forgot his umbrella at home. Is the statement that Paul left his umbrella behind at home correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+Yes, the statement is correct. The statement is a factual statement that accurately describes the situation.<eos>",True
+96,"<bos>Given My phone battery lasts all day. Is the statement that My phone battery needs charging every hour correct? Do not repeat the quaetion in your reply, please answer the question.
+
+No, the statement that your phone battery needs charging every hour is not correct.<eos>",False
+97,"<bos>Given The marathon took place on Sunday. Is the statement that The marathon happened on Sunday correct? Do not repeat the quaetion in your reply, please simply state the answer.
+
+Yes, the statement is correct. The marathon took place on Sunday.<eos>",True
+98,"<bos>Given Laura speaks three languages fluently. Is the statement that Laura knows three languages well correct? Do not repeat the quaetion in your reply, please answer the question.
+
+Yes, the statement is correct. Laura knows three languages well.<eos>",True
+99,"<bos>Given James enjoys watching horror movies. Is the statement that James is scared of horror movies and avoids them correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is not correct. The fact that James enjoys watching horror movies does not mean that he is scared of them.<eos>",False
+
+Additional Multi Sentence Input Tests (AI generated 20/10/2024
+
+100,"<bos>Given Emily woke up early and went for a run in the park. Later, she had breakfast at her 
+favorite café and met her friend Anna for coffee.. Is the statement that Emily started her day with a jog, had 
+breakfast, and met Anna for coffee. correct? Do not repeat the quaetion in your reply, please.
+
+Yes, the statement is correct. Emily started her day with a jog, had breakfast at her favorite café, and met Anna for coffee.<eos>",True
+101,"<bos>Given David spent the entire weekend working on his art project. He also managed to catch up on his 
+favorite TV show and call his mom to check in.. Is the statement that David worked on an art project and watched his favorite show. correct? Do not repeat the quaetion in your reply, please provide a simple answer.
+
+Yes, the statement is correct. It correctly describes the activities that David did over the weekend.<eos>",True
+102,"<bos>Given The train station was crowded in the morning because of delays. Many passengers were frustrated, 
+but the staff managed to keep things under control.. Is the statement that The train station was empty, and passengers were calm. correct? Do not repeat the quaetion in your reply, please.
+
+The context does not provide information about the train station being empty, and passengers being calm, so I cannot answer this question from the provided context.<eos>",False
+103,"<bos>Given Jenny and her family went to the beach yesterday. They built sandcastles, swam in 
+the sea, and had ice-cream before heading home.. Is the statement that Jenny’s family visited the beach and swam in the sea. correct? Do not repeat the quaetion in your reply, please.
+
+Sure, the statement is correct. Jenny's family visited the beach and went swimming in the sea.<eos>",True
+104,"<bos>Given The company announced a new product launch next month. They also revealed plans 
+to expand to three more countries in the coming year.. Is the statement that The company plans to launch a new product and expand globally. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+Yes, the statement is correct. The company plans to launch a new product and expand globally.<eos>",True
+105,"<bos>Given Mike loves photography and often spends weekends capturing sunsets. He also enjoys hiking in the mountains 
+and exploring new trails.. Is the statement that Mike dislikes photography and prefers staying indoors on weekends. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is incorrect. The context does not provide any evidence to support the claim that Mike dislikes photography and prefers staying indoors on weekends.<eos>",False
+106,"<bos>Given The movie was about a young hero who overcame great odds to save her village. It featured stunning 
+visuals and a heartwarming story.. Is the statement that The movie told the story of a hero who saved her village with breathtaking visuals. correct? Do not repeat the quaetion in your reply, please simply state the answer.
+
+Yes, the statement is correct. The movie told the story of a young hero who overcame great odds to save her village.<eos>",True
+107,"<bos>Given Sophia prepared a delicious dinner for her guests. She made pasta, salad, and a chocolate 
+cake for dessert. Everyone enjoyed the meal.. Is the statement that Sophia cooked a wonderful meal, including vanilla cake for dessert. correct? Do not repeat the quaetion in your reply, please.
+
+The answer is yes. The statement is correct. Sophia cooked a wonderful meal, including pasta, salad, and a chocolate cake for dessert.<eos>",False
+108,"<bos>Given The science museum hosted an exhibition about space exploration. Visitors could see 
+real astronaut suits, learn about the moon landing, and interact with virtual reality displays.. Is the statement that The museum’s 
+exhibition focused on space exploration, with interactive displays and astronaut suits. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+Yes, the statement is correct. The museum's exhibition focused on space exploration, with interactive displays and astronaut suits.<eos>",True
+109,"<bos>Given Alex studied all night for the math test. He also made time to review his notes from science class and prepare 
+for a history presentation.. Is the statement that Alex only prepared for his math test and ignored other subjects. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+No, the statement is not correct. Alex prepared for all three subjects, including math, science, and history.<eos>",False
+110,"<bos>Given The weather was sunny and warm in the morning. However, by the afternoon, it 
+started to rain heavily, catching many people by surprise.. Is the statement that The day started sunny but turned rainy by the afternoon. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+Yes, the statement is correct. The day started sunny but turned rainy by the afternoon.<eos>",True
+111,"<bos>Given Liam adopted a rescue dog named Max last month. Since then, he has been training Max and taking him on daily walks 
+in the park.. Is the statement that Liam recently adopted a dog and has been training it. correct? Do not repeat the quaetion in your reply, please provide a simple answer.
+
+Yes, the statement is correct. Liam recently adopted a dog named Max and has been training it since then.<eos>",True
+112,"<bos>Given The town festival featured live music, food stalls, and games for children. The highlight of the evening 
+was a spectacular fireworks display.. Is the statement that The town festival had music, food, games, but no fireworks. correct? Do not repeat the quaetion in your reply, please provide a clear answer.<eos>",False
+113,"<bos>Given Martha planted flowers in her garden during the spring. She also installed a small 
+fountain and added a bench to create a cozy space.. Is the statement that Martha focused only on planting flowers and 
+didn’t make other changes to her garden. correct? Do not repeat the quaetion in your reply, please.
+
+No, the statement is not correct. Martha's actions went beyond simply planting flowers. She also installed a fountain and added a bench, which shows that she made other changes to her garden besides planting flowers.<eos>",False
+114,"<bos>Given The professor explained the topic clearly and answered all the students’ questions. He 
+also provided additional reading materials for those who wanted to learn more.. Is the statement that The professor explained 
+the topic, answered questions, and shared extra resources. correct? Do not repeat the quaetion in your reply, please.
+
+Sure, the statement is correct. The professor's actions demonstrate that he effectively fulfilled his responsibilities in explaining the topic, answering questions, and providing additional resources.<eos>",True
+115,"<bos>Given Karen baked cookies for her son’s school event. She also made sandwiches 
+and packed some juice boxes for the children to enjoy.. Is the statement that Karen's son prepared cookies, 
+sandwiches, and drinks for the school event. correct? Do not repeat the quaetion in your reply, please.
+
+Sure, the statement is correct. Karen baked cookies, made sandwiches, and packed juice boxes for the children to enjoy for her son's school event.<eos>",False
+116,"<bos>Given Originally, Sarah and her friends planned to go to seaside. Howver, they changed their plans, and went on 
+a trip to the mountains, Sarah and her friends went skiing and snowboarding. This was almost as relaxing as swimming
+and sunbathing.. Is the statement that Sarah and her friends spent their trip sunbathing and swimming correct? Do not repeat the quaetion in your reply, please provide a clear answer.<eos>",False
+117,"<bos>Given The store had a special sale on electronics over the weekend. Many people lined up early to buy 
+discounted laptops, phones, and cameras.. Is the statement that The store held a weekend sale on electronics, attracting many buyers. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer.
+
+Yes, the statement is correct. The store held a weekend sale on electronics, attracting many buyers.<eos>",True
+118,"<bos>Given Tom’s team played their best match of the season yesterday. They scored three goals and won the game by a 
+large margin. The fans were thrilled.. Is the statement that Tom’s team lost their game, leaving fans disappointed. correct? Do not repeat the quaetion in your reply, please.
 
 The answer is no.
 
-The assumption that the tongue has specific taste zones is false. The receptors for different tastes are spread across the tongue, and the distribution of these receptors is not limited to specific areas.<eos>",True
-71,"<bos>Given Lightning stroke Empire state building multiple times. Is the statemant that Lightning never strikes the same place twice correct?
+The statement is not correct. It is not appropriate to assume that Tom’s team lost their game, leaving fans disappointed.<eos>",False
+119,"<bos>Given Alice spends her mornings meditating and practicing yoga. In the evenings, she 
+likes to read novels and write in her journal.. Is the statement that Alice’s daily routine includes meditation, yoga, 
+reading, and journaling. correct? Do not repeat the quaetion in your reply, please.
 
-No, the statement is not correct. The Empire State Building has never been struck by lightning multiple times.<eos>",False
+Yes, the statement is correct. Alice's daily routine includes meditation, yoga, reading, and journaling.<eos>",True
+
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024
+
+120,"<bos>Given Yesterday, Maria woke up at 7 AM and went for a morning jog in the park. After her jog, she made a healthy breakfast 
+consisting of scrambled eggs and orange juice. Around 10 AM, Maria attended an online seminar about time management. 
+She found the tips helpful and decided to implement them. At noon, Maria called her friend Jessica to discuss an 
+upcoming road trip. In the afternoon, she cleaned her apartment and rearranged her furniture. Maria also spent an 
+hour reading a new novel. She cooked spaghetti for dinner and watched a documentary on wildlife. Before going to bed, 
+she wrote in her journal and planned her tasks for the next day. Maria felt productive and 
+satisfied with her day.. Is the statement that Maria attended a seminar about time management and found it helpful. She had lunch with Jessica and 
+planned a road trip. Maria also wrote in her journal before going to bed. correct? Do not repeat the quaetion in your reply, please.
+
+Yes, the statement is correct. Maria attended an online seminar about time management and found it helpful. She also had lunch with Jessica and planned a road trip. She also wrote in her journal before going to bed.<eos>",False
+121,"<bos>Given David spent his Saturday outdoors enjoying the beautiful weather. He started the day with a hike in the hills 
+and took several photographs of the landscape. On his way back, he stopped by a local café 
+to have a cup of coffee and a slice of cheesecake. In the afternoon, David went to the farmers' 
+market and bought fresh vegetables, fruits, and flowers. He returned home and spent some time 
+arranging the flowers in a vase. Later, he invited his neighbour over for tea and shared some homemade cookies. In the 
+evening, David watched a mystery movie and enjoyed some popcorn. Before going to bed, he read a 
+few chapters of his favorite book.. Is the statement that David went hiking and enjoyed coffee at a café. He hosted a small dinner 
+party with friends in the evening. Later, David watched a mystery movie before sleeping. correct? Do not repeat the quaetion in your reply, please.<eos>",False
+121,"<bos>Given Sophie is an art student who loves painting landscapes. On Monday, she visited an art gallery to study the 
+works of famous painters. She spent the morning sketching some of her favorite pieces. Sophie met 
+her professor in the afternoon to discuss her project, which focuses on impressionist art. The 
+professor gave her valuable feedback and suggested some resources to explore. In the evening, 
+Sophie worked on her painting while listening to classical music. She used vibrant colors to 
+capture the beauty of a sunset over the ocean. Sophie also managed to submit her assignment 
+before the deadline. Before sleeping, she wrote down her ideas for the next painting.. Is the statement that Sophie spent her day 
+working on an impressionist art project and received feedback from her professor. She painted a sunset using bright 
+colors while enjoying music. Sophie later had dinner with her friends to celebrate finishing her assignment. correct? Do not repeat the quaetion in your reply, please.<eos>",False
+122,"<bos>Given Tom works at a tech company and is passionate about coding. On Wednesday, he attended a meeting to discuss a 
+new project. After the meeting, Tom spent the rest of the morning coding a prototype for a 
+mobile app. During lunch, he chatted with his colleagues about their weekend plans. In the afternoon, 
+Tom fixed some bugs in the company’s website and tested its functionality. 
+He stayed late at work to complete his tasks. After returning home, he prepared a quick dinner and watched an episode of 
+his favorite show. Before going to bed, Tom read an article on artificial intelligence to stay 
+updated on the latest trends.. Is the statement that Tom spent the morning coding a mobile app and the afternoon fixing website bugs. He later 
+watched his favorite show. correct? Do not repeat the quaetion in your reply, please provide a clear and concise answer. 
+
+Yes, the statement is correct. Tom spent the morning coding a mobile app and the afternoon fixing website bugs.<eos>",True
+123,"<bos>Given The school organized a sports day on Friday. The event started with a relay race in which several 
+teams participated. After that, there was a long jump competition and a 
+high jump event. The students cheered for their friends enthusiastically. Teachers also 
+joined in and played a friendly match of volleyball. During lunch, food 
+stalls served a variety of snacks and drinks. In the afternoon, there was a 
+tug-of-war competition that was the highlight of the day. The sports day ended with an 
+award ceremony where medals were distributed to the winners. Everyone enjoyed the 
+event and praised the organizers.. Is the statement that The school’s sports day included a relay race, tug-of-war, and an award ceremony. 
+Teachers participated in volleyball, and there were food stalls for lunch. In the evening, 
+a play was performed to conclude the event. correct? Do not repeat the quaetion in your reply, please.<eos>",False
+124,"<bos>Given Megan spent her Sunday afternoon at the botanical gardens. She took a leisurely stroll along the 
+flower-filled paths and admired the variety of plants. Megan also visited the greenhouse, 
+where she learned about exotic species. Later, she attended a photography workshop hosted 
+by a local artist. During the workshop, Megan learned new techniques for capturing nature 
+through the lens. After the session, she practiced by taking several photos of the garden. 
+In the evening, Megan had dinner at a café nearby and tried a new dish. She then returned
+home and spent some time editing her photos.. Is the statement that Megan visited the botanical gardens and attended a 
+photography workshop. She spent the afternoon taking photos and later edited them at home. correct? Do not repeat the quaetion in your reply, please.<eos>",True
+125,"<bos>Given James is a passionate traveler who loves exploring new cities. Last month, he visited Paris, 
+where he toured the Louvre Museum and the Eiffel Tower. James also took a boat tour along 
+the Seine River and dined at a rooftop restaurant with a view of the city. After Paris, he 
+flew to London and visited Buckingham Palace, the British Museum, and Covent Garden. 
+James also went to a theater show in the West End and had a traditional English breakfast 
+at a local café. He spent the final day of his trip shopping in Oxford Street 
+before heading back home.. Is the statement that James traveled to Paris and visited the Louvre and Eiffel Tower. 
+He also flew to London, where he explored famous landmarks and enjoyed a West End show. 
+During his trip, he spent most of his time relaxing by the Seine River. correct? Do not repeat the quaetion in your reply, please.<eos>",False
+126,"<bos>Given Lily works as a marketing consultant and frequently travels for business. Last week, 
+she had a meeting in New York City with a potential client. The meeting went well, and they 
+discussed a new advertising campaign. After the meeting, Lily explored the city and visited 
+several famous landmarks, including Times Square and Central Park. She also took a guided tour 
+of the Empire State Building and had dinner at a well-known seafood restaurant. The next day, 
+she flew to Chicago for another meeting. There, she worked on finalizing a contract with a 
+different client before heading back home.. Is the statement that Lily traveled to New York for a business meeting 
+and visited landmarks like Central Park. Afterward, she 
+flew to Chicago to meet another client and finalize a contract. She 
+also spent the evening at a local restaurant before returning home. correct? Do not repeat the quaetion in your reply, please.<eos>",False
+127,"<bos>Given Ethan is an avid cyclist and participates in local races on weekends. 
+Last Saturday, he competed in a 50-mile race across the countryside. 
+The race began early in the morning and was organized by the local 
+cycling club. Ethan was excited to join the event, as it was his first 
+time participating in such a long race. Throughout the race, he stayed 
+hydrated and paced himself to avoid exhaustion. After completing the course, 
+Ethan was awarded a silver medal for his performance. He spent the rest of the day 
+relaxing with his teammates and enjoying the post-race party.. Is the statement that Ethan raced in a 50-mile 
+competition and finished second, receiving a silver medal. He joined the event early in 
+the morning and paced himself during the race. Later, he attended a celebration with 
+his teammates. correct? Do not repeat the quaetion in your reply, please.<eos>",True
+128,"<bos>Given Rachel is a talented cook who enjoys experimenting with new recipes. On Friday, 
+she decided to make a three-course dinner for her friends. She started with a 
+fresh tomato and basil salad, followed by a main course of roasted 
+chicken with vegetables. For dessert, Rachel made a chocolate mousse, which 
+she served with a side of fresh berries. After dinner, they all played board games 
+and enjoyed some wine. Rachel’s friends were impressed with the meal and praised her 
+cooking skills. The next day, Rachel spent the afternoon baking a batch of 
+homemade cookies to share with her colleagues.. Is the statement that Rachel made a three-course dinner and 
+served chocolate mousse for dessert. She later baked cookies for her 
+colleagues and spent the evening playing board games. Rachel also attended a cooking 
+class to improve her skills. correct? Do not repeat the quaetion in your reply, please.
+
+Yes, the statement is correct. Rachel made a three-course dinner consisting of a fresh tomato and basil salad, roasted chicken with vegetables for the main course, and chocolate mousse for dessert.<eos>",False

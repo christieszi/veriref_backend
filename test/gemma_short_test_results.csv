@@ -2,78 +2,72 @@ Number,Answer,Model Answer
 
 Basic Tests
 
-1,"<bos>Given Monica went for a walk. Explain why the statement  Monica went for a walk is true or false.
+1,"<bos>Given Monica went for a walk. Is the statement that Monica went for a walk correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Monica did not go for a walk.<eos>",True
-2,"<bos>Given Sam loves running. Explain why the statement  Sam enjoys running is true or false.
+The statement is correct. It is a factual statement that Monica went for a walk.<eos>",True
+2,"<bos>Given Sam loves running. Is the statement that Sam enjoys running correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is True.
+The statement is correct. The word ""enjoy"" means to have a positive feeling or experience towards something. Since Sam loves running, it can be inferred that he enjoys running.<eos>",True 
+3,"<bos>Given Marina ate ice-cream. Is the statement that Marina did not eat ice-cream correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sam's love for running is evident from the fact that he enjoys running. He looks forward to running, and he is often seen running in public.<eos>",True 
-3,"<bos>Given Marina ate ice-cream. Explain why the statement  Marina did not eat ice-cream is true or false.
+The answer is No.
 
-The premise of the question is incorrect. The statement ""Marina did not eat ice-cream"" is not implied by the context.<eos>",True
-4,"<bos>Given Max likes hockey. Explain why the statement  Max hates hockey is true or false.
+The statement is not correct because the context does not provide any information about whether Marina ate ice-cream or not.<eos>",True
+4,"<bos>Given Max likes hockey. Is the statement that Max hates hockey correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The fact that Max likes hockey does not imply that he hates it.<eos>",False
-5,"<bos>Given It was raining yesterday. Explain why the statement  Yesterday, it was rainy is true or false.
+The statement is incorrect. The given context does not provide any information about Max's dislike of hockey.<eos>",False
+5,"<bos>Given It was raining yesterday. Is the statement that Yesterday, it was rainy correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. It was raining yesterday, but it is not true that it was raining today.<eos>",True
-6,"<bos>Given It was extremely cold and rainy a week ago. Explain why the statement  A week ago the weather was sunny and reallly warm is true or false.
+The statement is correct. It is a factual statement that was established by the weather report.<eos>",True
+6,"<bos>Given It was extremely cold and rainy a week ago. Is the statement that A week ago the weather was sunny and reallly warm correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The premise of the question is incorrect. The weather was cold and rainy a week ago, not sunny and warm.<eos>",False
-7,"<bos>Given Daniel missed the school because he caught a cold.. Explain why the statement  Daniel got ill, so he did not go to classes is true or false.
+The statement is not given in the context, so I cannot answer this question from the provided context.<eos>",False
+7,"<bos>Given Daniel missed the school because he caught a cold.. Is the statement that Daniel got ill, so he did not go to classes correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false.
+The statement is correct. The passage indicates that Daniel missed school because he caught a cold.<eos>",True 
+8,"<bos>Given Ben's flight got cancelled, so he did not go to New York. Is the statement that Ben could not go to New York because he got ill correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Explanation: The passage does not provide any information about why Daniel got ill, so we cannot conclude that the statement is true.<eos>",True 
-8,"<bos>Given Ben's flight got cancelled, so he did not go to New York. Explain why the statement  Ben could not go to New York because he got ill is true or false.
+The statement is incorrect. The fact that Ben's flight got cancelled does not mean that he was ill and could not go to New York.<eos>",False
+9,"<bos>Given My new laptop costs 999£. Is the statement that I bought a laptop for less than 1000£ correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Ben could have gotten ill after he booked his flight and before he actually went to New York.<eos>",False
-9,"<bos>Given My new laptop costs 999£. Explain why the statement  I bought a laptop for less than 1000£ is true or false.
+The statement is correct. You bought a laptop for less than 1000£.<eos>",True 
+10,"<bos>Given There was a car accident next to my house. Is the statement that There was a car accident next to my house correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The price of the laptop is 999£, not less than 1000£.<eos>",True 
-10,"<bos>Given There was a car accident next to my house. Explain why the statement  There was a car accident next to my house is true or false.
+The statement is correct. It is based on the premise that you live nearby the location of the accident.<eos>",True
+11,"<bos>Given I live in a very safe street. Is the statement that The area where I live is dangerous correct? Reply with a 'Yes', 'No' or 'Not given'
 
-I cannot provide a response based on the premise that the statement is true or false. I cannot make assumptions or draw conclusions from the context.<eos>",True
-11,"<bos>Given I live in a very safe street. Explain why the statement  The area where I live is dangerous is true or false.
+The statement is not given in the context, so I cannot answer this question from the provided context.<eos>",False
+12,"<bos>Given My friend went to music festival yesterday. Is the statement that My friend went to music festival yesterday correct? Reply with a 'Yes', 'No' or 'Not given'
 
-I cannot provide a response to the question as the context does not provide any information about the safety of the area where you live.<eos>",False
-12,"<bos>Given My friend went to music festival yesterday. Explain why the statement  My friend went to music festival yesterday is true or false.
-
-I cannot access real-time information, therefore I cannot answer this question.<eos>",True
+The statement is correct. It is a factual statement that can be verified by checking the event calendar or social media posts from the festival.<eos>",True
 
 Multi Sentence Input
 
 13,"<bos>Given Michael Jordan was born on 17 th February 1963 and is a successful basketball player. 
 Throughout his career, he won a total of six NBA (National Basketball Association) 
-championships with his team.. Explain why the statement  Michael Jordan was born on 17 th February 1963 is true or false.<eos>",True
+championships with his team.. Is the statement that Michael Jordan was born on 17 th February 1963 correct? Reply with a 'Yes', 'No' or 'Not given'<eos>",True
 14,"<bos>Given Serena Williams is a famous tennis player who was born on 26th September 1981 in Saginaw, Michigan. In total, Serena has won 23
 Grand Slam singles titles and 14 Grand Slam doubles titles.
 These achievements mean that Serena has won more titles
 than any other player since professional athletes
-were allowed to join the tournament in 1968.. Explain why the statement  Serena has won 25 Grand Slam singles. is true or false.
+were allowed to join the tournament in 1968.. Is the statement that Serena has won 25 Grand Slam singles. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Serena has won 23 Grand Slam singles titles and 14 Grand Slam doubles titles.<eos>",False
+The statement is incorrect. The text does not specify whether Serena has won 25 Grand Slam singles titles.<eos>",False
 15,"<bos>Given Jesse Owens was born in Oakville, Alabama on 12th September 1913.
 An incredible track and field athlete, Jesse won a total of four Olympic
 gold medals. At the age of nine, Jesse and his family moved to Cleveland, Ohio where
 his sporting talents began to be noticed at school. Throughout 1935, Jesse
 competed in a total of 42 different track and field events and won them all.
 This incredible feat earned him a place at the 1936 Olympics which were
-held in Berlin.. Explain why the statement  Jesse Owens was born in Cleveland, Ohio is true or false.
-
-The statement is false. Jesse Owens was born in Oakville, Alabama.<eos>",False
+held in Berlin.. Is the statement that Jesse Owens was born in Cleveland, Ohio correct? Reply with a 'Yes', 'No' or 'Not given'<eos>",False
 16,"<bos>Given Malala was born on 12 th July 1997 and she was raised in Swat
 Valley in North Pakistan. During her early childhood, Malala’s
 hometown of Mingora was a tourist hotspot and held many
 festivals. Her parents aptly named Malala after Malala of the
 Maiwand (a courageous woman who helped to protect her village
-from invasion over 100 years before).. Explain why the statement  Mingora was a popular among tourists is true or false.
+from invasion over 100 years before).. Is the statement that Mingora was a popular among tourists correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false.
-
-Malala was born in Mingora, Swat Valley in North Pakistan. Mingora was not a popular tourist hotspot during her early childhood.<eos>",True
+The statement is correct. Mingora was a popular tourist hotspot in the early childhood of Malala.<eos>",True
 17,"<bos>Given Malala has two younger brothers, Khushal and Atal, and her parents were determined
 to ensure that she, unlike many of her peers, was afforded the same education and
 opportunities as them. Malala loved school yet, at the time in Pakistan, all schools for girls
@@ -87,9 +81,9 @@ to education, Malala no longer wanted to hide her
 identity. Her blog became very popular and she was
 even interviewed for a documentary. As her popularity
 grew, she went on to win several peace awards and she
-attended a lot of prestigious events. Explain why the statement  Malala wrote a book anonymously when she was 11 years old is true or false. 
+attended a lot of prestigious events. Is the statement that Malala wrote a book anonymously when she was 11 years old correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The passage does not mention that Malala wrote a book anonymously when she was 11 years old.<eos>",False
+The statement is correct. The passage says that Malala began to write an anonymous blog about her experience of the unequal treatment of girls in Pakistan when she was 11 years old.<eos>",False
 18,"<bos>Given Some people did not agree with what Malala had to say; they did not want her views to
 become well known. Due to this, Malala was injured as she travelled on a bus home from
 school. She was flown to Birmingham, UK, to treat the wounds that she had suffered. Despite
@@ -122,9 +116,7 @@ says her dream is to be a politician: a job where she can
 help to make a difference. With the help of her father,
 Malala has started a charity called The Malala Fund,
 which aims to support girls from around the world to be
-able to learn and lead.. Explain why the statement  Malala won the Nobel Peace Prize when she was 17 years old is true or false. 
-
-The statement is false. Malala was 25 years old when she won the Nobel Peace Prize.<eos>",True
+able to learn and lead.. Is the statement that Malala won the Nobel Peace Prize when she was 17 years old correct? Reply with a 'Yes', 'No' or 'Not given'<eos>",True
 19,"<bos>Given Malala was born on 12 th July 1997 and she was raised in Swat
 Valley in North Pakistan. During her early childhood, Malala’s
 hometown of Mingora was a tourist hotspot and held many
@@ -138,12 +130,10 @@ her husband’s dreams and ambitions, as well as taking care of the family and t
 Malala has two younger brothers, Khushal and Atal, and her parents were determined
 to ensure that she, unlike many of her peers, was afforded the same education and
 opportunities as them. Malala loved school yet, at the time in Pakistan, all schools for girls
-were being ordered to close: Malala was unable to go to school as her brothers had.. Explain why the statement  Malala’s mother’s name 
-is Toor Pekai Yousafzai. is true or false. 
+were being ordered to close: Malala was unable to go to school as her brothers had.. Is the statement that Malala’s mother’s name 
+is Toor Pekai Yousafzai. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is true.
-
-Toor Pekai Yousafzai was Malala's mother's name. She was a brave and courageous woman who helped to protect her village from invasion over 100 years before.<eos>",True
+The statement is correct. The name of Malala's mother is Toor Pekai Yousafzai.<eos>",True
 
 Harder Multi Sentence Ipout
 
@@ -178,12 +168,12 @@ one pays any attention to us.'
 'That is true,' replied the big Tiger, purring softly. 'We
 might as well be in the thick jungles where we were born, as
 trying to protect Ozma when she needs no protection. And
-I'm dreadfully hungry all the time.'. Explain why the statement  Lion and the Tiger bored at the beginning 
-of the story because nobody acts bad around the Lion and the Tiger. is true or false.
+I'm dreadfully hungry all the time.'. Is the statement that Lion and the Tiger bored at the beginning 
+of the story because nobody acts bad around the Lion and the Tiger. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is False.
+The answer is Yes.
 
-The statement is not true. The Lion and the Tiger are not bored at the beginning of the story because nobody acts bad around them.<eos>",True
+The statement is correct. The passage indicates that the Lion and the Tiger are bored at the beginning of the story because nobody acts bad around them.<eos>",True
 21,"<bos>Given In the splendid palace of the Emerald City, which is in the
 center of the fairy Land of Oz, is a great Throne Room. This
 is where Princess Ozma, the Ruler, sits in a throne of
@@ -215,12 +205,12 @@ one pays any attention to us.'
 'That is true,' replied the big Tiger, purring softly. 'We
 might as well be in the thick jungles where we were born, as
 trying to protect Ozma when she needs no protection. And
-I'm dreadfully hungry all the time.'. Explain why the statement  Lion and the Tiger bored at the beginning 
-of the story because nobody wants to hurt Ozma. is true or false.
+I'm dreadfully hungry all the time.'. Is the statement that Lion and the Tiger bored at the beginning 
+of the story because nobody wants to hurt Ozma. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is False.
+The answer is Yes.
 
-The passage does not state that the Lion and Tiger bored at the beginning of the story because nobody wants to hurt Ozma.<eos>",True
+The statement is correct. The passage says that the Lion and the Tiger are more ornamental than useful.<eos>",True
 22,"<bos>Given In the splendid palace of the Emerald City, which is in the
 center of the fairy Land of Oz, is a great Throne Room. This
 is where Princess Ozma, the Ruler, sits in a throne of
@@ -292,10 +282,10 @@ across the country and hide in the jungle before anyone can
 stop us.'
 'All right. I'm game,' said the Lion, yawning again so that
 he showed two rows of large sharp teeth.
-The Tiger got up and stretched his great, sleek body.. Explain why the statement  The Lion and 
-the Tiger made their plan because they need to be fed more food. is true or false.
+The Tiger got up and stretched his great, sleek body.. Is the statement that The Lion and 
+the Tiger made their plan because they need to be fed more food. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is true. The Lion and the Tiger made their plan because they need to be fed more food. They want to show the people of Oz that they are a terrible beast and that they should fear them.<eos>",False
+The statement is correct. The Lion and the Tiger made their plan because they need to be fed more food.<eos>",False
 23,"<bos>Given Timid and weeping, the boy had attended his mother's
 funeral; gloomy and shy, he had listened to Siddhartha, who
 greeted him as his son and welcomed him at his place in
@@ -335,10 +325,10 @@ watching, waited and said nothing. One day, when
 Siddhartha the younger had once again tormented his father
 very much with spite and an unsteadiness in his wishes and
 had broken both of his rice-bowls, Vasudeva took his friend
-aside in the evening and talked to him.. Explain why the statement  Siddhartha has raised 
-his son since infancy. is true or false.
+aside in the evening and talked to him.. Is the statement that Siddhartha has raised 
+his son since infancy. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The passage does not mention that Siddhartha has raised his son since infancy.<eos>",False
+The statement is not given in the context, so I cannot answer this question from the provided context.<eos>",False
 24,"<bos>Given Timid and weeping, the boy had attended his mother's
 funeral; gloomy and shy, he had listened to Siddhartha, who
 greeted him as his son and welcomed him at his place in
@@ -378,10 +368,12 @@ watching, waited and said nothing. One day, when
 Siddhartha the younger had once again tormented his father
 very much with spite and an unsteadiness in his wishes and
 had broken both of his rice-bowls, Vasudeva took his friend
-aside in the evening and talked to him.. Explain why the statement  The boy grew up in a wealthy 
-home with servants.  is true or false.
+aside in the evening and talked to him.. Is the statement that The boy grew up in a wealthy 
+home with servants.  correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The passage does not provide any information about the boy's upbringing or the nature of his relationship with the servants.<eos>",True
+The answer is Yes.
+
+The passage says that the boy grew up in a wealthy home with servants.<eos>",True
 25,"<bos>Given Timid and weeping, the boy had attended his mother's
 funeral; gloomy and shy, he had listened to Siddhartha, who
 greeted him as his son and welcomed him at his place in
@@ -421,10 +413,12 @@ watching, waited and said nothing. One day, when
 Siddhartha the younger had once again tormented his father
 very much with spite and an unsteadiness in his wishes and
 had broken both of his rice-bowls, Vasudeva took his friend
-aside in the evening and talked to him.. Explain why the statement  Siddhartha is understanding 
-and kind to his son is true or false.
+aside in the evening and talked to him.. Is the statement that Siddhartha is understanding 
+and kind to his son correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is true. Siddhartha is understanding and kind to his son because he patiently waits for his son to understand him, to accept his love, to perhaps reciprocate it.<eos>",True
+The answer is Yes.
+
+The passage says that Siddhartha understood that the eleven-year-old was a pampered boy, a mother's boy, and that he had grown up in the habits of rich people, accustomed to finer food, to a soft bed, accustomed to giving orders to servants.<eos>",True
 26,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -507,12 +501,10 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Asian carp is an unpopular 
-menu item since it is hard to prepare because of all the little bones is true or false?
+this a war that we are destined to lose?. Is the statement that Asian carp is an unpopular 
+menu item since it is hard to prepare because of all the little bones correct? Reply with a 'Yes', 'No' or 'Not given'
 
-**False.**
-
-The passage does not say that Asian carp is an unpopular menu item.<eos>",True
+Sure, the statement is correct. Asian carp is an unpopular menu item since it is hard to prepare because of all the little bones.<eos>",True
 27,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -595,12 +587,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Asian carp is a very fattening fish, 
-so it is an unpopular menu item is true or false.
+this a war that we are destined to lose?. Is the statement that Asian carp is a very fattening fish, 
+so it is an unpopular menu item correct? Reply with a 'Yes', 'No' or 'Not given'
 
-**Answer:**
+**Answer: Yes**
 
-The statement is false. The passage does not say that Asian carp is a very fattening fish, so it is not true.<eos>",False
+The passage clearly states that the introduction of Asian carp into American waters is a war, and that the US government is actively working to stop the spread of these invasive fish.<eos>",False
 26,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -683,12 +675,10 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Asian carp is an 
-unpopular menu item because some of them are toxic and unsafe to eat. is true or false.
+this a war that we are destined to lose?. Is the statement that Asian carp is an 
+unpopular menu item because some of them are toxic and unsafe to eat. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-**True.**
-
-The statement is true. Some Asian carp are hazardous to eat because they have so many algal toxins in their systems. They also have lots of tiny bones in their meat, which makes them difficult to prepare.<eos>",True
+Sure, the statement is correct. Asian carp is an unpopular menu item because some of them are toxic and unsafe to eat.<eos>",True
 27,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -771,12 +761,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Asian carp is a very fattening fish, 
-so it is an unpopular menu item is true or false.
+this a war that we are destined to lose?. Is the statement that Asian carp is a very fattening fish, 
+so it is an unpopular menu item correct? Reply with a 'Yes', 'No' or 'Not given'
 
-**Answer:**
+**Answer: Yes**
 
-The statement is false. The passage does not say that Asian carp is a very fattening fish, so it is not true.<eos>",False
+The passage clearly states that the introduction of Asian carp into American waters is a war, and that the US government is actively working to stop the spread of these invasive fish.<eos>",False
 28,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -859,10 +849,10 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  According to the text, 
-one species of Asian carp is the silver carp. is true or false.
+this a war that we are destined to lose?. Is the statement that According to the text, 
+one species of Asian carp is the silver carp. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The text does not specify that one species of Asian carp is the silver carp.<eos>",False
+Sure, the statement is correct. The text says that one species of Asian carp is the silver carp.<eos>",False
 29,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -945,12 +935,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  It is argued 
-Asian carp could disrupt the ecosystem in Lake Michigan is true or false. 
+this a war that we are destined to lose?. Is the statement that It is argued 
+Asian carp could disrupt the ecosystem in Lake Michigan correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is **True**.
+**Answer: Yes**
 
-The passage argues that Asian carp could disrupt the ecosystem in Lake Michigan by eating native fish, breeding rapidly and densely, and competing with native fish for food and habitat.<eos>",True
+The passage argues that Asian carp pose a serious threat to the ecosystem in Lake Michigan and that the US government is at war with a fish.<eos>",True
 30,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1033,10 +1023,10 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  A waterskier is the person
-most threatened by silver carp in a local water source is true or false.
+this a war that we are destined to lose?. Is the statement that A waterskier is the person
+most threatened by silver carp in a local water source correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. A waterskier is not the person most threatened by silver carp in a local water source.<eos>",True
+The statement is correct. A waterskier is the person most threatened by silver carp in a local water source.<eos>",True
 30,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1119,10 +1109,12 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  A beachgoer is the person who is
-most threatened by silver carp in a local water source is true or false.
+this a war that we are destined to lose?. Is the statement that A beachgoer is the person who is
+most threatened by silver carp in a local water source correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The statement is about the threat of Asian carp to the Great Lakes and the Mississippi River, not to beachgoers.<eos>",True
+**Answer: Yes**
+
+The passage states that the Asian carp poses a serious threat to water skiers and boaters, and that the US government has been on the offensive against these large-bellied invaders.<eos>",True
 31,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1205,13 +1197,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Silver carp can jump up to twenty feet in the air. is true or false.
+this a war that we are destined to lose?. Is the statement that Silver carp can jump up to twenty feet in the air. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sure, here are the answers:
+Sure, the answer is Yes.
 
-**Silver carp can jump up to twenty feet in the air.** True.
-
-**The statement is true.** The passage says that Asian carp can jump up to ten feet in the air.<eos>",False
+The statement is correct. Silver carp can jump up to twenty feet in the air.<eos>",False
 32,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1294,11 +1284,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Silver carp can grow to be 100 lbs. is true or false.
+this a war that we are destined to lose?. Is the statement that Silver carp can grow to be 100 lbs. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sure, here's the explanation:
+Sure, the answer is Yes.
 
-**True.** The statement that silver carp can grow to be 100 lbs. is true.<eos>",True
+The statement that Silver carp can grow to be 100 lbs. is correct.<eos>",True
 34,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1381,13 +1371,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Silver carp are also known as 'flying carp.' is true or false.
+this a war that we are destined to lose?. Is the statement that Silver carp are also known as 'flying carp.' correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sure, here's the explanation:
+Sure, the answer is Yes.
 
-**Statement:** Silver carp are also known as 'flying carp' is true.
-
-**Explanation:** The passage states that the silver carp can jump up to ten feet in the air when frightened. This behavior is often seen as a flying carp.<eos>",True
+The statement is correct. Silver carp are also known as 'flying carp'.<eos>",True
 33,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1470,13 +1458,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Silver carp are also known as 'flying carp.' is true or false.
+this a war that we are destined to lose?. Is the statement that Silver carp are also known as 'flying carp.' correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sure, here's the explanation:
+Sure, the answer is Yes.
 
-**Statement:** Silver carp are also known as 'flying carp' is true.
-
-**Explanation:** The passage states that the silver carp can jump up to ten feet in the air when frightened. This behavior is often seen as a flying carp.<eos>",True
+The statement is correct. Silver carp are also known as 'flying carp'.<eos>",True
 35,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1559,13 +1545,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Silver carp are also known as 'flying carp.' is true or false.
+this a war that we are destined to lose?. Is the statement that Silver carp are also known as 'flying carp.' correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sure, here's the explanation:
+Sure, the answer is Yes.
 
-**Statement:** Silver carp are also known as 'flying carp' is true.
-
-**Explanation:** The passage states that the silver carp can jump up to ten feet in the air when frightened. This behavior is often seen as a flying carp.<eos>",True
+The statement is correct. Silver carp are also known as 'flying carp'.<eos>",True
 36,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1648,19 +1632,11 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  Silver carp have been declared an 'injurious species' by the government. is true or false.
+this a war that we are destined to lose?. Is the statement that Silver carp have been declared an 'injurious species' by the government. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-**Answer:**
+The answer is Yes.
 
-Sure, here's the answer to the questions:
-
-**1. Odds of America being involved in at least one war since 1776 are over 90%.**
-
-True. The passage states that the odds of America being involved in at least one war since 1776 are over 90%.
-
-**2. Asian carp are a threat to the Great Lakes ecosystem.**
-
-True. The passage states that Asian carp pose a",True
+The statement is correct. The US government has declared the silver carp to be an ""injurious species"".<eos>",True
 37,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1743,10 +1719,10 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  The author believes that 
-it would be best for the fishing industry if the canal were closed permanently. is true or false?
+this a war that we are destined to lose?. Is the statement that The author believes that 
+it would be best for the fishing industry if the canal were closed permanently. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The passage does not provide any evidence to support the claim that closing the canal would be beneficial for the fishing industry.<eos>",True
+The statement is correct. The author believes that it would be best for the fishing industry if the canal were closed permanently.<eos>",True
 38,"<bos>Given The United States has a lengthy history of going to
 war. It is a nation born from war. Pick any year since
 1776, and the odds of America being involved in at
@@ -1829,178 +1805,524 @@ action. But the courts have been persuaded by the value
 of the canal as a shipping conduit thus far. In the
 meantime, the barriers continue to hold, but how long
 can they? The carp have the Great Lakes under siege. Is
-this a war that we are destined to lose?. Explain why the statement  The Great Lake states agree 
-fully on a solution to the Asian carp problem. is true or false.
+this a war that we are destined to lose?. Is the statement that The Great Lake states agree 
+fully on a solution to the Asian carp problem. correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The Great Lakes states have not agreed on a solution to the Asian carp problem. They have taken legal action to have the canal closed, but they have not reached a consensus on how to deal with the problem.<eos>",False
+The answer is No.
+
+The passage does not provide any information about the Great Lakes states' agreement on a solution to the Asian carp problem.<eos>",False
 
 Analysing indirect conclusions and subtlties
 
-39,"<bos>Given Bob got the highest score in the class. Explain why the statement  Bob got an A is true or false.
+39,"<bos>Given Bob got the highest score in the class. Is the statement that Bob got an A correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Bob got the highest score in the class, but that does not mean he got an A.<eos>",False/Cannot Say
+The statement is correct. Bob got the highest score in the class, which is an A.<eos>",False/Cannot Say
 40,"<bos>Given Nobody failed the test, and Bob got the highest score in the 
-class. Explain why the statement  Bob passed the test is true or false.
+class. Is the statement that Bob passed the test correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The statement is not true because Nobody failed the test.<eos>",True
-41,"<bos>Given Amelia does not have any brothers. Explain why the statement  Amelia got a sister is true or false.
+The statement is incorrect. The statement is not given in the context, and therefore cannot be determined to be correct or incorrect.<eos>",True
+41,"<bos>Given Amelia does not have any brothers. Is the statement that Amelia got a sister correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Amelia does not have any brothers, so she did not get a sister.<eos>",False/Cannot Say
-42,<bos>Given Amelia has 2 siblings. Amelia does not have any brothers. Explain why the statement  Amelia has 2 sisters is true or false.<eos>,True
+The statement is correct. The context indicates that Amelia does not have any brothers, implying that she got a sister.<eos>",False/Cannot Say
+42,"<bos>Given Amelia has 2 siblings. Amelia does not have any brothers. Is the statement that Amelia has 2 sisters correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. Yes, Amelia has 2 sisters.<eos>",True
 43,"<bos>Given We analysed 2 articles about monkey Olly. The first article states that Olly
-is 2 years old. The second article says that Olly is 3 years old. Explain why the statement  Olly is 2 years old is true or false.
+is 2 years old. The second article says that Olly is 3 years old. Is the statement that Olly is 2 years old correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The second article says that Olly is 3 years old.<eos>",False/Cannot Say
+The answer is No.
+
+The second article says that Olly is 3 years old, which contradicts the first article's statement that he is 2 years old.<eos>",False/Cannot Say
 44,"<bos>Given We analysed 2 articles about monkey Olly. The first article states that Olly
-is 2 years old. The second article says that Olly is 3 years old. Explain why the statement  Olly is 3 years old is true or false.
+is 2 years old. The second article says that Olly is 3 years old. Is the statement that Olly is 3 years old correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The first article states that Olly is 2 years old.<eos>",False/Cannot Say
+The answer is No.
+
+The second article says that Olly is 3 years old, which contradicts the first article's statement that Olly is 2 years old.<eos>",False/Cannot Say
 45,"<bos>Given We analysed 2 articles about monkey Olly. The first article states that Olly
-is 2 years old. The second article says that Olly is 3 years old. Explain why the statement  We cannot say how old is Olly is true or false.
+is 2 years old. The second article says that Olly is 3 years old. Is the statement that We cannot say how old is Olly correct? Reply with a 'Yes', 'No' or 'Not given'
 
-Sure, here's an explanation of why the statement is not true or false:
+The answer is No.
 
-The two articles provide different pieces of information about Olly's age. The first article says that Olly is 2 years old, while the second article says that Olly is 3 years old. Since these two statements are contradictory, it is not possible to say whether Olly is 2 or 3 years old.<eos>",True
+The second article provides a specific age of 3 years for Olly, contradicting the first statement of 2 years.<eos>",True
 46,"<bos>Given The scientists developed a new spieces of apples that have a blue colour. The same 
-labaratory developed a spieces of oranges that have bright green colour. Explain why the statement  Scientists managed
-to create blue apples, green oranges, and they are about to produce blue oranges is true or false.
+labaratory developed a spieces of oranges that have bright green colour. Is the statement that Scientists managed
+to create blue apples, green oranges, and they are about to produce blue oranges correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false.
+The answer is No.
 
-The scientists did not develop a new species of apples that have a blue color. They developed a new species of apples that have a red color.
+The statement is not correct. The scientists did not develop a new species of apples that have a blue color, or oranges that have a bright green color.<eos>",False
+47,"<bos>Given Over 1000000£ will be invested in public transport of London. Is the statement that 2000000£ pounds will be
+invested in the development of London transport correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The scientists did not develop a new species of oranges that have a green color. They developed a new species of oranges that have a yellow color.
-
-The statement is false.<eos>",False
-47,"<bos>Given Over 1000000£ will be invested in public transport of London. Explain why the statement  2000000£ pounds will be
-invested in the development of London transport is true or false.
-
-The statement is false.
-
-The amount of money to be invested in the development of London transport is not given in the context.<eos>",False
+The statement is correct. 2000000£ will be invested in the development of London transport.<eos>",False
 48,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Explain why the statement  We can surely
-say that the new medication is effective in treating cancer is true or false?
+However, current results look promising. Is the statement that We can surely
+say that the new medication is effective in treating cancer correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. While the preliminary research suggests potential effectiveness, more clinical trials are needed to confirm the results and analyse long-term side effects.<eos>",False
+Answer: No
+
+Explanation: The statement is not correct. The results are not final and more medical trials need to be conducted to analyse long-term side effects.<eos>",False
 49,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Explain why the statement  We can surely
-say that the new medication does not have any side effects is true or false? 
-The answer is False.
+However, current results look promising. Is the statement that We can surely
+say that the new medication does not have any side effects correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The results of the preliminary research showed that the new medication could potentially be useful for treating cancer. However, the results are not final, and more medical trials need to be conducted, especially to analyze long-term side effects. Until more medical trials are conducted, it is not possible to say that the new medication does not have any side effects.<eos>",False
+Answer: No
+
+Explanation: The passage does not provide any information to support the claim that the medication does not have any side effects.<eos>",False
 50,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Explain why the statement  We do not know how effective is
+However, current results look promising. Is the statement that We do not know how effective is
 the new medication for treating cancer, but we know for sure that 
-it has no side effects is true or false?
+it has no side effects correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. While the preliminary research showed promising results, more clinical trials are needed to confirm the safety and efficacy of the medication for treating cancer.<eos>",False
+The answer is No.
+
+The statement is not correct. The fact that we do not know how effective the new medication is for treating cancer does not mean that it has no side effects.<eos>",False
 51,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Explain why the statement  The new medication is very effective 
-for cancer treatment, but more studies of potential side effects are needed is true or false. 
+However, current results look promising. Is the statement that The new medication is very effective 
+for cancer treatment, but more studies of potential side effects are needed correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is **false**. 
+The answer is Yes.
 
-The statement is false because the passage does not provide any evidence to support the claim that the medication is very effective for cancer treatment.<eos>",False
+The statement is correct. The phrase ""but more studies of potential side effects are needed"" indicates that the results are promising but not conclusive.<eos>",False
 52,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Explain why the statement  There is at least one case when the new
-medication helped to cure cancer is true or false. 
+However, current results look promising. Is the statement that There is at least one case when the new
+medication helped to cure cancer correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is False.
+The answer is No.
 
-The passage does not provide any evidence or specific case to support the claim that there is at least one case when the new medication helped to cure cancer.<eos>",False
+The passage does not provide any information about a case when the new medication helped to cure cancer.<eos>",False
 53,"<bos>Given Our preliminary research showed that the newly developed medication could
 potentially be useful for treating cancer. But the results are not final, and more 
 mdeical trials need to be conducted, especially to analyse long-term side effects. 
-However, current results look promising. Explain why the statement  The new medication was tested on animals,
-and now it needs to be tested on humans is true or false.
+However, current results look promising. Is the statement that The new medication was tested on animals,
+and now it needs to be tested on humans correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The new medication was tested on humans before it was tested on animals.<eos>",False
+The statement is correct. The new medication was tested on animals before being tested on humans.<eos>",False
 54,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Explain why the statement  80% of respondents 
-reported improved sleep quality is true or false. 
+after taking the newly developed medication. Is the statement that 80% of respondents 
+reported improved sleep quality correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is false. 
+The answer is No.
 
-The given statement is false because the sample size is not large enough to make a statistically significant claim about the population of respondents who experience sleep improvement after taking the medication.<eos>",True
+The sample size is not given in the context, so we cannot determine the percentage of respondents who reported improved sleep quality.<eos>",True
 55,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Explain why the statement  80% of respondents 
-said that they started to sleep better after using the new medication is true or false. 
+after taking the newly developed medication. Is the statement that 80% of respondents 
+said that they started to sleep better after using the new medication correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is False. 
+The answer is No.
 
-The given statement is false because the sample size is not large enough to make a statistical conclusion about the population of all respondents who take the medication.<eos>",True
+The given information does not provide enough data to determine the percentage of respondents who experienced sleep improvement.<eos>",True
 56,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Explain why the statement  60% of respondents 
-reported improved sleep quality is true or false. 
+after taking the newly developed medication. Is the statement that 60% of respondents 
+reported improved sleep quality correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is false. 
+The answer is No.
 
-The given statement is false because the sample size is not large enough to draw a statistically significant conclusion. The statement is based on a sample of 8 respondents, and the results may not be replicated in a larger sample.<eos>",True
+The given statement is not correct. The sample size is small (8 respondents), and the results may not be reliable.<eos>",True
 57,"<bos>Given 8 out of 10 respondents noticed improvment in sleep quality 
-after taking the newly developed medication. Explain why the statement  every one in two respondents 
-said that they started to sleep better after using the new medication is true or false. 
-False. 
+after taking the newly developed medication. Is the statement that every one in two respondents 
+said that they started to sleep better after using the new medication correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false because the sample size is not large enough to support the claim that every one in two respondents said that they started to sleep better after taking the new medication.<eos>",True
+The answer is Yes.
+
+The statement is correct. The given information indicates that 50% of the respondents noticed an improvement in sleep quality after taking the medication.<eos>",True
 
 Analysing data that might contradictory to model's current beliefs
 
-58,"<bos>Given Rome is the capital of France. Explain why the statement  Rome is the capital of France is true or false.
+58,"<bos>Given Rome is the capital of France. Is the statement that Rome is the capital of France correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Rome is the capital of Italy, not France.<eos>","False statement, but true if assume context"
-59,"<bos>Given Kids do not like sweets. Explain why the statement  Kids are not into sweets is true or false.
+The statement is correct. Rome is the capital of France.<eos>","False statement, but true if assume context"
+59,"<bos>Given Kids do not like sweets. Is the statement that Kids are not into sweets correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Kids are very into sweets. They love candy, chocolate, and other sweet treats.<eos>",True
-60,"<bos>Given New studies show that eating excess amount of sugar does not affect weight gain. Explain why the statement  Eating a lot
-of sugar is directly related to weight gain is true or false.
+The statement is correct. Kids are not into sweets.<eos>",True
+60,"<bos>Given New studies show that eating excess amount of sugar does not affect weight gain. Is the statement that Eating a lot
+of sugar is directly related to weight gain correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The answer is False.
+The answer is No.
 
-The studies show that eating excess amount of sugar does affect weight gain.<eos>",False/Might need checking
+The passage does not provide any evidence to support the claim that eating excess amount of sugar directly affects weight gain.<eos>",False/Might need checking
 61,"<bos>Given Scientific community admitted that previous studies were not correct, and that actually
-caffeine is not addictive. Explain why the statement  The latest discoveries show that one cannot get addicted to caffeine is true or false.
+caffeine is not addictive. Is the statement that The latest discoveries show that one cannot get addicted to caffeine correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. The scientific community has admitted that previous studies were not correct, and that actually caffeine is addictive.<eos>",True/Might need checking
-62,"<bos>Given A man with 210 bones was admitted to hospital. Explain why the statement  It was recorded that at least one human had 210 bones is true or false.
+The answer is Yes.
 
-The statement is true.
+The statement is correct. The scientific community has admitted that previous studies were not correct, and that caffeine is not addictive. The latest discoveries show that one cannot get addicted to caffeine.<eos>",True/Might need checking
+62,"<bos>Given A man with 210 bones was admitted to hospital. Is the statement that It was recorded that at least one human had 210 bones correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The man with 210 bones has at least one human being with 210 bones.<eos>",True 
-63,"<bos>Given Modern neuroscience confirms humans use most of their brain. Explain why the statement  Humans use only 10%-15% of their brain is true or false.
+The statement is correct. It was recorded that at least one human had 210 bones.<eos>",True 
+63,"<bos>Given Modern neuroscience confirms humans use most of their brain. Is the statement that Humans use only 10%-15% of their brain correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Modern neuroscience has shown that humans use almost all of their brain.<eos>",False
-65,"<bos>Given Goldfish can remember information for at least several days. Explain why the statement  Goldfish have a 3-second memory is true or false.
+The answer is No.
 
-The statement is false. While goldfish can remember information for several days, they do not have a 3-second memory.<eos>",False
-66,"<bos>Given Bulls react to the movement, not to red colour as many people believe. Explain why the statement  Bulls are irritated by red colour is true or false.
+The statement is not given in the context.<eos>",False
+65,"<bos>Given Goldfish can remember information for at least several days. Is the statement that Goldfish have a 3-second memory correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Bulls are not irritated by red colour.<eos>",False
-67,"<bos>Given There is no historical evidence that Vikings wore helmets with horns. Explain why the statement  Vikings wore horned helmets is true or false.
+The statement is incorrect. The research on goldfish memory is inconclusive and there is no clear consensus on the duration of their memory.<eos>",False
+66,"<bos>Given Bulls react to the movement, not to red colour as many people believe. Is the statement that Bulls are irritated by red colour correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. There is no historical evidence to support the claim that Vikings wore horned helmets.<eos>",False
-68,"<bos>Given Apart from the traditional 5 senses, humans also have sense of balance and temperature. Explain why the statement  Humans have only 5
-senses:taste, hearing, sight, smell, touch is true or false.
+The statement is correct. Bulls react to the movement of the animal, not to the colour of the animal's body.<eos>",False
+67,"<bos>Given There is no historical evidence that Vikings wore helmets with horns. Is the statement that Vikings wore horned helmets correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Humans have more than 5 senses. The traditional 5 senses are: taste, hearing, sight, smell, and touch. However, humans also have other senses, such as proprioception, which is the sense of body position and movement, and thermoreception, which is the sense of temperature.<eos>",False
+The answer is No.
+
+The statement is not given in the context, and there is no historical evidence to support it.<eos>",False
+68,"<bos>Given Apart from the traditional 5 senses, humans also have sense of balance and temperature. Is the statement that Humans have only 5
+senses:taste, hearing, sight, smell, touch correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is incorrect. The human senses include five traditional senses: taste, hearing, sight, smell, and touch.<eos>",False
 69,"<bos>Given Although it might seem that hair and nails keep growing after death, this is not true. They appear longer 
-simply because skin dehydrates. Explain why the statement  Skin and hair stop growing after death is true or false. 
+simply because skin dehydrates. Is the statement that Skin and hair stop growing after death correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Skin and hair continue to grow after death.<eos>",True 
-70,"<bos>Given The assumption that tongue has specific taste zones is false. Explain why the statement  The receptors for different tastes are
-spread across the tongue is true or false.
+The answer is No.
 
-The statement is false. The distribution of taste receptors on the tongue is not uniform and is not spread across the tongue. The tongue has different taste zones, and the receptors for different tastes are concentrated in specific areas.<eos>",True
-71,"<bos>Given Lightning stroke Empire state building multiple times. Explain why the statement  Lightning never strikes the same place twice is true or false.
+The passage says that skin dehydrates, which can make hair and nails appear longer.<eos>",True 
+70,"<bos>Given The assumption that tongue has specific taste zones is false. Is the statement that The receptors for different tastes are
+spread across the tongue correct? Reply with a 'Yes', 'No' or 'Not given'
 
-The statement is false. Lightning can strike the same place multiple times.<eos>",False
+The answer is No.
+
+The assumption that tongue has specific taste zones is false. The receptors for different tastes are spread across the tongue, and not in specific zones.<eos>",True
+71,"<bos>Given Lightning stroke Empire state building multiple times. Is the statement that Lightning never strikes the same place twice correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is not given in the context, so I cannot answer this question from the provided context.<eos>",False
+
+Additional Basic Tests (AI generated 20/10/2024
+
+72,"<bos>Given Lucy is an excellent swimmer. Is the statement that Lucy swims very well correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The context indicates that Lucy is an excellent swimmer.<eos>",True
+73,"<bos>Given John dislikes spicy food. Is the statement that John enjoys eating spicy food correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+The statement is not correct because John dislikes spicy food, so eating spicy food would be wrong for him.<eos>",False
+74,"<bos>Given Anna graduated last year. Is the statement that Anna completed her studies last year correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The context specifies that Anna graduated last year, implying that she completed her studies then.<eos>",True
+75,"<bos>Given The sky was clear this morning. Is the statement that The sky was cloudy this morning correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The sky was clear this morning, so the statement is true.<eos>",False
+76,"<bos>Given Tom owns a red car, and he drives it every day. Is the statement that Tom drives a red vehicle correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The statement is true, as Tom owns a red car and drives it every day.<eos>",True
+77,"<bos>Given Jenny has three siblings. Is the statement that Jenny is an only child correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The statement is saying that Jenny is the only child among her three siblings.<eos>",False
+78,"<bos>Given Mark failed his math test. Is the statement that Mark passed his math test correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is incorrect. The fact that Mark failed his math test does not mean that he passed it.<eos>",False
+79,"<bos>Given The museum closes at 5 PM. Is the statement that The museum shuts its doors at 5 PM correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The museum closes at 5 PM.<eos>",True
+80,"<bos>Given Lisa loves playing the guitar. Is the statement that Lisa hates playing the guitar correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is incorrect. The context does not provide any information about Lisa's dislike for playing the guitar.<eos>",False
+81,"<bos>Given The train arrived 10 minutes late. Is the statement that The train was delayed by 10 minutes correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The train was delayed by 10 minutes because it arrived 10 minutes late.<eos>",True
+82,"<bos>Given George is allergic to peanuts. Is the statement that George can eat peanuts without any issues correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+George is allergic to peanuts, so eating peanuts without any issues is not correct.<eos>",False
+83,"<bos>Given The library is located downtown. Is the statement that The library is situated in the city center correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The library is located downtown, in the city center.<eos>",True
+84,"<bos>Given This novel was published in 2020. Is the statement that This book came out in 2020 correct? Reply with a 'Yes', 'No' or 'Not given'
+
+Yes<eos>",True
+85,"<bos>Given Emma baked a chocolate cake. Is the statement that Emma made a dessert with chocolate correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The phrase ""baked a chocolate cake"" indicates that Emma baked a chocolate cake.<eos>",True
+86,"<bos>Given The package was delivered yesterday. Is the statement that The package arrived yesterday correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The package was delivered yesterday.<eos>",True
+87,"<bos>Given Peter is afraid of heights. Is the statement that Peter enjoys climbing tall buildings correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+The statement is not correct because Peter is afraid of heights.<eos>",False
+88,"<bos>Given The road to the village is under construction. Is the statement that The road to the village is closed for repairs correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The road to the village is closed for repairs.<eos>",True
+89,"<bos>Given Sarah is an experienced traveler. Is the statement that Sarah has visited many countries correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. We are not given any information about the number of countries Sarah has visited, so we cannot conclude whether it is true or false.<eos>",True
+90,"<bos>Given The concert starts at 8 PM. Is the statement that The performance begins at 8 PM correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The concert starts at 8 PM.<eos>",True
+91,"<bos>Given Jack broke his leg while skiing. Is the statement that Jack injured himself skiing correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. Jack injured himself skiing.<eos>",True
+92,"<bos>Given The restaurant serves Italian cuisine. Is the statement that The restaurant specializes in Italian food correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The restaurant serves Italian cuisine, which is a type of Italian cuisine.<eos>",True
+93,"<bos>Given Julia works as a graphic designer. Is the statement that Julia is employed as a graphic designer correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. Julia is employed as a graphic designer.<eos>",True
+94,"<bos>Given Alice visited the Grand Canyon last summer. Is the statement that Alice traveled to the Grand Canyon in the summer correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. Alice visited the Grand Canyon last summer.<eos>",True
+95,"<bos>Given Paul forgot his umbrella at home. Is the statement that Paul left his umbrella behind at home correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The statement is a factual statement that Paul forgot his umbrella at home.<eos>",True
+96,"<bos>Given My phone battery lasts all day. Is the statement that My phone battery needs charging every hour correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is incorrect. The average phone battery lasts all day, and does not need charging every hour.<eos>",False
+97,"<bos>Given The marathon took place on Sunday. Is the statement that The marathon happened on Sunday correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The marathon took place on Sunday.<eos>",True
+98,"<bos>Given Laura speaks three languages fluently. Is the statement that Laura knows three languages well correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. Laura knows three languages fluently.<eos>",True
+99,"<bos>Given James enjoys watching horror movies. Is the statement that James is scared of horror movies and avoids them correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+The statement is not correct, as it is not accurate to assume that because James enjoys watching horror movies, he is scared of them.<eos>",False
+
+Additional Multi Sentence Input Tests (AI generated 20/10/2024
+
+100,"<bos>Given Emily woke up early and went for a run in the park. Later, she had breakfast at her 
+favorite café and met her friend Anna for coffee.. Is the statement that Emily started her day with a jog, had 
+breakfast, and met Anna for coffee. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. It accurately describes the events that happened to Emily in the morning.<eos>",True
+101,"<bos>Given David spent the entire weekend working on his art project. He also managed to catch up on his 
+favorite TV show and call his mom to check in.. Is the statement that David worked on an art project and watched his favorite show. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The sentence indicates that David worked on an art project and also watched his favorite TV show.<eos>",True
+102,"<bos>Given The train station was crowded in the morning because of delays. Many passengers were frustrated, 
+but the staff managed to keep things under control.. Is the statement that The train station was empty, and passengers were calm. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is not correct. The passage does not provide any information about the number of passengers or the condition of the train station in the morning.<eos>",False
+103,"<bos>Given Jenny and her family went to the beach yesterday. They built sandcastles, swam in 
+the sea, and had ice-cream before heading home.. Is the statement that Jenny’s family visited the beach and swam in the sea. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. It is a factual statement that Jenny's family visited the beach and swam in the sea.<eos>",True
+104,"<bos>Given The company announced a new product launch next month. They also revealed plans 
+to expand to three more countries in the coming year.. Is the statement that The company plans to launch a new product and expand globally. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. The company plans to launch a new product and expand globally.<eos>",True
+105,"<bos>Given Mike loves photography and often spends weekends capturing sunsets. He also enjoys hiking in the mountains 
+and exploring new trails.. Is the statement that Mike dislikes photography and prefers staying indoors on weekends. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is incorrect. The context does not provide any information about Mike's dislike of photography.<eos>",False
+106,"<bos>Given The movie was about a young hero who overcame great odds to save her village. It featured stunning 
+visuals and a heartwarming story.. Is the statement that The movie told the story of a hero who saved her village with breathtaking visuals. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The movie did tell the story of a young hero who overcame great odds to save her village.<eos>",True
+107,"<bos>Given Sophia prepared a delicious dinner for her guests. She made pasta, salad, and a chocolate 
+cake for dessert. Everyone enjoyed the meal.. Is the statement that Sophia cooked a wonderful meal, including vanilla cake for dessert. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The passage indicates that Sophia prepared pasta, salad, and a chocolate cake for dessert.<eos>",False
+108,"<bos>Given The science museum hosted an exhibition about space exploration. Visitors could see 
+real astronaut suits, learn about the moon landing, and interact with virtual reality displays.. Is the statement that The museum’s 
+exhibition focused on space exploration, with interactive displays and astronaut suits. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The museum's exhibition focused on space exploration, with interactive displays and astronaut suits.<eos>",True
+109,"<bos>Given Alex studied all night for the math test. He also made time to review his notes from science class and prepare 
+for a history presentation.. Is the statement that Alex only prepared for his math test and ignored other subjects. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+The passage does not provide any information about Alex's preparation for the other subjects, so it is not possible to determine if he only prepared for his math test.<eos>",False
+110,"<bos>Given The weather was sunny and warm in the morning. However, by the afternoon, it 
+started to rain heavily, catching many people by surprise.. Is the statement that The day started sunny but turned rainy by the afternoon. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The weather changed from sunny to rainy by the afternoon.<eos>",True
+111,"<bos>Given Liam adopted a rescue dog named Max last month. Since then, he has been training Max and taking him on daily walks 
+in the park.. Is the statement that Liam recently adopted a dog and has been training it. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The passage indicates that Liam recently adopted a dog named Max and has been training it since then.<eos>",True
+112,"<bos>Given The town festival featured live music, food stalls, and games for children. The highlight of the evening 
+was a spectacular fireworks display.. Is the statement that The town festival had music, food, games, but no fireworks. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+The statement is not correct. The passage clearly states that the highlight of the evening was a spectacular fireworks display.<eos>",False
+113,"<bos>Given Martha planted flowers in her garden during the spring. She also installed a small 
+fountain and added a bench to create a cozy space.. Is the statement that Martha focused only on planting flowers and 
+didn’t make other changes to her garden. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is No.
+
+The passage does not provide any information about the other changes Martha made to her garden, so we cannot conclude that she focused only on planting flowers.<eos>",False
+114,"<bos>Given The professor explained the topic clearly and answered all the students’ questions. He 
+also provided additional reading materials for those who wanted to learn more.. Is the statement that The professor explained 
+the topic, answered questions, and shared extra resources. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The professor fulfilled all the responsibilities of explaining the topic, answering questions, and sharing extra resources.<eos>",True
+115,"<bos>Given Karen baked cookies for her son’s school event. She also made sandwiches 
+and packed some juice boxes for the children to enjoy.. Is the statement that Karen's son prepared cookies, 
+sandwiches, and drinks for the school event. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The statement is saying that Karen baked cookies, made sandwiches, and packed juice boxes for the children to enjoy at the school event.<eos>",False
+116,"<bos>Given Originally, Sarah and her friends planned to go to seaside. Howver, they changed their plans, and went on 
+a trip to the mountains, Sarah and her friends went skiing and snowboarding. This was almost as relaxing as swimming
+and sunbathing.. Is the statement that Sarah and her friends spent their trip sunbathing and swimming correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. Sarah and her friends spent their trip sunbathing and swimming.<eos>",False
+117,"<bos>Given The store had a special sale on electronics over the weekend. Many people lined up early to buy 
+discounted laptops, phones, and cameras.. Is the statement that The store held a weekend sale on electronics, attracting many buyers. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. The store held a weekend sale on electronics, attracting many buyers.<eos>",True
+118,"<bos>Given Tom’s team played their best match of the season yesterday. They scored three goals and won the game by a 
+large margin. The fans were thrilled.. Is the statement that Tom’s team lost their game, leaving fans disappointed. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The statement is correct. The passage indicates that Tom's team won the game by a large margin, implying that they scored three goals and won by a significant margin.<eos>",False
+119,"<bos>Given Alice spends her mornings meditating and practicing yoga. In the evenings, she 
+likes to read novels and write in her journal.. Is the statement that Alice’s daily routine includes meditation, yoga, 
+reading, and journaling. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+Alice's daily routine includes meditation, yoga, reading, and journaling.<eos>",True
+
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024
+
+120,"<bos>Given Yesterday, Maria woke up at 7 AM and went for a morning jog in the park. After her jog, she made a healthy breakfast 
+consisting of scrambled eggs and orange juice. Around 10 AM, Maria attended an online seminar about time management. 
+She found the tips helpful and decided to implement them. At noon, Maria called her friend Jessica to discuss an 
+upcoming road trip. In the afternoon, she cleaned her apartment and rearranged her furniture. Maria also spent an 
+hour reading a new novel. She cooked spaghetti for dinner and watched a documentary on wildlife. Before going to bed, 
+she wrote in her journal and planned her tasks for the next day. Maria felt productive and 
+satisfied with her day.. Is the statement that Maria attended a seminar about time management and found it helpful. She had lunch with Jessica and 
+planned a road trip. Maria also wrote in her journal before going to bed. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. Maria attended an online seminar about time management and found it helpful.<eos>",False
+121,"<bos>Given David spent his Saturday outdoors enjoying the beautiful weather. He started the day with a hike in the hills 
+and took several photographs of the landscape. On his way back, he stopped by a local café 
+to have a cup of coffee and a slice of cheesecake. In the afternoon, David went to the farmers' 
+market and bought fresh vegetables, fruits, and flowers. He returned home and spent some time 
+arranging the flowers in a vase. Later, he invited his neighbour over for tea and shared some homemade cookies. In the 
+evening, David watched a mystery movie and enjoyed some popcorn. Before going to bed, he read a 
+few chapters of his favorite book.. Is the statement that David went hiking and enjoyed coffee at a café. He hosted a small dinner 
+party with friends in the evening. Later, David watched a mystery movie before sleeping. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. David went hiking and enjoyed coffee at a café in the evening.<eos>",False
+121,"<bos>Given Sophie is an art student who loves painting landscapes. On Monday, she visited an art gallery to study the 
+works of famous painters. She spent the morning sketching some of her favorite pieces. Sophie met 
+her professor in the afternoon to discuss her project, which focuses on impressionist art. The 
+professor gave her valuable feedback and suggested some resources to explore. In the evening, 
+Sophie worked on her painting while listening to classical music. She used vibrant colors to 
+capture the beauty of a sunset over the ocean. Sophie also managed to submit her assignment 
+before the deadline. Before sleeping, she wrote down her ideas for the next painting.. Is the statement that Sophie spent her day 
+working on an impressionist art project and received feedback from her professor. She painted a sunset using bright 
+colors while enjoying music. Sophie later had dinner with her friends to celebrate finishing her assignment. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. Sophie spent her day working on an impressionist art project and received feedback from her professor. She painted a sunset using bright colors while enjoying music. Sophie later had dinner with her friends to celebrate finishing her assignment.<eos>",False
+122,"<bos>Given Tom works at a tech company and is passionate about coding. On Wednesday, he attended a meeting to discuss a 
+new project. After the meeting, Tom spent the rest of the morning coding a prototype for a 
+mobile app. During lunch, he chatted with his colleagues about their weekend plans. In the afternoon, 
+Tom fixed some bugs in the company’s website and tested its functionality. 
+He stayed late at work to complete his tasks. After returning home, he prepared a quick dinner and watched an episode of 
+his favorite show. Before going to bed, Tom read an article on artificial intelligence to stay 
+updated on the latest trends.. Is the statement that Tom spent the morning coding a mobile app and the afternoon fixing website bugs. He later 
+watched his favorite show. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. Tom spent the morning coding a mobile app and the afternoon fixing website bugs.<eos>",True
+123,"<bos>Given The school organized a sports day on Friday. The event started with a relay race in which several 
+teams participated. After that, there was a long jump competition and a 
+high jump event. The students cheered for their friends enthusiastically. Teachers also 
+joined in and played a friendly match of volleyball. During lunch, food 
+stalls served a variety of snacks and drinks. In the afternoon, there was a 
+tug-of-war competition that was the highlight of the day. The sports day ended with an 
+award ceremony where medals were distributed to the winners. Everyone enjoyed the 
+event and praised the organizers.. Is the statement that The school’s sports day included a relay race, tug-of-war, and an award ceremony. 
+Teachers participated in volleyball, and there were food stalls for lunch. In the evening, 
+a play was performed to conclude the event. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes. The statement is correct. The school's sports day included a relay race, tug-of-war, and an award ceremony.<eos>",False
+124,"<bos>Given Megan spent her Sunday afternoon at the botanical gardens. She took a leisurely stroll along the 
+flower-filled paths and admired the variety of plants. Megan also visited the greenhouse, 
+where she learned about exotic species. Later, she attended a photography workshop hosted 
+by a local artist. During the workshop, Megan learned new techniques for capturing nature 
+through the lens. After the session, she practiced by taking several photos of the garden. 
+In the evening, Megan had dinner at a café nearby and tried a new dish. She then returned
+home and spent some time editing her photos.. Is the statement that Megan visited the botanical gardens and attended a 
+photography workshop. She spent the afternoon taking photos and later edited them at home. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. Megan visited the botanical gardens and attended a photography workshop during her Sunday afternoon.<eos>",True
+125,"<bos>Given James is a passionate traveler who loves exploring new cities. Last month, he visited Paris, 
+where he toured the Louvre Museum and the Eiffel Tower. James also took a boat tour along 
+the Seine River and dined at a rooftop restaurant with a view of the city. After Paris, he 
+flew to London and visited Buckingham Palace, the British Museum, and Covent Garden. 
+James also went to a theater show in the West End and had a traditional English breakfast 
+at a local café. He spent the final day of his trip shopping in Oxford Street 
+before heading back home.. Is the statement that James traveled to Paris and visited the Louvre and Eiffel Tower. 
+He also flew to London, where he explored famous landmarks and enjoyed a West End show. 
+During his trip, he spent most of his time relaxing by the Seine River. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. James visited Paris and visited the Louvre Museum and the Eiffel Tower. He also flew to London and visited Buckingham Palace, the British Museum, and Covent Garden. During his trip, he spent most of his time relaxing by the Seine River.<eos>",False
+126,"<bos>Given Lily works as a marketing consultant and frequently travels for business. Last week, 
+she had a meeting in New York City with a potential client. The meeting went well, and they 
+discussed a new advertising campaign. After the meeting, Lily explored the city and visited 
+several famous landmarks, including Times Square and Central Park. She also took a guided tour 
+of the Empire State Building and had dinner at a well-known seafood restaurant. The next day, 
+she flew to Chicago for another meeting. There, she worked on finalizing a contract with a 
+different client before heading back home.. Is the statement that Lily traveled to New York for a business meeting 
+and visited landmarks like Central Park. Afterward, she 
+flew to Chicago to meet another client and finalize a contract. She 
+also spent the evening at a local restaurant before returning home. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+Lily traveled to New York City for a business meeting and visited landmarks like Central Park. Afterward, she flew to Chicago to meet another client and finalize a contract. She also spent the evening at a local restaurant before returning home.<eos>",False
+127,"<bos>Given Ethan is an avid cyclist and participates in local races on weekends. 
+Last Saturday, he competed in a 50-mile race across the countryside. 
+The race began early in the morning and was organized by the local 
+cycling club. Ethan was excited to join the event, as it was his first 
+time participating in such a long race. Throughout the race, he stayed 
+hydrated and paced himself to avoid exhaustion. After completing the course, 
+Ethan was awarded a silver medal for his performance. He spent the rest of the day 
+relaxing with his teammates and enjoying the post-race party.. Is the statement that Ethan raced in a 50-mile 
+competition and finished second, receiving a silver medal. He joined the event early in 
+the morning and paced himself during the race. Later, he attended a celebration with 
+his teammates. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+The statement is correct. Ethan raced in a 50-mile competition and finished second, receiving a silver medal.<eos>",True
+128,"<bos>Given Rachel is a talented cook who enjoys experimenting with new recipes. On Friday, 
+she decided to make a three-course dinner for her friends. She started with a 
+fresh tomato and basil salad, followed by a main course of roasted 
+chicken with vegetables. For dessert, Rachel made a chocolate mousse, which 
+she served with a side of fresh berries. After dinner, they all played board games 
+and enjoyed some wine. Rachel’s friends were impressed with the meal and praised her 
+cooking skills. The next day, Rachel spent the afternoon baking a batch of 
+homemade cookies to share with her colleagues.. Is the statement that Rachel made a three-course dinner and 
+served chocolate mousse for dessert. She later baked cookies for her 
+colleagues and spent the evening playing board games. Rachel also attended a cooking 
+class to improve her skills. correct? Reply with a 'Yes', 'No' or 'Not given'
+
+The answer is Yes.
+
+Rachel made a three-course dinner consisting of a fresh tomato and basil salad, roasted chicken with vegetables for the main course, and chocolate mousse for dessert.<eos>",False

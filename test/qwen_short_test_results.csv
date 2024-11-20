@@ -2,102 +2,155 @@ Number,Answer,Model Answer
 
 Basic Tests
 
-1,Yes.,True
-2,Yes.,True 
-3,No.,True
-4,No.,False
+1,Not Given,True
+2,Not given,True 
+3,No,True
+4,Not given,False
 5,Yes.,True
-6,No.,False
+6,No,False
 7,Yes.,True 
-8,No. The information provided states that Ben's flight got cancelled due to the cancellation of his trip and not because he got ill.,False
+8,Not given,False
 9,Yes.,True 
-10,"Yes, there was a car accident next to your house.",True
-11,No.,False
-12,Yes.,True
+10,Not Given,True
+11,Not Given,False
+12,Not given,True
 
 Multi Sentence Input
 
 13,Yes.,True
-14,"No. According to official records, Serena Williams has won a total of 23 Grand Slam singles titles.",False
-15,"No. Jesse Owens was actually born in Oakville, Alabama.",False
-16,"Yes, it is true that Mingora was a popular tourist destination during Malala's childhood. The city was known for its cultural festivals and historical sites, making it an attractive place for visitors from around the world.",True
+14,"No. According to official records, Serena Williams has won exactly 23 Grand Slam singles titles.",False
+15,No.,False
+16,Yes,True
 17,Yes.,False
-18,"Yes, it is true that Malala won the Nobel Peace Prize when she was 17 years old.",True
+18,Yes,True
 19,Yes.,True
 
 Harder Multi Sentence Ipout
 
-20,Yes.,True
+20,Yes,True
 21,No.,True
 22,No.,False
-23,Yes.,False
+23,Yes,False
 24,Yes,True
-25,Yes.,True
+25,Yes,True
 26,Yes.,True
-27,Yes.,False
+27,Yes,False
 26,Yes.,True
-27,Yes.,False
+27,Yes,False
 28,Yes.,False
 29,Yes.,True
 30,Yes.,True
-30,"No, it's not accurate to say that a beachgoer is the most directly threatened by silver carp in a local water source. While silver carp can cause physical harm to humans due to their aggressive jumping behavior, particularly those riding jet-skis or windsurfing boards, the primary concern lies more with environmental impacts rather than direct human injury.
-
-The risks to humans associated with silver carp include:
-
-1. Potential ingestion: Silver carp can contain toxic algal residues, though this risk varies among different populations.
-   
-2. Physical injuries: Jumping silver carp can cause serious accidents such as breaking noses, fracturing vertebrae, or even drowning if struck while jet-skiing or tubing.
-
-3. Legal consequences: Being caught feeding on non-native species can result in fines and restrictions on fishing activities.
-
-4. Economic impact: Controlling invasive species can disrupt commercial fisheries and recreational activities.
-
-5. Environmental disruption: As mentioned, silver carp outcompete native species and alter ecosystems, affecting biodiversity.
-
-While the threat to individuals might seem immediate, the broader ecological ramifications necessitate comprehensive measures beyond just protecting beach-goers.",True
+30,No.,True
 31,No.,False
-32,Yes.,True
+32,Yes,True
 34,Yes.,True
 33,Yes.,True
-35,"Yes, it is true that Silver carp are also known as 'flying carp'.",True
+35,Yes.,True
 36,Yes.,True
 37,No.,True
-38,"No, the Great Lakes states generally do not fully agree on a solution to the Asian carp problem. While some have expressed support for measures such as cutting off access to the Mississippi River or poisoning the canal, others have opposed such actions due to concerns about economic impacts and environmental effects. The issue remains contentious, and resolution continues to be discussed among stakeholders.",False
+38,No.,False
 
 Analysing indirect conclusions and subtlties
 
-39,"No, just because Bob got the highest score in the class doesn't necessarily mean he received an A grade. The highest score could be anything from 90 to 100 (depending on the grading scale used), and an ""A"" typically corresponds to scores above 85-90 depending on educational standards.",False/Cannot Say
+39,Not given,False/Cannot Say
 40,Yes.,True
-41,"No, if Amelia does not have any brothers, then she did not get a sister either.",False/Cannot Say
+41,Not given,False/Cannot Say
 42,No.,True
-43,"No, the information provided in the two articles does not match. The first article indicates that Olly is 2 years old, while the second article states that Olly is 3 years old. Therefore, we cannot determine if it is true that Olly is 2 years old based on the given information.",False/Cannot Say
-44,"No, the information provided in both articles contradicts each other, so we cannot say for certain that Olly is 3 years old based on the given data.",False/Cannot Say
+43,"Based on the information provided in the two articles, there isn't enough data to determine whether Olly",False/Cannot Say
+44,Not given,False/Cannot Say
 45,Yes.,True
-46,No.,False
-47,Yes.,False
-48,"No, we cannot say definitively that the new medication is effective in treating cancer based solely on preliminary research results. More medical trials are needed to analyze long-term side effects and confirm its effectiveness in treating cancer.",False
-49,No.,False
+46,Not Given,False
+47,Not given,False
+48,Not Given,False
+49,No,False
 50,No.,False
 51,Yes.,False
-52,No.,False
-53,Yes.,False
-54,"Yes, if 8 out of 10 respondents reported an improvement in sleep quality after taking the newly developed medication, then yes, 80% of respondents did report improved sleep quality.",True
+52,"Based on the information provided in the prompt, there is no indication that there has been any confirmed case",False
+53,No.,False
+54,Yes.,True
 55,Yes.,True
 56,Yes.,True
-57,No.,True
+57,Not given,True
 
 Analysing data that might contradictory to model's current beliefs
 
-58,"No, Rome is not the capital of France. The capital of France is Paris.","False statement, but true if assume context"
-59,"Yes, kids generally don't enjoy sweets as much as adults do.",True
-60,"No, according to recent studies, excessive intake of sugar does not necessarily lead to weight gain.",False/Might need checking
-61,Yes.,True/Might need checking
-62,"No, there is no scientific record of any human having exactly 210 bones. The number of bones in an adult human typically ranges from about 206 to 208.",True 
-63,"No, this is not accurate. The popular belief that humans only use about 10-15% of our brains has been debunked by modern neuroscience research. In fact, the entire brain is utilized throughout an individual's life and in all circumstances.",False
-65,"No, the statement ""Goldfish have a 3-second memory"" is not accurate. While goldfish are known to have short-term memories of around 2-3 seconds and can form associations over time, they do not have a fixed memory capacity like some other animals might. They learn through experience and can retain certain behaviors for extended periods but their ability to recall specific events isn't as precise as often claimed in popular culture or scientific research.",False
+58,No,"False statement, but true if assume context"
+59,Yes.,True
+60,No.,False/Might need checking
+61,Yes,True/Might need checking
+62,"No, there is no scientific evidence suggesting that any human has exactly 210 bones. The",True 
+63,No,False
+65,No.,False
 66,No.,False
 67,"No, there is no historical evidence to support the claim that Vikings wore horned helmets.",False
-68,"No, humans do not have just five senses: taste, hearing, sight, smell, and touch. The human body is capable of perceiving many more sensory inputs through various other mechanisms, such as proprioception (sense of body position), gustation (taste), chemoreception (smell), mechanosensation (touch), thermoreception (temperature), nociception (pain), and even some non-thermal sensations like vibration and pressure. Each of these provides unique information about our environment and interactions with it.",False
+68,No.,False
 69,No.,True 
 70,Yes.,True
-71,"Yes, lightning is known to strike the same location only once in its lifetime. This phenomenon, often referred to as ""staying put,"" occurs because lightning follows the path of least resistance through the air and soil, which may not always be the same each time it strikes an area. However, there have been some rare cases where lightning has struck the same spot more than once due to unusual atmospheric conditions.",False
+71,Yes.,False
+
+Additional Basic Tests (AI generated 20/10/2024
+
+72,Yes.,True
+73,No.,False
+74,Yes.,True
+75,No.,False
+76,Yes.,True
+77,Not given,False
+78,No.,False
+79,Yes.,True
+80,No.,False
+81,Yes.,True
+82,No.,False
+83,Not given,True
+84,Yes.,True
+85,Yes.,True
+86,Yes.,True
+87,Not given,False
+88,Not Given,True
+89,Not given,True
+90,Not Given,True
+91,Yes.,True
+92,Not given,True
+93,Yes.,True
+94,Not Given,True
+95,Yes.,True
+96,No.,False
+97,Yes.,True
+98,Yes.,True
+99,Not given,False
+
+Additional Multi Sentence Input Tests (AI generated 20/10/2024
+
+100,Yes.,True
+101,Yes.,True
+102,No.,False
+103,Yes.,True
+104,Yes.,True
+105,Not given,False
+106,Yes.,True
+107,Not Given,False
+108,Yes.,True
+109,"No, based on the information provided in the prompt, it is not accurate to conclude that Alex only",False
+110,Yes.,True
+111,Yes.,True
+112,No.,False
+113,"No. The passage clearly states that Martha not only planted flowers but also ""installed a small fountain and",False
+114,Yes.,True
+115,No,False
+116,No.,False
+117,Yes.,True
+118,No.,False
+119,Yes.,True
+
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024
+
+120,Yes.,False
+121,Yes,False
+121,Yes,False
+122,Yes.,True
+123,No,False
+124,Yes.,True
+125,Yes,False
+126,Yes.,False
+127,Yes.,True
+128,Yes,False

@@ -1,0 +1,177 @@
+Number,Answer,Model Answer
+
+Basic Tests
+
+1, Yes.,True
+2, Yes.,True 
+3, No. The statement that Marina did not eat ice-cream is not correct. The information given is that Marina ate ice-cream.,True
+4, No.,False
+5, Yes.,True
+6, No,False
+7," Yes, the statement is correct. The information given indicates that Daniel missed school because he caught a cold, which implies that he did not go to classes due to his illness.",True 
+8, No.,False
+9, Yes,True 
+10, Not given. The statement doesn't provide any information about the correctness or detail of the incident. It merely states that an event was reported to you.,True
+11, No.,False
+12," 'No'. The sentence should be: ""My friend went to the music festival yesterday."" (with ""the"" before ""music festival"")",True
+
+Multi Sentence Input
+
+13," Yes, the statement that Michael Jordan was born on 17th February 1963 is correct.",True
+14, No.,False
+15, 'No',False
+16, Yes.,True
+17," Not given. The passage does not explicitly state that Malala wrote a book anonymously when she was 11 years old. It mentions that she wrote an anonymous blog, but it does not provide details about a book or the specific age of 11.",False
+18," Yes, the statement is correct. Malala Yousafzai became the youngest person ever to receive the Nobel Peace Prize in 2014 at the age of 17.",True
+19," Yes, the statement is correct. Malala's mother's name is Toor Pekai Yousafzai.",True
+
+Harder Multi Sentence Ipout
+
+20," ""Yes"", the statement is correct. The Lion and the Tiger are bored because no one acts bad around them, as noted by the line ""No one would dare be naughty while the huge Lion and Tiger crouched beside the throne; but the fact is, the people of Oz are very seldom naughty.""",True
+21," Not given. The statement says the Lion and Tiger are bored because ""no one pays any attention to us,"" not because people don't want to hurt Ozma. While it's true that people don't want to hurt Ozma, the text doesn't explicitly state that this is the reason for the beasts' boredom.",True
+22, Yes.,False
+23," Not given. The passage does not provide information on whether Siddhartha has raised his son since infancy. It only mentions that Siddhartha welcomed him at his place and understood that the boy was pampered and used to finer things, suggesting that they had been living apart until recently.",False
+24, Yes,True
+25, Yes.,True
+26," 'Yes', the statement is correct. The passage mentions that Asian carp have ""lots of tiny bones in their meat, which makes them difficult to prepare."" This feature indeed makes them an unpopular menu item.",True
+27," No. The text states that the reason Asian carp are not a popular delicacy is due to the presence of algal toxins in their systems and the difficulty in preparing them because of their tiny bones, not because they are fattening.",False
+26," 'Not given'. The text states that Asian carp are not a popular delicacy due to their meat being difficult to prepare (due to tiny bones) and not because they are toxic or unsafe to eat. It only mentions that some Asian carp are hazardous to eat because they have algal toxins in their systems, but it does not specify how common this is or that it applies to all Asian carp. Therefore, the statement is not given in the text.",True
+27," 'Not given'. The passage does not provide information about Asian carp being a very fattening fish or its popularity as a menu item. It mentions that Asian carp have lots of tiny bones in their meat, which makes them difficult to prepare, and that they can be hazardous to eat due to algal toxins in their systems, but it does not discuss their fat content or popularity.",False
+28," Yes, the text states that one species of Asian carp is the silver carp.",False
+29," Yes. The passage discusses how Asian carp, when introduced to new waters, can disrupt the ecosystem by outcompeting native bottom feeders, impacting the entire food chain.",True
+30, Not given. The statement mentions only waterskiers and does not compare the risks to other individuals who might be using the local water source.,True
+30," 'No' - The statement suggests that beachgoers are the most threatened by silver carp, but the passage mentions that water skiers and boaters are more specifically at risk due to silver carp's tendency to jump when frightened and potentially collide with people. Beachgoers are not explicitly identified as being particularly threatened.",True
+31," No. The statement that Silver Carp can jump up to twenty feet in the air is incorrect. Silver Carp can jump up to ten feet in the air, not twenty.",False
+32," Yes. The statement that Silver carp can grow to be 100 lbs is correct. The passage mentions, ""One species, the silver carp, can grow to be 100 pounds.""",True
+34, Yes.,True
+33, Yes.,True
+35, Yes,True
+36, Yes.,True
+37," 'Not given'
+
+The author does not explicitly state a preference for closing the canal permanently, only that some people advocate for this measure. The author's personal belief on the matter is not clear from the provided text.",True
+38," 'Not given'. The passage does not provide enough information to confirm or deny whether all Great Lake states agree fully on a solution to the Asian carp problem. It mentions that some Great Lake states have taken legal action, but it does not specify the exact states or whether they all agree on the same solution. Therefore, we cannot determine if the statement is correct or incorrect.",False
+
+Analysing indirect conclusions and subtlties
+
+39," Not given. The information provided only states that Bob got the highest score in the class, but it does not specify what score or grade corresponds to that achievement.",False/Cannot Say
+40," Yes. If Bob got the highest score in the class, it implies that he scored above the passing threshold, meaning he passed the test.",True
+41, Not given. The statement that Amelia got a sister is not necessarily true or false based on the information that Amelia does not have any brothers.,False/Cannot Say
+42," Not given. Although Amelia does not have any brothers and has 2 siblings, it does not necessarily mean that both siblings are sisters. One or both could be sisters, but without additional information, we cannot confirm that both are female.",True
+43, Not given. The information provided does not allow us to definitively confirm Olly's age based on the contradictory statements from the two articles.,False/Cannot Say
+44," Not given.
+
+The information provided in the articles is contradictory, so we cannot definitively say whether Olly is 2 or 3 years old. Therefore, the statement that Olly is 3 years old cannot be confirmed as correct based on the given information.",False/Cannot Say
+45, No.,True
+46," Not given. The statement mentions blue oranges, but there's no information provided about the laboratory developing or planning to develop blue oranges.",False
+47," 'Not given'
+
+The first statement mentions that over 1000000£ will be invested, which means more than 1000000£ but we don't know exactly how much. The second statement specifies exactly 2000000£. Since the first statement does not confirm the exact amount mentioned in the second statement, we cannot be sure if the second statement is correct. Therefore, the answer is 'Not given'.",False
+48, No.,False
+49," No. The statement ""We can surely say that the new medication does not have any side effects"" is not correct based on the given information. The text specifies that more medical trials, particularly to analyze long-term side effects, need to be conducted. Therefore, it is not accurate to assert that there are definitely no side effects.",False
+50, Not given.,False
+51," No.
+
+The original text states that the results are not final and more medical trials need to be conducted, especially to analyze long-term side effects. Therefore, it's not accurate to say that the new medication is ""very effective"" for cancer treatment at this stage. The statement should be more cautious and tentative, acknowledging that while the current results are promising, further research is necessary.",False
+52," Not given. The statement ""There is at least one case when the new medication helped to cure cancer"" is not supported by the information provided. The text only mentions that the medication has potential and the results look promising. It does not provide any specific cases of cure.",False
+53," Not given. The passage does not explicitly state whether the medication was tested on animals before human testing. It only mentions that more medical trials need to be conducted, particularly to analyze long-term side effects, which could imply human trials are the next step, but it does not confirm or deny animal testing.",False
+54," Yes, the statement is correct. 8 out of 10 respondents is 80% of the respondents.",True
+55," Yes, the statement is correct. If 8 out of 10 respondents noticed an improvement in sleep quality, then 80% of respondents did say that they started to sleep better after using the new medication.",True
+56," Yes, the statement is correct. If 8 out of 10 respondents reported improvement in sleep quality, that is equivalent to 80% of respondents. Since 60% is less than 80%, the statement that 60% of respondents reported improved sleep quality is correct.",True
+57, No.,True
+
+Analysing data that might contradictory to model's current beliefs
+
+58, No.,"False statement, but true if assume context"
+59," Not given. The statement ""Kids do not like sweets"" does not directly confirm or deny that ""Kids are not into sweets"". The phrase ""not into"" could imply a lack of interest or preference for sweets, but it's not the same as saying they don't like them.",True
+60, No.,False/Might need checking
+61," 'No'. The admission by the scientific community that previous studies were not correct and that caffeine is not addictive is simply a correction of past misinformation. It does not necessarily mean that ""the latest discoveries"" show this; it could just be a reassessment of past evidence. Therefore, the statement cannot be confirmed as correct based on the given information.",True/Might need checking
+62," Yes, the statement is correct. The admission of a man with 210 bones is evidence that at least one human has that number of bones.",True 
+63, No.,False
+65, No.,False
+66, No.,False
+67, No.,False
+68, No.,False
+69, Yes. Skin and hair indeed stop growing after death.,True 
+70," Yes. The statement that the receptors for different tastes are spread across the tongue is correct. While it's true that the tongue has specific taste zones is a false assumption, the taste receptors for different tastes (sweet, salty, sour, bitter, and umami) are distributed across the entire tongue, not confined to specific zones.",True
+71, No.,False
+
+Additional Basic Tests (AI generated 20/10/2024
+
+72," Yes, the statement that Lucy swims very well is correct based on the given information.",True
+73, No.,False
+74," Not given. The statement ""Anna graduated last year"" implies that she completed her studies to the point of graduating, but it does not specify if she finished all her required studies or if there were any additional studies or classes still needed. Therefore, the statement ""Anna completed her studies last year"" is not necessarily true based on the given information.",True
+75, No.,False
+76," Yes, the statement that Tom drives a red vehicle is correct.",True
+77, No.,False
+78, No.,False
+79," Yes, the statement ""The museum shuts its doors at 5 PM"" is correct. Both statements convey the same information, just phrased differently.",True
+80, No.,False
+81," Yes, the statement ""The train was delayed by 10 minutes"" is correct. Both statements indicate that the train did not arrive on time and was 10 minutes behind schedule.",True
+82, No.,False
+83, Yes.,True
+84," Yes, the statement ""This book came out in 2020"" is correct. The text specifies that the novel was published in 2020.",True
+85, Yes,True
+86," Not given. The statement ""The package was delivered yesterday"" doesn't specify whether it was received or just handed over for delivery, so we can't confirm if it ""arrived"" (presumably meaning it was received) yesterday.",True
+87, No.,False
+88," 'Not given'. The original statement only says that the road is under construction, not that it is closed for repairs. While the road might be closed for repairs as part of the construction, this is not explicitly stated in the original sentence.",True
+89, Yes.,True
+90, Yes,True
+91," Yes, the statement that Jack injured himself skiing is correct. The sentence ""Jack broke his leg while skiing"" explicitly states that the injury occurred during skiing.",True
+92," Yes, the statement is correct. If the restaurant serves Italian cuisine, it means it specializes in Italian food.",True
+93, Yes.,True
+94, 'Yes',True
+95," ""Yes""",True
+96, No.,False
+97, Yes,True
+98," ""Yes"", the statement that Laura knows three languages well is correct. The clue is that she speaks them fluently, which implies a high level of knowledge and proficiency.",True
+99, Not given. The statement does not provide enough information to confirm or deny James's fear or avoidance of horror movies; it only states that he enjoys watching them.,False
+
+Additional Multi Sentence Input Tests (AI generated 20/10/2024
+
+100," Yes, the statement correctly summarizes the information given. Emily woke up early and went for a run (jog), then had breakfast at her favorite café, and later met her friend Anna for coffee.",True
+101," Yes, the statement is correct. The passage says David spent the entire weekend working on his art project and also managed to catch up on his favorite TV show.",True
+102, 'No',False
+103, Yes,True
+104," No. The company is only planning to expand to three more countries, not globally.",True
+105, No.,False
+106," Yes. The sentence captures the main points of the original statement:
+- ""The movie told the story of a hero"" matches ""The movie was about a young hero""
+- ""who saved her village"" matches ""to save her village""
+- ""with breathtaking visuals"" matches ""featured stunning visuals""
+
+Consequently, the statement is correct.",True
+107," No.
+
+The original statement mentions a chocolate cake for dessert, not a vanilla cake.",False
+108, Yes,True
+109," No, the statement is not correct. The text mentions that Alex also reviewed his notes from science class and prepared for a history presentation.",False
+110, Yes,True
+111, Yes.,True
+112, No.,False
+113, No.,False
+114, Yes,True
+115, No.,False
+116, No.,False
+117, Yes.,True
+118, No.,False
+119, Yes,True
+
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024
+
+120," **No.**
+
+The statement says she had lunch with Jessica and planned a road trip, but according to the text, she called Jessica and discussed the road trip at noon, which is not the same as having lunch. It also says she wrote in her journal before going to bed, but the text doesn't mention when she had lunch. Therefore, the statement contains incorrect information.",False
+121, No.,False
+121," No. The statement includes a detail about having dinner with her friends, which is not mentioned in the original text.",False
+122, Yes,True
+123," **No**
+
+The statement that ""in the evening, a play was performed to conclude the event"" is not correct according to the passage provided. The passage mentions that the sports day ended with an award ceremony and there is no mention of a play in the evening.
+
+Here's the relevant part of the passage: ""The sports day ended with an award ceremony where medals were distributed to the winners."" There is no mention of a play afterward.",False
+124, Yes,True
+125, No.,False
+126, Yes.,False
+127," 'Not given'. While the text mentions Ethan completing a 50-mile race and receiving a silver medal, it does not explicitly state that he finished second overall in the race. The information about his ranking is not provided.",True
+128," Yes, the statement is correct. It accurately summarizes the events described in the passage. Rachel did make a three-course dinner with chocolate mousse for dessert, later baked cookies for her colleagues, spent the evening playing board games, and attended a cooking class.",False

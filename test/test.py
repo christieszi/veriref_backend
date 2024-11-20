@@ -41,7 +41,7 @@ def test_model(input_filename, output_filename, model_func, with_assumption):
                 if with_assumption:
                     answer = model_func(source, statement)
                 else:
-                    answer = model_func("Given " + str(source) + ". Is the statemant that " + str(statement) + " correct?")
+                    answer = model_func("Given " + str(source) + ". Is the statement that " + str(statement) + " correct? Reply with a 'Yes', 'No' or 'Not given'")
 
                 # Write the processed data to the new CSV
                 writer.writerow([number, answer, model_answer])
@@ -50,7 +50,7 @@ def test_model(input_filename, output_filename, model_func, with_assumption):
 
 # Specify the CSV file
 input_filename = 'test/test_dataset.csv'
-output_filename = 'test/gemma_test_results.csv'
+output_filename = 'test/qwen_short_test_results.csv'
 
 # Call the function
-test_model(input_filename, output_filename, model_func=gemma_ask, with_assumption=False)
+test_model(input_filename, output_filename, model_func=qwen_ask, with_assumption=True)

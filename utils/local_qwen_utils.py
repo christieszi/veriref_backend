@@ -12,7 +12,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 def qwen_ask(context, prompt):
     messages = [
         {"role": "system", "content": f"You know that {context}."},
-        {"role": "user", "content": f"Is it true that {prompt}?"}
+        {"role": "user", "content": f"Is it true that {prompt}? Reply with a 'yes' or a 'no' or 'not given'"}
     ]
     text = tokenizer.apply_chat_template(
         messages,
@@ -23,7 +23,7 @@ def qwen_ask(context, prompt):
 
     generated_ids = model.generate(
         **model_inputs,
-        max_new_tokens=512
+        max_new_tokens=20
     )
     generated_ids = [
         output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
