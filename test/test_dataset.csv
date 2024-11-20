@@ -1782,3 +1782,176 @@ simply because skin dehydrates","Skin and hair stop growing after death","True"
 70,"The assumption that tongue has specific taste zones is false","The receptors for different tastes are
 spread across the tongue","True"
 71,"Lightning stroke Empire state building multiple times","Lightning never strikes the same place twice","False"
+
+# Additional Basic Tests (AI generated 20/10/2024, human verified)
+72,"Lucy is an excellent swimmer","Lucy swims very well","True"
+73,"John dislikes spicy food","John enjoys eating spicy food","False"
+74,"Anna graduated last year","Anna completed her studies last year","True"
+75,"The sky was clear this morning","The sky was cloudy this morning","False"
+76,"Tom owns a red car, and he drives it every day","Tom drives a red vehicle","True"
+77,"Jenny has three siblings","Jenny is an only child","False"
+78,"Mark failed his math test","Mark passed his math test","False"
+79,"The museum closes at 5 PM","The museum shuts its doors at 5 PM","True"
+80,"Lisa loves playing the guitar","Lisa hates playing the guitar","False"
+81,"The train arrived 10 minutes late","The train was delayed by 10 minutes","True"
+82,"George is allergic to peanuts","George can eat peanuts without any issues","False"
+83,"The library is located downtown","The library is situated in the city center","True"
+84,"This novel was published in 2020","This book came out in 2020","True"
+85,"Emma baked a chocolate cake","Emma made a dessert with chocolate","True"
+86,"The package was delivered yesterday","The package arrived yesterday","True"
+87,"Peter is afraid of heights","Peter enjoys climbing tall buildings","False"
+88,"The road to the village is under construction","The road to the village is closed for repairs","True"
+89,"Sarah is an experienced traveler","Sarah has visited many countries","True"
+90,"The concert starts at 8 PM","The performance begins at 8 PM","True"
+91,"Jack broke his leg while skiing","Jack injured himself skiing","True"
+92,"The restaurant serves Italian cuisine","The restaurant specializes in Italian food","True"
+93,"Julia works as a graphic designer","Julia is employed as a graphic designer","True"
+94,"Alice visited the Grand Canyon last summer","Alice traveled to the Grand Canyon in the summer","True"
+95,"Paul forgot his umbrella at home","Paul left his umbrella behind at home","True"
+96,"My phone battery lasts all day","My phone battery needs charging every hour","False"
+97,"The marathon took place on Sunday","The marathon happened on Sunday","True"
+98,"Laura speaks three languages fluently","Laura knows three languages well","True"
+99,"James enjoys watching horror movies","James is scared of horror movies and avoids them","False"
+
+# Additional Multi Sentence Input Tests (AI generated 20/10/2024, human verified)
+100,"Emily woke up early and went for a run in the park. Later, she had breakfast at her 
+favorite café and met her friend Anna for coffee.","Emily started her day with a jog, had 
+breakfast, and met Anna for coffee.","True"
+101,"David spent the entire weekend working on his art project. He also managed to catch up on his 
+favorite TV show and call his mom to check in.","David worked on an art project and watched his favorite show.","True"
+102,"The train station was crowded in the morning because of delays. Many passengers were frustrated, 
+but the staff managed to keep things under control.","The train station was empty, and passengers were calm.","False"
+103,"Jenny and her family went to the beach yesterday. They built sandcastles, swam in 
+the sea, and had ice-cream before heading home.","Jenny’s family visited the beach and swam in the sea.","True"
+104,"The company announced a new product launch next month. They also revealed plans 
+to expand to three more countries in the coming year.","The company plans to launch a new product and expand globally.","True"
+105,"Mike loves photography and often spends weekends capturing sunsets. He also enjoys hiking in the mountains 
+and exploring new trails.","Mike dislikes photography and prefers staying indoors on weekends.","False"
+106,"The movie was about a young hero who overcame great odds to save her village. It featured stunning 
+visuals and a heartwarming story.","The movie told the story of a hero who saved her village with breathtaking visuals.","True"
+107,"Sophia prepared a delicious dinner for her guests. She made pasta, salad, and a chocolate 
+cake for dessert. Everyone enjoyed the meal.","Sophia cooked a wonderful meal, including vanilla cake for dessert.","False"
+108,"The science museum hosted an exhibition about space exploration. Visitors could see 
+real astronaut suits, learn about the moon landing, and interact with virtual reality displays.","The museum’s 
+exhibition focused on space exploration, with interactive displays and astronaut suits.","True"
+109,"Alex studied all night for the math test. He also made time to review his notes from science class and prepare 
+for a history presentation.","Alex only prepared for his math test and ignored other subjects.","False"
+110,"The weather was sunny and warm in the morning. However, by the afternoon, it 
+started to rain heavily, catching many people by surprise.","The day started sunny but turned rainy by the afternoon.","True"
+111,"Liam adopted a rescue dog named Max last month. Since then, he has been training Max and taking him on daily walks 
+in the park.","Liam recently adopted a dog and has been training it.","True"
+112,"The town festival featured live music, food stalls, and games for children. The highlight of the evening 
+was a spectacular fireworks display.","The town festival had music, food, games, but no fireworks.","False"
+113,"Martha planted flowers in her garden during the spring. She also installed a small 
+fountain and added a bench to create a cozy space.","Martha focused only on planting flowers and 
+didn’t make other changes to her garden.","False"
+114,"The professor explained the topic clearly and answered all the students’ questions. He 
+also provided additional reading materials for those who wanted to learn more.","The professor explained 
+the topic, answered questions, and shared extra resources.","True"
+115,"Karen baked cookies for her son’s school event. She also made sandwiches 
+and packed some juice boxes for the children to enjoy.","Karen's son prepared cookies, 
+sandwiches, and drinks for the school event.","False"
+116,"Originally, Sarah and her friends planned to go to seaside. Howver, they changed their plans, and went on 
+a trip to the mountains, Sarah and her friends went skiing and snowboarding. This was almost as relaxing as swimming
+and sunbathing.","Sarah and her friends spent their trip sunbathing and swimming","False"
+117,"The store had a special sale on electronics over the weekend. Many people lined up early to buy 
+discounted laptops, phones, and cameras.","The store held a weekend sale on electronics, attracting many buyers.","True"
+118,"Tom’s team played their best match of the season yesterday. They scored three goals and won the game by a 
+large margin. The fans were thrilled.","Tom’s team lost their game, leaving fans disappointed.","False"
+119,"Alice spends her mornings meditating and practicing yoga. In the evenings, she 
+likes to read novels and write in her journal.","Alice’s daily routine includes meditation, yoga, 
+reading, and journaling.","True"
+
+# Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024, human verified)
+120,"Yesterday, Maria woke up at 7 AM and went for a morning jog in the park. After her jog, she made a healthy breakfast 
+consisting of scrambled eggs and orange juice. Around 10 AM, Maria attended an online seminar about time management. 
+She found the tips helpful and decided to implement them. At noon, Maria called her friend Jessica to discuss an 
+upcoming road trip. In the afternoon, she cleaned her apartment and rearranged her furniture. Maria also spent an 
+hour reading a new novel. She cooked spaghetti for dinner and watched a documentary on wildlife. Before going to bed, 
+she wrote in her journal and planned her tasks for the next day. Maria felt productive and 
+satisfied with her day.","Maria attended a seminar about time management and found it helpful. She had lunch with Jessica and 
+planned a road trip. Maria also wrote in her journal before going to bed.","False"
+121,"David spent his Saturday outdoors enjoying the beautiful weather. He started the day with a hike in the hills 
+and took several photographs of the landscape. On his way back, he stopped by a local café 
+to have a cup of coffee and a slice of cheesecake. In the afternoon, David went to the farmers' 
+market and bought fresh vegetables, fruits, and flowers. He returned home and spent some time 
+arranging the flowers in a vase. Later, he invited his neighbour over for tea and shared some homemade cookies. In the 
+evening, David watched a mystery movie and enjoyed some popcorn. Before going to bed, he read a 
+few chapters of his favorite book.","David went hiking and enjoyed coffee at a café. He hosted a small dinner 
+party with friends in the evening. Later, David watched a mystery movie before sleeping.","False"
+121,"Sophie is an art student who loves painting landscapes. On Monday, she visited an art gallery to study the 
+works of famous painters. She spent the morning sketching some of her favorite pieces. Sophie met 
+her professor in the afternoon to discuss her project, which focuses on impressionist art. The 
+professor gave her valuable feedback and suggested some resources to explore. In the evening, 
+Sophie worked on her painting while listening to classical music. She used vibrant colors to 
+capture the beauty of a sunset over the ocean. Sophie also managed to submit her assignment 
+before the deadline. Before sleeping, she wrote down her ideas for the next painting.","Sophie spent her day 
+working on an impressionist art project and received feedback from her professor. She painted a sunset using bright 
+colors while enjoying music. Sophie later had dinner with her friends to celebrate finishing her assignment.","False"
+122,"Tom works at a tech company and is passionate about coding. On Wednesday, he attended a meeting to discuss a 
+new project. After the meeting, Tom spent the rest of the morning coding a prototype for a 
+mobile app. During lunch, he chatted with his colleagues about their weekend plans. In the afternoon, 
+Tom fixed some bugs in the company’s website and tested its functionality. 
+He stayed late at work to complete his tasks. After returning home, he prepared a quick dinner and watched an episode of 
+his favorite show. Before going to bed, Tom read an article on artificial intelligence to stay 
+updated on the latest trends.","Tom spent the morning coding a mobile app and the afternoon fixing website bugs. He later 
+watched his favorite show.","True"
+123,"The school organized a sports day on Friday. The event started with a relay race in which several 
+teams participated. After that, there was a long jump competition and a 
+high jump event. The students cheered for their friends enthusiastically. Teachers also 
+joined in and played a friendly match of volleyball. During lunch, food 
+stalls served a variety of snacks and drinks. In the afternoon, there was a 
+tug-of-war competition that was the highlight of the day. The sports day ended with an 
+award ceremony where medals were distributed to the winners. Everyone enjoyed the 
+event and praised the organizers.","The school’s sports day included a relay race, tug-of-war, and an award ceremony. 
+Teachers participated in volleyball, and there were food stalls for lunch. In the evening, 
+a play was performed to conclude the event.","False"
+124,"Megan spent her Sunday afternoon at the botanical gardens. She took a leisurely stroll along the 
+flower-filled paths and admired the variety of plants. Megan also visited the greenhouse, 
+where she learned about exotic species. Later, she attended a photography workshop hosted 
+by a local artist. During the workshop, Megan learned new techniques for capturing nature 
+through the lens. After the session, she practiced by taking several photos of the garden. 
+In the evening, Megan had dinner at a café nearby and tried a new dish. She then returned
+home and spent some time editing her photos.","Megan visited the botanical gardens and attended a 
+photography workshop. She spent the afternoon taking photos and later edited them at home.","True"
+125,"James is a passionate traveler who loves exploring new cities. Last month, he visited Paris, 
+where he toured the Louvre Museum and the Eiffel Tower. James also took a boat tour along 
+the Seine River and dined at a rooftop restaurant with a view of the city. After Paris, he 
+flew to London and visited Buckingham Palace, the British Museum, and Covent Garden. 
+James also went to a theater show in the West End and had a traditional English breakfast 
+at a local café. He spent the final day of his trip shopping in Oxford Street 
+before heading back home.","James traveled to Paris and visited the Louvre and Eiffel Tower. 
+He also flew to London, where he explored famous landmarks and enjoyed a West End show. 
+During his trip, he spent most of his time relaxing by the Seine River.","False"
+126,"Lily works as a marketing consultant and frequently travels for business. Last week, 
+she had a meeting in New York City with a potential client. The meeting went well, and they 
+discussed a new advertising campaign. After the meeting, Lily explored the city and visited 
+several famous landmarks, including Times Square and Central Park. She also took a guided tour 
+of the Empire State Building and had dinner at a well-known seafood restaurant. The next day, 
+she flew to Chicago for another meeting. There, she worked on finalizing a contract with a 
+different client before heading back home.","Lily traveled to New York for a business meeting 
+and visited landmarks like Central Park. Afterward, she 
+flew to Chicago to meet another client and finalize a contract. She 
+also spent the evening at a local restaurant before returning home.","False"
+127,"Ethan is an avid cyclist and participates in local races on weekends. 
+Last Saturday, he competed in a 50-mile race across the countryside. 
+The race began early in the morning and was organized by the local 
+cycling club. Ethan was excited to join the event, as it was his first 
+time participating in such a long race. Throughout the race, he stayed 
+hydrated and paced himself to avoid exhaustion. After completing the course, 
+Ethan was awarded a silver medal for his performance. He spent the rest of the day 
+relaxing with his teammates and enjoying the post-race party.","Ethan raced in a 50-mile 
+competition and finished second, receiving a silver medal. He joined the event early in 
+the morning and paced himself during the race. Later, he attended a celebration with 
+his teammates.","True"
+128,"Rachel is a talented cook who enjoys experimenting with new recipes. On Friday, 
+she decided to make a three-course dinner for her friends. She started with a 
+fresh tomato and basil salad, followed by a main course of roasted 
+chicken with vegetables. For dessert, Rachel made a chocolate mousse, which 
+she served with a side of fresh berries. After dinner, they all played board games 
+and enjoyed some wine. Rachel’s friends were impressed with the meal and praised her 
+cooking skills. The next day, Rachel spent the afternoon baking a batch of 
+homemade cookies to share with her colleagues.","Rachel made a three-course dinner and 
+served chocolate mousse for dessert. She later baked cookies for her 
+colleagues and spent the evening playing board games. Rachel also attended a cooking 
+class to improve her skills.","False"
