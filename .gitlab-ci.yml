@@ -1,6 +1,10 @@
 stages:
   - build
 
+before_script:
+  - git submodule init
+  - git submodule update
+
 build_job:
   stage: build
   tags:
