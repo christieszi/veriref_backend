@@ -8,6 +8,7 @@ import os
 from bs4 import BeautifulSoup
 import requests
 from werkzeug.utils import secure_filename
+from urllib.parse import urlparse
  
 # Flask constructor
 app = Flask(__name__)   
@@ -22,31 +23,20 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Configure secret key for session
 app.secret_key = os.urandom(24)
 
-# async def ask(prompt,stream=False):
+async def ask(prompt,stream=False):
 
-#     sampling_params = {
-#         "max_tokens": 200,
-#         "temperature":1,
-#     }
-#     if stream:
+    sampling_params = {
+        "max_tokens": 200,
+        "temperature":1,
+    }
+    if stream:
         
-#         async for line in mistral_stream(prompt=prompt,sampling_params=sampling_params,stream=True):
-#             text=line.decode('utf-8')
-#             print(text,end='',flush=True)
-#     else:
-#         result = await mistral(prompt,sampling_params=sampling_params)
-#         return result['text']
- 
-# # A decorator used to tell the application
-# # which URL is associated function
-# @app.route('/standard', methods =["GET", "POST"])
-# def standard():
-#     if request.method == "POST":
-#        input_data = str(request.form.get("data"))
-#        statement = str(request.form.get("statement"))
-#        output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + statement + "?")))
-#        return render_template("form.html", output=output)
-#     return render_template("form.html", output='')
+        async for line in mistral_stream(prompt=prompt,sampling_params=sampling_params,stream=True):
+            text=line.decode('utf-8')
+            print(text,end='',flush=True)
+    else:
+        result = await mistral(prompt,sampling_params=sampling_params)
+        return result['text']
 
 # @app.route('/', methods=['GET', 'POST'])
 # def upload_or_input():
@@ -69,15 +59,6 @@ app.secret_key = os.urandom(24)
 #         elif 'source_text' in request.form and request.form['source_text'].strip() != '':
 #             source_text = request.form['source_text']
 #             input_data = source_text
-
-
-#         # Form 2: Mandatory Text Input
-#         to_verify = request.form.get('to_verify')
-#         if not to_verify.strip():
-#             return render_template('upload.html', error="Please enter text in the second form.")
-        
-#         session['source_text'] = source_text
-#         session['to_verify'] = to_verify
 
 #         short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + to_verify + "? Reply with 'Yes', 'No', or 'Cannot say', please")))
 #         output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Why is it true or not that" + to_verify + "?")))
@@ -104,20 +85,14 @@ def extract_text_from_pdf(pdf_path):
 @app.route('/process', methods=['POST'])
 def process_inputs():
     # Handle file upload
-    source_file = request.files.get("sourceFile")
+    source_file = request.files.get("file")
     source_text = request.form.get("sourceTextInput")
     text_to_verify = request.form.get("toVerify")
 
     if source_file:
         filename = secure_filename(source_file.filename)
-        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        source_file.save(file_path)  # Save the file temporarily
-
-        # Simulate extracting text from the PDF
-        extracted_text = f"Simulated text from {filename}"  # Replace with real extraction logic
-        print(f"Uploaded file saved to: {file_path}")
-
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        source_file.save(filepath)
 
         # Extract text from PDF
         input_data = extract_text_from_pdf(filepath)
@@ -127,25 +102,22 @@ def process_inputs():
             os.remove(filepath)
         except Exception as e:
             return render_template('upload.html', error=f"Error deleting file: {e}")
-        
     elif source_text:
-        input_data = source_text
+        source_text = source_text.strip()
+        if urlparse(source_text).scheme:
+            response = requests.get(source_text)
+            response.raise_for_status()
+            input_data = BeautifulSoup(response.content, "html.parser").get_text()
+        else:
+            input_data = source_text
     else:
-            file = request.files['source_file']
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filepath)
+        input_data = None
 
-            # Extract text from PDF
-            input_data = extract_text_from_pdf(filepath)
-
-            # Delete the file after processing
-            try:
-                os.remove(filepath)
-            except Exception as e:
-                return render_template('upload.html', error=f"Error deleting file: {e}") = "No file or source uploaded uploaded."
+    short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + text_to_verify + "? Reply with 'Correct, 'Incorrect', or 'Cannot say', please")))
+    output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Why is it true or not that" + text_to_verify + "?")))
 
     # Return extracted text along with processed second input
-    return jsonify({"processedText": f"{input_data} | Additional Input: {text_to_verify}"})
+    return jsonify({"shortAnswer": f"{short_answer}", "explanation": f"{output}"})
  
 if __name__=='__main__':
    app.run()
