@@ -1,0 +1,129 @@
+Number,"Result (1 for correct, 0 for incorrect)",Comment,Correct answer
+Basic Tests,,,
+1,0,Overcomplicated ,TRUE
+2,1,,TRUE
+3,1,,FALSE
+4,1,,FALSE
+5,1,,TRUE
+6,1,,FALSE
+7,0,"Hallucinated, used external knowledge",TRUE
+8,0,Hallucinated,FALSE
+9,1,,TRUE
+10,0,"Hallucinated, but asked for more evidence",TRUE
+11,0,Hallucinated,FALSE
+12,1,,TRUE
+Multi sentence input,,,
+13,1,External ,TRUE
+14,1,External,FALSE
+15,1,External,FALSE
+16,1,External,TRUE
+17,0,Faked evidence,FALSE
+18,1,External,TRUE
+19,1,,TRUE
+Harder Multi Sentence Input,,,
+20,1,Hallucinated,TRUE
+21,1,,TRUE
+22,1,,FALSE
+23,0,Misunderstood question,FALSE
+24,1,,TRUE
+25,1,,TRUE
+26,1,,TRUE
+27,0,,FALSE
+26,1,,TRUE
+28,1,,TRUE
+29,1,,TRUE
+30,1,,TRUE
+30,1,,FALSE
+31,1,,FALSE
+32,1,,TRUE
+34,1,,TRUE
+36,1,,TRUE
+37,1,,TRUE
+38,1,,FALSE
+Analysing indirect conclusions and subtlties,,,
+39,1,,FALSE/CANNOT SAY
+40,1,,TRUE
+41,1,,FALSE/CANNOT SAY
+42,1,,TRUE
+43,0,,FALSE/CANNOT SAY
+44,0,,FALSE/CANNOT SAY
+45,1,,TRUE
+46,0,External,FALSE/CANNOT SAY
+47,1,,FALSE/CANNOT SAY
+48,1,,FALSE
+49,1,,FALSE
+50,1,,FALSE
+51,1,Good basis,FALSE
+52,0,External knowledge ,FALSE
+53,0,external knowledge,FALSE
+54,1,,TRUE
+55,1,,TRUE
+56,1,,FALSE
+57,1,,FALSE
+Analysing data that might contradictory to model's current beliefs,,,
+58,1,,FALSE
+59,0,,TRUE
+60,0,,FALSE
+61,1,,TRUE
+62,0,,TRUE
+63,0,,FALSE
+65,0,,FALSE
+66,0,,FALSE
+67,0,,FALSE
+68,0,,FALSE
+69,0,,TRUE
+70,0,,TRUE
+71,0,,FALSE
+Additional Basic Tests (AI generated 20/10/2024,,,
+72,1,,TRUE
+73,1,,FALSE
+74,1,,TRUE
+75,1,,FALSE
+76,1,,TRUE
+77,1,,FALSE
+78,1,,FALSE
+79,1,,TRUE
+80,1,,FALSE
+81,1,,TRUE
+82,1,,FALSE
+83,1,,TRUE
+84,1,,TRUE
+85,1,,TRUE
+86,1,,TRUE
+87,1,,FALSE
+88,1,,TRUE/NOT GIVEN
+89,1,,NOT GIVEN
+90,1,,TRUE
+91,1,,TRUE
+92,1,,TRUE
+93,0,,TRUE
+94,1,,TRUE
+95,1,,TRUE
+96,0,,FALSE
+97,0,,TRUE
+98,1,,TRUE
+99,1,,FALSE
+Additional Multi Sentence Input Tests (AI generated 20/10/2024,,,
+100,1,,TRUE
+101,1,,TRUE
+102,1,,FALSE
+103,1,,TRUE
+104,1,,TRUE
+105,1,,FALSE
+106,1,,TRUE
+107,1,,FALSE
+108,1,,TRUE
+109,1,,FALSE
+110,1,,TRUE
+111,1,,TRUE
+112,1,,FALSE
+113,1,,FALSE
+114,1,,TRUE
+115,0,,FALSE
+116,1,,FALSE
+117,1,,TRUE
+118,1,,FALSE
+119,1,,TRUE
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024,,,
+Total: 118,90,,19 false positive out of 55 FALSE/NOT GIVEN
+,,,9 false negatives out of 63 TRUE

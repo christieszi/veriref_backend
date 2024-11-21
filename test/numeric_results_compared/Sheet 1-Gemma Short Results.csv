@@ -1,0 +1,129 @@
+Number,"Result (1 for correct, 0 for incorrect)",Comment,Correct answer
+Basic Tests,,,
+1,1,,TRUE
+2,1,,TRUE
+3,1,,FALSE
+4,1,,FALSE
+5,1,,TRUE
+6,0,"Replied not given instead of False, although it was given in the context",FALSE
+7,1,,TRUE
+8,1,,FALSE
+9,1,,TRUE
+10,1,,TRUE
+11,0,Replied not given although was given in the context,FALSE
+12,1,Hallucinated reasoning,TRUE
+Multi sentence input,,,
+13,0,Did not give an answer,TRUE
+14,1,Not very precise classification (not given rather than incorrect because passage provides a different information),FALSE
+15,0,No answer,FALSE
+16,1,,TRUE
+17,0,"Incorrect, and reasoning provided an opposing answer to this.",FALSE
+18,0,No answer,TRUE
+19,1,,TRUE
+Harder Multi Sentence Input,,,
+20,1,,TRUE
+21,1,,TRUE
+22,0,Consequence,FALSE
+23,1,Not given,FALSE
+24,1,,TRUE
+25,1,,TRUE
+26,1,,TRUE
+27,0,"Didn’t understand the question, assumed a question from the text was asked",FALSE
+26,1,,TRUE
+28,1,,TRUE
+29,1,,TRUE
+30,1,,TRUE
+30,0,"Incorrect, and reasoning provided an opposing answer to this.",FALSE
+31,0,"Hallucinated correct answer, although text gave a different answer. Changed number in reply",FALSE
+32,1,,TRUE
+34,1,,TRUE
+36,1,,TRUE
+37,1,,TRUE
+38,1,Identified not given,FALSE
+Analysing indirect conclusions and subtlties,,,
+39,0,"Made an incorrect conclusion, data was not given. Hallucinated",FALSE/CANNOT SAY
+40,0,Could not combine to statements to drive to a conclusion,TRUE
+41,0,Hallucinated an implication,FALSE/CANNOT SAY
+42,1,,TRUE
+43,1,Identified contradiction,FALSE/CANNOT SAY
+44,1,Identified contradiction,FALSE/CANNOT SAY
+45,0,"Answered a different question from what was asked, although reasoning was correct",TRUE
+46,1,,FALSE
+47,0,Wrong conclusion,FALSE/CANNOT SAY
+48,1,,FALSE
+49,1,,FALSE
+50,1,Wrong hallucinating reasoning,FALSE
+51,0,Could not identify that the part of the statement was wrong,FALSE
+52,1,,FALSE
+53,0,Hallucinated reasoning,FALSE
+54,0,Did not see numeric evidence,TRUE
+55,0,Did not see numeric  evidence,TRUE
+56,1,Incorrect reasoning,FALSE
+57,0,Hallucinated evidence,FALSE
+Analysing data that might contradictory to model's current beliefs,,,
+58,0,"Didn't identify an obviously correct sentence, but correct from the context",FALSE
+59,1,,TRUE
+60,1,Wrong reasoning,FALSE
+61,1,,TRUE
+62,1,,TRUE
+63,1,Wrong reasoning,FALSE
+65,1,"Wrong reasoning, used internal beliefs",FALSE
+66,0,"Correct reasoning, wrong answer",FALSE
+67,1,Wrong reasoning,FALSE
+68,1,Wrong reasoning,FALSE
+69,0,"Correct reasoning, wrong answer",TRUE
+70,0,"Correct reasoning, wrong answer",TRUE
+71,0,Did not find evidence (conclusion),FALSE
+Additional Basic Tests (AI generated 20/10/2024,,,
+72,1,,TRUE
+73,1,,FALSE
+74,1,,TRUE
+75,0,Hallucinated question,FALSE
+76,1,,TRUE
+77,0,Just hallucination,FALSE
+78,1,,FALSE
+79,1,,TRUE
+80,1,Wrong reasoning,FALSE
+81,1,,TRUE
+82,1,,FALSE
+83,1,,TRUE
+84,1,,TRUE
+85,1,,TRUE
+86,1,,TRUE
+87,1,,FALSE
+88,1,,TRUE
+89,0,"Incorrect answer, good reasoning",NOT GIVEN
+90,1,,TRUE
+91,1,,TRUE
+92,1,,TRUE
+93,1,,TRUE
+94,1,,TRUE
+95,1,,TRUE
+96,1,"Incorrect reasoning, used some background knowledge",FALSE
+97,1,,TRUE
+98,1,,TRUE
+99,1,,FALSE
+Additional Multi Sentence Input Tests (AI generated 20/10/2024,,,
+100,1,,TRUE
+101,1,,TRUE
+102,1,"Wrong reasoning, could not identify evidence",FALSE
+103,1,,TRUE
+104,1,,TRUE
+105,1,"Slightly incorrect reasoning, did not spot the contradiction",FALSE
+106,1,,TRUE
+107,0,"Did not spot the contradiction, hallucinated",FALSE
+108,1,,TRUE
+109,1,"Did not identify contradiction, said not given",FALSE
+110,1,,TRUE
+111,1,,TRUE
+112,1,Spotted contradiction correctly,FALSE
+113,1,"Did not spot contradiction, said not given",FALSE
+114,1,,TRUE
+115,0,"Hallucinated, didn’t spot contradiction details",FALSE
+116,0,Got mislead by the change,FALSE
+117,1,,TRUE
+118,0,Wrong answer correct reasoning,FALSE
+119,1,,TRUE
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024,,Needs to be corrected to check multiple questions,
+Total: 118,86,,24 false positive out of 55 FALSE/NOT GIVEN
+,,,8 false negatives out of 63 TRUE

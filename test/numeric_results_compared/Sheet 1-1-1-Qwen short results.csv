@@ -1,0 +1,129 @@
+Number,"Result (1 for correct, 0 for incorrect)",Comment,Correct answer
+Basic Tests,,,
+1,0,Not given,TRUE
+2,0,Not given,TRUE
+3,1,,FALSE
+4,0,Not given,FALSE
+5,1,,TRUE
+6,1,,FALSE
+7,1,,TRUE
+8,0,Not given,FALSE
+9,1,,TRUE
+10,0,Not given ,TRUE
+11,0,Not given ,FALSE
+12,0,Not given ,TRUE
+Multi sentence input,,,
+13,1,,TRUE
+14,1,Used external knowledge,FALSE
+15,1,,FALSE
+16,1,,TRUE
+17,0,,FALSE
+18,1,,TRUE
+19,1,,TRUE
+Harder Multi Sentence Input,,,
+20,1,,TRUE
+21,0,,TRUE
+22,1,,FALSE
+23,0,,FALSE
+24,1,,TRUE
+25,1,,TRUE
+26,1,,TRUE
+27,0,,FALSE
+26,1,,TRUE
+28,1,,TRUE
+29,1,,TRUE
+30,1,,TRUE
+30,1,,FALSE
+31,1,,FALSE
+32,1,,TRUE
+34,1,,TRUE
+36,1,,TRUE
+37,0,,TRUE
+38,1,,FALSE
+Analysing indirect conclusions and subtlties,,,
+39,1,Not given,FALSE/CANNOT SAY
+40,1,,TRUE
+41,1,Not given,FALSE/CANNOT SAY
+42,0,,TRUE
+43,1,Cannot say,FALSE/CANNOT SAY
+44,1,Not given,FALSE/CANNOT SAY
+45,1,,TRUE
+46,1,Not given,FALSE/CANNOT SAY
+47,1,Not given,FALSE/CANNOT SAY
+48,0,Not given,FALSE
+49,1,,FALSE
+50,1,,FALSE
+51,0,,FALSE
+52,1,,FALSE
+53,1,,FALSE
+54,1,,TRUE
+55,1,,TRUE
+56,0,Wrong numbers,FALSE
+57,0,Not given,FALSE
+Analysing data that might contradictory to model's current beliefs,,,
+58,1,,FALSE
+59,1,,TRUE
+60,1,,FALSE
+61,1,,TRUE
+62,0,Used external knowledge,TRUE
+63,1,,FALSE
+65,1,,FALSE
+66,1,,FALSE
+67,1,,FALSE
+68,1,,FALSE
+69,0,,TRUE
+70,1,,TRUE
+71,0,,FALSE
+Additional Basic Tests (AI generated 20/10/2024,,,
+72,1,,TRUE
+73,1,,FALSE
+74,1,,TRUE
+75,1,,FALSE
+76,1,,TRUE
+77,0,Not given,FALSE
+78,1,,FALSE
+79,1,,TRUE
+80,1,,FALSE
+81,1,,TRUE
+82,1,,FALSE
+83,0,Not given,TRUE
+84,1,,TRUE
+85,1,,TRUE
+86,1,,TRUE
+87,0,Conclusion,FALSE
+88,1,Not given,TRUE/NOT GIVEN
+89,1,,NOT GIVEN
+90,0,Not given,TRUE
+91,1,,TRUE
+92,0,Not given,TRUE
+93,1,,TRUE
+94,0,Not given,TRUE
+95,1,,TRUE
+96,1,,FALSE
+97,1,,TRUE
+98,1,,TRUE
+99,0,Not given,FALSE
+Additional Multi Sentence Input Tests (AI generated 20/10/2024,,,
+100,1,,TRUE
+101,1,,TRUE
+102,1,,FALSE
+103,1,,TRUE
+104,1,,TRUE
+105,0,"Not given, didn’t see contradiction",FALSE
+106,1,,TRUE
+107,0,"Not given, didn't spot contradiction",FALSE
+108,1,,TRUE
+109,1,,FALSE
+110,1,,TRUE
+111,1,,TRUE
+112,1,,FALSE
+113,1,,FALSE
+114,1,,TRUE
+115,1,,FALSE
+116,1,,FALSE
+117,1,,TRUE
+118,1,,FALSE
+119,1,,TRUE
+Additional Multi Sentence Input and Multi Sentence Output Tests (AI generated 20/10/2024,,,
+Total: 118,89,,16 false positive out of 55 FALSE/NOT GIVEN
+,,,13 false negatives out of 63 TRUE

@@ -2,7 +2,7 @@
 Number, Source, Statement, Answer
 1,"Monica went for a walk","Monica went for a walk","True"
 2,"Sam loves running","Sam enjoys running","True" 
-3,"Marina ate ice-cream","Marina did not eat ice-cream","True"
+3,"Marina ate ice-cream","Marina did not eat ice-cream","False"
 4,"Max likes hockey","Max hates hockey","False"
 5,"It was raining yesterday","Yesterday, it was rainy","True"
 6,"It was extremely cold and rainy a week ago","A week ago the weather was sunny and reallly warm","False"
