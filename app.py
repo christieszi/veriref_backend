@@ -38,39 +38,6 @@ async def ask(prompt,stream=False):
         result = await mistral(prompt,sampling_params=sampling_params)
         return result['text']
 
-# @app.route('/', methods=['GET', 'POST'])
-# def upload_or_input():
-#     if request.method == 'POST':
-#         if request.form.get('reset'):
-#             session.clear() 
-#             return redirect(url_for('upload_or_input'))
-
-#         input_data = None
-#         source_text = None
-#         if 'source_file' in request.files and request.files['source_file'].filename != '':
-
-#         elif 'source_url' in request.form and request.form['source_url'].strip() != '':
-#             source_url = request.form['source_url']
-#             session['source_url'] = source_url
-#             response = requests.get(source_url)
-#             response.raise_for_status()
-#             input_data = BeautifulSoup(response.content, "html.parser").get_text()
-
-#         elif 'source_text' in request.form and request.form['source_text'].strip() != '':
-#             source_text = request.form['source_text']
-#             input_data = source_text
-
-#         short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + to_verify + "? Reply with 'Yes', 'No', or 'Cannot say', please")))
-#         output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Why is it true or not that" + to_verify + "?")))
-
-#         return render_template('upload.html', short_answer=short_answer, output=output, source_url=source_url, source_text=source_text, to_verify=to_verify)
-    
-#     source_url = session.get('source_url', None)
-#     source_text = session.get('source_text', None)
-#     to_verify = session.get('to_verify', None)
-
-#     return render_template('upload.html', source_url=source_url, source_text=source_text, to_verify=to_verify)
-
 def extract_text_from_pdf(pdf_path):
     text = ''
     try:
