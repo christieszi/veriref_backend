@@ -1,12 +1,14 @@
-stages:
-  - build
+default:
+  before_script:
+    - apt install -y python3-pip
+    - echo MISTRAL_ENDPOINT="$MISTRAL_ENDPOINT" >> .env
+    - export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.8/dist-packages/
 
-build_job:
-  stage: build
-  tags:
-    - For-Build
+stages:
+  - deploy  
+
+deploy:
+  image: ubuntu:latest
+  stage: deploy    # deploy to heroku
   script:
-    - echo "Build started...."
-    - cd /home/ec2-user/builds/t3_iyseHN/0/kz1021/veriref/
-    - docker build -t veriref-flask-app .
-    - docker run -p 5000:5000 veriref-flask-app
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
