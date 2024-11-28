@@ -1,8 +1,6 @@
 default:
   before_script:
-    - apt install -y python3-pip
     - echo MISTRAL_ENDPOINT="$MISTRAL_ENDPOINT" >> .env
-    - export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.8/dist-packages/
 
 stages:
   - deploy  
@@ -11,9 +9,5 @@ deploy:
   image: ubuntu:latest
   stage: deploy    # deploy to heroku
   script:
-    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-
-
-
+    - sudo gem install dpl
+    - sudo dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
