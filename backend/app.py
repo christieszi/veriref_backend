@@ -1,5 +1,5 @@
 # importing Flask and other modules
-from flask import Flask, request, render_template, session, redirect, url_for, jsonify
+from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 import asyncio
 from utils import mistral_stream, mistral, ask_question
