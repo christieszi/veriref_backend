@@ -85,8 +85,8 @@ def process_inputs():
     else:
         input_data = None
 
-    short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + text_to_verify + "? Reply with 'Correct, 'Incorrect', or 'Cannot say', please")))
-    output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Why is it true or not that" + text_to_verify + "?")))
+    short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + text_to_verify + "? Reply with a short answer: 'Correct, 'Incorrect', or 'Cannot say', please")))
+    output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Why is it true or not that" + text_to_verify + "? Break down your reasoning into bullet points.")))
 
     # Return extracted text along with processed second input
     return jsonify({"shortAnswer": f"{short_answer}", "explanation": f"{output}"})
