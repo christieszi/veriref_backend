@@ -1,6 +1,7 @@
 default:
   before_script:
     - echo MISTRAL_ENDPOINT="$MISTRAL_ENDPOINT" >> .env
+    - echo HUGGINGFACE_TOKEN="$HUGGINGFACE_TOKEN" >> .env
 
 stages:
   - deploy  

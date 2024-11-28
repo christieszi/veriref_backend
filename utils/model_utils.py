@@ -2,10 +2,15 @@ from .mistral_tokeniser import MistralTokeniser
 import aiohttp
 from dotenv import load_dotenv
 import os
+from huggingface_hub import login
 
-# Load variables from .env file
 load_dotenv()
 mistral_endpoint = os.getenv('MISTRAL_ENDPOINT')
+huggingface_token = os.getenv('HUGGINGFACE_TOKEN')
+
+login(token = huggingface_token)
+
+# Load variables from .env file
 
 tokenizer = MistralTokeniser.from_pretrained("mistralai/Mistral-Small-Instruct-2409")
 
