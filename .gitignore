@@ -1,3 +1,4 @@
 env/
 .env
-import_requests.py
+.DS_Store 
+
