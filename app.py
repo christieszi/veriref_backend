@@ -50,6 +50,10 @@ def extract_text_from_pdf(pdf_path):
         text = f"Error reading PDF: {e}"
     return text
 
+@app.route("/")
+def index():
+    return "Hello World!"
+
 @app.route('/process', methods=['POST'])
 def process_inputs():
     # Handle file upload
@@ -88,4 +92,5 @@ def process_inputs():
     return jsonify({"shortAnswer": f"{short_answer}", "explanation": f"{output}"})
  
 if __name__=='__main__':
-   app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
