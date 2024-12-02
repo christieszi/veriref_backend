@@ -10,5 +10,4 @@ deploy:
   image: ubuntu:latest
   stage: deploy    # deploy to heroku
   script:
-    - sudo gem install dpl
-    - sudo dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
