@@ -94,30 +94,27 @@ def process_inputs():
     short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + text_to_verify + "? Reply with 'Correct, 'Incorrect', or 'Cannot say', please")))
     output = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following text '" + text_to_verify + "'. Output only enumerated claims and facts without any extra information.")))
     claims = extract_list_elements(output)
+    claims_output = []
     for claim in claims: 
-        print(claim)
         answer = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
         answer = answer.lstrip()
-        print(answer)
         if answer == "Correct" or "Correct" in answer: 
-            print("help")
-            print(asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is correct."))))
-            a = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' which specific setences support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
-            print('A')
-            print(a)
-            print(extract_sentences_elements(a))
+            explanation = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is correct.")))
+            sentences = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' which specific setences support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
+            sentences = (extract_sentences_elements(sentences))
+
         elif answer == "Incorrect" or "Incorrect" in answer:
-            print(asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is incorrect."))))
-            print("yooooooo")
-            a = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' give specific setences which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))
-            print('A')
-            print(a)
-            print(extract_sentences_elements(a))          
+            explanation = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is incorrect.")))
+            sentences = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' give specific setences which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))
+            sentences = (extract_sentences_elements(sentences))       
         else:
-            print(asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect."))))         
+            explanation = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
+            sentences = []
+
+        claims_output.append([claim, answer, explanation, sentences])
 
     # Return extracted text along with processed second input
-    return jsonify({"shortAnswer": f"{short_answer}", "explanation": f"{output}"})
+    return jsonify({"shortAnswer": f"{short_answer}", "explanation": f"{output}", "claims": claims_output})
  
 if __name__=='__main__':
    app.run()
