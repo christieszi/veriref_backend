@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import requests
 from werkzeug.utils import secure_filename
 from urllib.parse import urlparse
+import re
  
 # Flask constructor
 app = Flask(__name__)   
@@ -49,6 +50,16 @@ def extract_text_from_pdf(pdf_path):
         text = f"Error reading PDF: {e}"
     return text
 
+def extract_list_elements(text):
+    pattern = r'\d+\.\s(.*?)(?=\s\d+\.\s|$)'
+    matches = re.findall(pattern, text)
+    return matches
+
+def extract_sentences_elements(text):
+    pattern = r'\d+\.\s+"(.*?)"'
+    matches = re.findall(pattern, text)
+    return matches
+
 @app.route('/process', methods=['POST'])
 def process_inputs():
     # Handle file upload
@@ -81,7 +92,29 @@ def process_inputs():
         input_data = None
 
     short_answer = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Is it true that" + text_to_verify + "? Reply with 'Correct, 'Incorrect', or 'Cannot say', please")))
-    output = asyncio.run(ask(ask_question("Given the fact that " + input_data + ". Why is it true or not that" + text_to_verify + "?")))
+    output = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following text '" + text_to_verify + "'. Output only enumerated claims and facts without any extra information.")))
+    claims = extract_list_elements(output)
+    for claim in claims: 
+        print(claim)
+        answer = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
+        answer = answer.lstrip()
+        print(answer)
+        if answer == "Correct" or "Correct" in answer: 
+            print("help")
+            print(asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is correct."))))
+            a = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' which specific setences support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
+            print('A')
+            print(a)
+            print(extract_sentences_elements(a))
+        elif answer == "Incorrect" or "Incorrect" in answer:
+            print(asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is incorrect."))))
+            print("yooooooo")
+            a = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' give specific setences which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))
+            print('A')
+            print(a)
+            print(extract_sentences_elements(a))          
+        else:
+            print(asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect."))))         
 
     # Return extracted text along with processed second input
     return jsonify({"shortAnswer": f"{short_answer}", "explanation": f"{output}"})
