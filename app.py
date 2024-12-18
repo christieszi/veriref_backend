@@ -105,8 +105,6 @@ def process_inputs():
                 classification = 1
                 explanation = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is correct.")))
                 references = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
-                references = (extract_sentences_elements(references))
-
             elif answer == "Incorrect" or "Incorrect" in answer:
                 classification = 2
                 explanation = asyncio.run(ask(ask_question("Based only on the following text '" + input_data + "' explain why the following claim '" + claim + "' is incorrect.")))
@@ -128,7 +126,6 @@ def process_inputs():
             "claims": claims_processed
         })
 
-    print(sentences_processed)
     return jsonify({"sentences": sentences_processed})
  
 if __name__=='__main__':
