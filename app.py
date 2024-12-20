@@ -13,7 +13,7 @@ import re
  
 # Flask constructor
 app = Flask(__name__)   
-CORS(app, resources={r"/process": {"origins": "*"}})
+CORS(app, resources={r"/process": {"origins": "http://localhost:3000"}})
 
 # Configure upload folder
 UPLOAD_FOLDER = 'uploads'
@@ -91,11 +91,14 @@ def process_inputs():
 
         for source_number in source_numbers:
             if source_number and references.get(source_number):
-                response = requests.get(references[source_number])
-                response.raise_for_status()
-                input_data = BeautifulSoup(response.content, "html.parser").get_text()
-                source_text += (input_data)
-                source_text += "\n"
+                try:
+                    response = requests.get(references[source_number])
+                    response.raise_for_status()
+                    input_data = BeautifulSoup(response.content, "html.parser").get_text()
+                    source_text += (input_data)
+                    source_text += "\n"
+                except:
+                    source_text = source_text
 
         if len(source_text) == 0: 
             claim_dict = {
