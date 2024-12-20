@@ -44,19 +44,18 @@ def extract_references(text):
     ]
     # Vancouver-style references pattern
     reference_pattern = re.compile(r'\[(\d+(?:,\s?\d+)*)\]')
+    
     in_text_citations = {}
     for sentence in complete_sentences[:-1]:
-        # Find all Vancouver references in the sentence.
         matches = reference_pattern.findall(sentence)
 
         if matches:
-            # Extract reference numbers and flatten them into a single list.
             citations = [int(ref) for group in matches for ref in group.split(',')]
+            in_text_citations[remove_brackets_and_numbers(sentence).strip()] = citations
         else:
-            citations = []
+            in_text_citations[sentence.strip()] = []
 
-        # Map the sentence to the extracted references (or an empty list).
-        in_text_citations[sentence.strip()] = citations
+    print(in_text_citations)
 
     return references, in_text_citations
 
@@ -67,3 +66,7 @@ def extract_url(text):
         return match.group(0)
     else:
         return None
+    
+def remove_brackets_and_numbers(sentence):
+    # Use regex to remove squared brackets and numbers inside them
+    return re.sub(r'\[\d*\]', '', sentence)
