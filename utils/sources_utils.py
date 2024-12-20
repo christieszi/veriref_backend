@@ -2,7 +2,6 @@ import re
 
 def extract_references(text):
     ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
-    
     if ref_match:
         references_text = ref_match.group(1)
         body_text = text[:ref_match.start()]
@@ -15,7 +14,8 @@ def extract_references(text):
                 references_text = '\n'.join(lines[i:])
                 body_text = lines[:i]
                 break
-        
+        body_text = text 
+        references_text = ""
     
     references = {}
     matches = re.findall(
@@ -26,21 +26,44 @@ def extract_references(text):
 
     if matches:
         for match in matches:
+
             number = match[0] or match[1] or match[2] 
-            content = match[3].strip()                
+            content = match[3].strip()              
             if content:                               
                 key = int(number) if number else len(references) + 1  
-                references[key] = content
+                references[key] = extract_url(content)
     else:
         lines = [line.strip() for line in references_text.splitlines() if line.strip()]
         references = {i + 1: line for i, line in enumerate(lines[:5])}
     
+    sentences = re.split(r'(\.|\?|!)', body_text.strip())
+    
+    complete_sentences = [
+        sentences[i] + (sentences[i + 1] if i + 1 < len(sentences) else '')
+        for i in range(0, len(sentences), 2)
+    ]
+    # Vancouver-style references pattern
+    reference_pattern = re.compile(r'\[(\d+(?:,\s?\d+)*)\]')
     in_text_citations = {}
-    pattern = r'([^.]*?)(\[\d+(?:,\s*\d+)*\]|\(\d+(?:,\s*\d+)*\))'
-    matches = re.findall(pattern, body_text)
+    for sentence in complete_sentences[:-1]:
+        # Find all Vancouver references in the sentence.
+        matches = reference_pattern.findall(sentence)
 
-    for sentence, numbers in matches:
-        individual_numbers = re.findall(r'\d+', numbers)
-        in_text_citations[sentence.strip()] = list(map(int, individual_numbers))
+        if matches:
+            # Extract reference numbers and flatten them into a single list.
+            citations = [int(ref) for group in matches for ref in group.split(',')]
+        else:
+            citations = []
+
+        # Map the sentence to the extracted references (or an empty list).
+        in_text_citations[sentence.strip()] = citations
 
     return references, in_text_citations
+
+def extract_url(text):
+    url_pattern = r'https?://[^\s]+'
+    match = re.search(url_pattern, text)
+    if match:
+        return match.group(0)
+    else:
+        return None
