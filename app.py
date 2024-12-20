@@ -13,7 +13,7 @@ import re
  
 # Flask constructor
 app = Flask(__name__)   
-CORS(app)
+CORS(app, resources={r"/process": {"origins": "*"}})
 
 # Configure upload folder
 UPLOAD_FOLDER = 'uploads'
