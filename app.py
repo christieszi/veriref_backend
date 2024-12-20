@@ -3,7 +3,7 @@ from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 import asyncio
 from utils import mistral_stream, mistral, ask_question, extract_references
-import PyPDF2
+import fitz
 import os
 from bs4 import BeautifulSoup
 import requests
@@ -42,10 +42,10 @@ async def ask(prompt,stream=False):
 def extract_text_from_pdf(pdf_path):
     text = ''
     try:
-        with open(pdf_path, 'rb') as pdf_file:
-            reader = PyPDF2.PdfReader(pdf_file)
-            for page in reader.pages:
-                text += page.extract_text()
+        doc = fitz.open(pdf_path)
+        text = ""
+        for page in doc:    
+            text += page.get_text()    
     except Exception as e:
         text = f"Error reading PDF: {e}"
     return text
@@ -63,33 +63,24 @@ def extract_sentences_elements(text):
 @app.route('/process', methods=['POST'])
 def process_inputs():
     # Handle file upload
-    # source_file = request.files.get("file")
+    file = request.files.get("file")
     # source_text = request.form.get("sourceTextInput")
-    text_to_verify = request.form.get("toVerify")
+    text_input = request.form.get("textInput")
 
-    # if source_file:
-    #     filename = secure_filename(source_file.filename)
-    #     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    #     source_file.save(filepath)
+    if file:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
 
-    #     # Extract text from PDF
-    #     input_data = extract_text_from_pdf(filepath)
+        # Extract text from PDF
+        text_to_verify = extract_text_from_pdf(filepath)
 
-    #     # Delete the file after processing
-    #     try:
-    #         os.remove(filepath)
-    #     except Exception as e:
-    #         return render_template('upload.html', error=f"Error deleting file: {e}")
-    # elif source_text:
-    #     source_text = source_text.strip()
-    #     if urlparse(source_text).scheme:
-    #         response = requests.get(source_text)
-    #         response.raise_for_status()
-    #         input_data = BeautifulSoup(response.content, "html.parser").get_text()
-    #     else:
-    #         input_data = source_text
-    # else:
-    #     input_data = None
+        try:
+            os.remove(filepath)
+        except Exception as e:
+            return render_template('upload.html', error=f"Error deleting file: {e}")
+    else:
+        text_to_verify = text_input
 
     references, sentences_with_citations = extract_references(text_to_verify)
 
