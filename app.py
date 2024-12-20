@@ -104,7 +104,7 @@ def process_inputs():
             claim_dict = {
                 "claim": sentence,
                 "answer": "Could not check",
-                "type": 3,
+                "type": 4,
                 "explanation": "Could not access source",
                 "references": []
             }
