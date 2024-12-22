@@ -1,4 +1,6 @@
 import re
+import requests
+from bs4 import BeautifulSoup
 
 def extract_references(text):
     ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
@@ -68,5 +70,9 @@ def extract_url(text):
         return None
     
 def remove_brackets_and_numbers(sentence):
-    # Use regex to remove squared brackets and numbers inside them
     return re.sub(r'\[\d*\]', '', sentence)
+
+def get_source_text_from_link(source):
+    response = requests.get(source)
+    response.raise_for_status()
+    return BeautifulSoup(response.content, "html.parser").get_text()
