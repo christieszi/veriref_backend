@@ -5,9 +5,9 @@ import asyncio
 from utils import mistral_stream, mistral, ask_question, extract_references, get_source_text_from_link, extract_url
 import fitz
 import os
-from urllib.parse import urlparse
 import re
 from werkzeug.utils import secure_filename
+import json
  
 app = Flask(__name__)   
 CORS(app, resources={r"/process": {"origins": "*"}, 
@@ -152,78 +152,77 @@ def process_prompt():
 
 @app.route('/add_source', methods=['POST'])
 def add_source():
-    try:
-        file = request.files.get("file")
-        text_input = request.form.get("textInput")
+    file = request.files.get("file")
+    text_input = request.form.get("textInput")
 
-        if file:
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-            source_text = extract_text_from_pdf(filepath)
-            try:
-                os.remove(filepath)
-            except Exception as e:
-                return render_template('upload.html', error=f"Error deleting file: {e}")
+    if file:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+        source_text = extract_text_from_pdf(filepath)
+        try:
+            os.remove(filepath)
+        except Exception as e:
+            return render_template('upload.html', error=f"Error deleting file: {e}")
+    else:
+        link = extract_url(text_input)
+        if link:
+            source_text = get_source_text_from_link(link)
+        else: 
+            source_text = text_input
+
+    sources = json.loads(request.form.get('sources'))
+    sentence = request.form.get('sentence')
+    for source in sources: 
+        try:
+            source_text += get_source_text_from_link(source)
+            source_text += "\n"
+        except:
+            source_text = source_text
+
+    claims = json.loads(request.form.get("claims"))
+    claims_processed = [] 
+    if len(source_text) == 0: 
+        claim_dict = {
+            "claim": sentence,
+            "answer": "Could not check",
+            "type": 4,
+            "explanation": "Could not access source",
+            "references": []
+        }
+        claims_processed.append(claim_dict)
+    else:
+        if claims[0]['type'] == 4:
+            new_claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
+            new_claims = extract_list_elements(new_claims)
         else:
-            link = extract_url(text_input)
-            if link:
-                source_text = get_source_text_from_link(link)
-            else: 
-                source_text = text_input
+            new_claims = [claim['claim'] for claim in claims]
 
-        sources = request.json['sources']  
-        for source in sources: 
-            try:
-                source_text += get_source_text_from_link(source)
-                source_text += "\n"
-            except:
-                source_text = source_text
-
-        claims =  request.json['claims']
-        claims_processed = [] 
-        if len(source_text) == 0: 
-            claim_dict = {
-                "claim": claims[0]["claim"],
-                "answer": "Could not check",
-                "type": 4,
-                "explanation": "Could not access source",
-                "references": []
-            }
-            claims_processed.append(claim_dict)
-        else:
-            if claims[0]['type'] == 4:
-                new_claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + claims[0]['claim'] + "'. Output only enumerated claims and facts without any extra information.")))
-                new_claims = extract_list_elements(new_claims)
+        for claim in new_claims:
+            answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
+            answer = answer.lstrip()
+            if answer == "Correct" or "Correct" in answer: 
+                classification = 1
+                explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
+                references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
+            elif answer == "Incorrect" or "Incorrect" in answer:
+                classification = 2
+                explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
+                references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))     
             else:
-                new_claims = [claim['claim'] for claim in claims]
-            for claim in new_claims:
-                answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
-                answer = answer.lstrip()
-                if answer == "Correct" or "Correct" in answer: 
-                    classification = 1
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
-                    references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
-                elif answer == "Incorrect" or "Incorrect" in answer:
-                    classification = 2
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
-                    references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))     
-                else:
-                    classification = 3
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
-                    references = []
-                claim_dict = {
-                    "claim": claim,
-                    "answer": answer,
-                    "type": classification,
-                    "explanation": explanation,
-                    "references": references
-                }
-                claims_processed.append(claim_dict)            
+                classification = 3
+                explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
+                references = []
+            claim_dict = {
+                "claim": claim,
+                "answer": answer,
+                "type": classification,
+                "explanation": explanation,
+                "references": references
+            }
+            claims_processed.append(claim_dict)            
 
-        return jsonify({"claims": claims_processed})
-    except Exception as e:
-        return jsonify({"claims": request.json["claims"]})
+    return jsonify({"claims": claims_processed})
 
 @app.route('/analyse_sentence', methods=['POST'])
 def analyse_sentence():
