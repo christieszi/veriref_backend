@@ -10,10 +10,10 @@ import re
 from werkzeug.utils import secure_filename
  
 app = Flask(__name__)   
-CORS(app, resources={r"/process": {"origins": "http://localhost:3000"}, 
-                     r"/prompt": {"origins": "http://localhost:3000"}, 
-                     r"/add_source": {"origins": "http://localhost:3000"},
-                     r"/analyse_sentence": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/process": {"origins": "*"}, 
+                     r"/prompt": {"origins": "*"}, 
+                     r"/add_source": {"origins": "*"},
+                     r"/analyse_sentence": {"origins": "*"}})
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
