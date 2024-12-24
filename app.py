@@ -153,8 +153,8 @@ def process_prompt():
 @app.route('/add_source', methods=['POST'])
 def add_source():
     try:
-        file = request.json["file"]
-        text_input = request.json["textInput"]
+        file = request.files.get("file")
+        text_input = request.form.get("textInput")
 
         if file:
             filename = secure_filename(file.filename)
