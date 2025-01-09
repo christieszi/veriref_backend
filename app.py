@@ -74,18 +74,18 @@ def process_inputs():
     else:
         text_to_verify = text_input
 
-    references, sentences_with_citations = extract_references(text_to_verify)
+    doc_references, sentences_with_citations = extract_references(text_to_verify)
 
     sentences_processed = [] 
     for sentence, source_numbers in sentences_with_citations.items(): 
         source_text = ""
         claims_processed = []
-        sources = []
+        sources = [] 
 
         for source_number in source_numbers:
-            if source_number and references.get(source_number):
+            if source_number and doc_references[source_number]:
                 try:
-                    source = references[source_number]
+                    source = doc_references[source_number]
                     source_text += get_source_text_from_link(source)
                     source_text += "\n"
                     sources.append(source)

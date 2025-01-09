@@ -38,26 +38,32 @@ def extract_references(text):
         lines = [line.strip() for line in references_text.splitlines() if line.strip()]
         references = {i + 1: line for i, line in enumerate(lines[:5])}
     
-    sentences = re.split(r'(\.|\?|!)', body_text.strip())
-    
-    complete_sentences = [
-        sentences[i] + (sentences[i + 1] if i + 1 < len(sentences) else '')
-        for i in range(0, len(sentences), 2)
-    ]
-    # Vancouver-style references pattern
-    reference_pattern = re.compile(r'\[(\d+(?:,\s?\d+)*)\]')
-    
+    sentences = re.split(r'(?<=[.!?])\s+', body_text.strip())
+
     in_text_citations = {}
-    for sentence in complete_sentences[:-1]:
-        matches = reference_pattern.findall(sentence)
 
-        if matches:
-            citations = [int(ref) for group in matches for ref in group.split(',')]
-            in_text_citations[remove_brackets_and_numbers(sentence).strip()] = citations
-        else:
-            in_text_citations[sentence.strip()] = []
+    for sentence in sentences:
+        if not sentence.strip():
+            continue
 
-    print(in_text_citations)
+        matches = re.finditer(r'(.*?)[\[\()]([0-9,\s]+)[\]\)]', sentence)
+
+        current_sentence = sentence.strip()
+        sentence_processed = False
+
+        for match in matches:
+            part = (match.group(1) or "").strip() or (match.group(3) or "").strip()
+            numbers = (match.group(2) or "").strip() or (match.group(3) or "").strip()
+
+            number_list = [int(num.strip()) for num in numbers.split(',') if num.strip().isdigit()]
+
+            if part:
+                in_text_citations[part] = number_list
+                sentence_processed = True
+
+        if not sentence_processed:
+            clean_sentence = re.sub(r'\s*[\[(][0-9,\s]+[\])]\s*$', '', current_sentence)
+            in_text_citations[clean_sentence] = []
 
     return references, in_text_citations
 
