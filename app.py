@@ -138,7 +138,7 @@ def launch_processing_job(job_id):
                     }
                     yield ("data: " + json.dumps({
                         "messageType": "claim",
-                        "claim": claim,
+                        "claim": claim_dict,
                         "sentenceIndex": i,
                         "claimIndex": j
                     }) + "\n\n")
@@ -150,7 +150,7 @@ def launch_processing_job(job_id):
                 "sources": sources
             })
 
-        yield "data: " + json.dumps({"messageType": "end", "sentences": sentences_processed}) + "\n\n"
+        yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
         jobs.pop(job_id)
 
     doc_references = jobs[job_id]["references"]
