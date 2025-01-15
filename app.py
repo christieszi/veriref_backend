@@ -1,5 +1,5 @@
 # importing Flask and other modules
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, Response
 from flask_cors import CORS
 import asyncio
 from utils import mistral_stream, mistral, ask_question, extract_references, get_source_text_from_link, extract_url
@@ -8,12 +8,15 @@ import os
 import re
 from werkzeug.utils import secure_filename
 import json
+import uuid
  
 app = Flask(__name__)   
 CORS(app, resources={r"/process": {"origins": "*"}, 
                      r"/prompt": {"origins": "*"}, 
                      r"/add_source": {"origins": "*"},
-                     r"/analyse_sentence": {"origins": "*"}})
+                     r"/analyse_sentence": {"origins": "*"},
+                     r"/launch_processing_job/*": {"origins": "*"},
+                     r"/stream": {"origins": "*"}})
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -57,6 +60,85 @@ def extract_sentences_elements(text):
     matches = re.findall(pattern, text)
     return matches
 
+jobs = {} # Example: {"job_id": {"references": [], "sentences": [], "time_submitted": TODO}}
+
+@app.route('/launch_processing_job/<job_id>')
+def launch_processing_job(job_id):
+    def generate(doc_references, sentences_with_citations):
+        yield ("data: " + json.dumps({
+            "messageType": "sentences",
+            "sentences": sentences_with_citations
+        }) + "\n\n")
+
+        sentences_processed = [] 
+        for sentence, source_numbers in sentences_with_citations.items(): 
+            source_text = ""
+            claims_processed = []
+            sources = [] 
+
+            for source_number in source_numbers:
+                if source_number and doc_references[source_number]:
+                    try:
+                        source = doc_references[source_number]
+                        source_text += get_source_text_from_link(source)
+                        source_text += "\n"
+                        sources.append(source)
+                    except:
+                        source_text = source_text
+
+            if len(source_text) == 0: 
+                claim_dict = {
+                    "claim": sentence,
+                    "answer": "Could not check",
+                    "type": 4,
+                    "explanation": "Could not access source",
+                    "references": []
+                }
+                yield ("data: " + json.dumps(claim_dict) + "\n\n")
+                claims_processed.append(claim_dict)
+            else:
+                claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
+                claims = extract_list_elements(claims)
+                for claim in claims: 
+                    answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
+                    answer = answer.lstrip()
+                    if answer == "Correct" or "Correct" in answer: 
+                        classification = 1
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
+                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
+                    elif answer == "Incorrect" or "Incorrect" in answer:
+                        classification = 2
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
+                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))     
+                    else:
+                        classification = 3
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
+                        references = []
+                    claim_dict = {
+                        "claim": claim,
+                        "answer": answer,
+                        "type": classification,
+                        "explanation": explanation,
+                        "references": references
+                    }
+                    yield ("data: " + json.dumps(claim_dict) + "\n\n")
+                    claims_processed.append(claim_dict)
+
+            sentences_processed.append({
+                "sentence": sentence,
+                "claims": claims_processed,
+                "sources": sources
+            })
+
+        yield "data: " + json.dumps({"messageType": "end", "sentences": sentences_processed}) + "\n\n"
+        yield "data:end\n\n"
+        jobs.pop(job_id)
+
+    doc_references = jobs[job_id]["references"]
+    sentences_with_citations = jobs[job_id]["sentences"]
+
+    return Response(generate(doc_references, sentences_with_citations), content_type='text/event-stream')
+
 @app.route('/process', methods=['POST'])
 def process_inputs():
     file = request.files.get("file")
@@ -75,66 +157,10 @@ def process_inputs():
         text_to_verify = text_input
 
     doc_references, sentences_with_citations = extract_references(text_to_verify)
+    job_id = str(uuid.uuid4())
 
-    sentences_processed = [] 
-    for sentence, source_numbers in sentences_with_citations.items(): 
-        source_text = ""
-        claims_processed = []
-        sources = [] 
-
-        for source_number in source_numbers:
-            if source_number and doc_references[source_number]:
-                try:
-                    source = doc_references[source_number]
-                    source_text += get_source_text_from_link(source)
-                    source_text += "\n"
-                    sources.append(source)
-                except:
-                    source_text = source_text
-
-        if len(source_text) == 0: 
-            claim_dict = {
-                "claim": sentence,
-                "answer": "Could not check",
-                "type": 4,
-                "explanation": "Could not access source",
-                "references": []
-            }
-            claims_processed.append(claim_dict)
-        else:
-            claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
-            claims = extract_list_elements(claims)
-            for claim in claims: 
-                answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
-                answer = answer.lstrip()
-                if answer == "Correct" or "Correct" in answer: 
-                    classification = 1
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
-                    references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
-                elif answer == "Incorrect" or "Incorrect" in answer:
-                    classification = 2
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
-                    references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))     
-                else:
-                    classification = 3
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
-                    references = []
-                claim_dict = {
-                    "claim": claim,
-                    "answer": answer,
-                    "type": classification,
-                    "explanation": explanation,
-                    "references": references
-                }
-                claims_processed.append(claim_dict)
-
-        sentences_processed.append({
-            "sentence": sentence,
-            "claims": claims_processed,
-            "sources": sources
-        })
-
-    return jsonify({"sentences": sentences_processed})
+    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations}
+    return jsonify({"jobId": job_id})
  
 @app.route('/prompt', methods=['POST'])
 def process_prompt():
