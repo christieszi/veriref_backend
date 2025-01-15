@@ -67,11 +67,11 @@ def launch_processing_job(job_id):
     def generate(doc_references, sentences_with_citations):
         yield ("data: " + json.dumps({
             "messageType": "sentences",
-            "sentences": sentences_with_citations
+            "sentences": [{"sentence": sentence,"claims": [],"sources": []} for sentence, _ in sentences_with_citations.items()]
         }) + "\n\n")
 
         sentences_processed = [] 
-        for sentence, source_numbers in sentences_with_citations.items(): 
+        for i, (sentence, source_numbers) in enumerate(sentences_with_citations.items()): 
             source_text = ""
             claims_processed = []
             sources = [] 
@@ -92,14 +92,24 @@ def launch_processing_job(job_id):
                     "answer": "Could not check",
                     "type": 4,
                     "explanation": "Could not access source",
-                    "references": []
+                    "references": [],
+                    "sentenceIndex": i
                 }
-                yield ("data: " + json.dumps(claim_dict) + "\n\n")
+                yield ("data: " + json.dumps({
+                    "messageType": "claimNoResource",
+                    "claim": claim_dict
+                }) + "\n\n")
                 claims_processed.append(claim_dict)
             else:
                 claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
                 claims = extract_list_elements(claims)
-                for claim in claims: 
+                yield ("data: " + json.dumps({
+                    "messageType": "claims",
+                    "claims": claims,
+                    "sentenceIndex": i
+                }) + "\n\n")
+
+                for j, claim in enumerate(claims): 
                     answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
                     answer = answer.lstrip()
                     if answer == "Correct" or "Correct" in answer: 
@@ -119,9 +129,14 @@ def launch_processing_job(job_id):
                         "answer": answer,
                         "type": classification,
                         "explanation": explanation,
-                        "references": references
+                        "references": references,
+                        "sentenceIndex": i,
+                        "claimIndex": j
                     }
-                    yield ("data: " + json.dumps(claim_dict) + "\n\n")
+                    yield ("data: " + json.dumps({
+                        "messageType": "claim",
+                        "claim": claim,
+                    }) + "\n\n")
                     claims_processed.append(claim_dict)
 
             sentences_processed.append({
@@ -131,7 +146,6 @@ def launch_processing_job(job_id):
             })
 
         yield "data: " + json.dumps({"messageType": "end", "sentences": sentences_processed}) + "\n\n"
-        yield "data:end\n\n"
         jobs.pop(job_id)
 
     doc_references = jobs[job_id]["references"]
