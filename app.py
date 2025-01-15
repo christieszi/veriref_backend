@@ -92,12 +92,12 @@ def launch_processing_job(job_id):
                     "answer": "Could not check",
                     "type": 4,
                     "explanation": "Could not access source",
-                    "references": [],
-                    "sentenceIndex": i
+                    "references": []
                 }
                 yield ("data: " + json.dumps({
                     "messageType": "claimNoResource",
-                    "claim": claim_dict
+                    "claim": claim_dict,
+                    "sentenceIndex": i
                 }) + "\n\n")
                 claims_processed.append(claim_dict)
             else:
@@ -105,7 +105,12 @@ def launch_processing_job(job_id):
                 claims = extract_list_elements(claims)
                 yield ("data: " + json.dumps({
                     "messageType": "claims",
-                    "claims": claims,
+                    "claims": ([{
+                    "claim": claim,
+                    "answer": "",
+                    "type": 4,
+                    "explanation": "",
+                    "references": []} for claim in claims]),
                     "sentenceIndex": i
                 }) + "\n\n")
 
@@ -130,12 +135,12 @@ def launch_processing_job(job_id):
                         "type": classification,
                         "explanation": explanation,
                         "references": references,
-                        "sentenceIndex": i,
-                        "claimIndex": j
                     }
                     yield ("data: " + json.dumps({
                         "messageType": "claim",
                         "claim": claim,
+                        "sentenceIndex": i,
+                        "claimIndex": j
                     }) + "\n\n")
                     claims_processed.append(claim_dict)
 
