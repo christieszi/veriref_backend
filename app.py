@@ -375,20 +375,23 @@ def analyse_sentence():
 def upload():
     file_input = request.files.get("file")
     text_input = request.form.get("textInput")
+    sentences = json.loads(request.form.get("sentences")) 
 
-    print(text_input)
+    print(sentences)
+
+    file_path = None
     if file_input:
         # Handle PDF file upload
         filename = secure_filename(file_input.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file_input.save(filepath)
-        return send_file(filepath, as_attachment=True)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_input.save(file_path)
+        # return send_file(filepath, as_attachment=True)
 
     elif text_input:
         print("whatafauck")
         # Handle text input and convert to PDF using Fitz
 
-        pdf_path = 'output.pdf'
+        file_path = 'output.pdf'
 
         # Create PDF using FPDF
         pdf = FPDF()
@@ -402,9 +405,59 @@ def upload():
         pdf.multi_cell(page_width, 10, text_input)
 
         # Save the PDF
-        pdf.output(pdf_path)
-        return send_file(pdf_path, as_attachment=True)
+        pdf.output(file_path)
+        # return send_file(pdf_path, as_attachment=True)
+    
+    def get_sentence_classification(sentence_json): 
+        sentence = sentence_json['sentence']
+        classification =  0
+        claims = sentence_json['claims']
+        for claim_json in claims:
+            claim = claim_json['claim'] 
+            claim_type = claim_json['type'] 
+            if claim_type == 2: 
+                classification = 2 
+                break 
+            elif claim_type == 3 or claim_type == 4: 
+                classification = 3 
+            elif claim_type == 1:
+                classification = 1 
+        return sentence, classification
 
+    processed_sentences = [get_sentence_classification(sentence_json) for sentence_json in sentences]
+    print(processed_sentences)
+
+    doc = fitz.open(file_path)
+
+    for page_num in range(doc.page_count):
+        sentenceNotFound = False 
+
+        while (not sentenceNotFound) and len(processed_sentences) > 0:
+
+            page = doc.load_page(page_num)
+
+            cur_sentence, cur_class = processed_sentences[0]
+
+            text_instances = page.search_for(cur_sentence)
+            
+            if text_instances:
+                for inst in text_instances:
+                    # Add a highlight annotation for the found text
+                    highlight = page.add_highlight_annot(inst)
+                    if cur_class == 1:
+                        highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                    elif cur_class == 2:
+                        highlight.set_colors(stroke=(1, 0.6, 0.6))
+                    else:
+                        highlight.set_colors(stroke=(1, 1, 0.6))
+                    highlight.update()
+                del processed_sentences[0]
+            else: 
+                sentenceNotFound = True
+
+    # Save the modified PDF
+    doc.save("highlighted_output.pdf")
+    return send_file("highlighted_output.pdf", as_attachment=True)
     # return 'No file or text provided.', 401
 
 if __name__=='__main__':
