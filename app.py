@@ -1,5 +1,5 @@
 # importing Flask and other modules
-from flask import Flask, request, render_template, jsonify, Response
+from flask import Flask, request, render_template, jsonify, Response, send_file
 from flask_cors import CORS
 import asyncio
 from utils import mistral_stream, mistral, ask_question, extract_references, get_source_text_from_link, extract_url
@@ -9,6 +9,7 @@ import re
 from werkzeug.utils import secure_filename
 import json
 import uuid
+from fpdf import FPDF
  
 app = Flask(__name__)   
 CORS(app, resources={r"/process": {"origins": "*"}, 
@@ -16,7 +17,8 @@ CORS(app, resources={r"/process": {"origins": "*"},
                      r"/add_source": {"origins": "*"},
                      r"/analyse_sentence": {"origins": "*"},
                      r"/launch_processing_job/*": {"origins": "*"},
-                     r"/stream": {"origins": "*"}})
+                     r"/stream": {"origins": "*"},
+                     r"/generate_pdf": {"origins": "*"}})
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -92,24 +94,24 @@ def launch_processing_job(job_id):
                     "answer": "Could not check",
                     "type": 4,
                     "explanation": "Could not access source",
-                    "references": []
+                    "references": None
                 }
                 yield ("data: " + json.dumps({
                     "messageType": "claimNoResource",
                     "claim": claim_dict,
                     "sentenceIndex": i
                 }) + "\n\n")
-                claims_processed.append(claim_dict)
+
             else:
-                claims = asyncio.run(ask(ask_question("Identify all the separate non-trivial claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
+                claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
                 claims = extract_list_elements(claims)
                 yield ("data: " + json.dumps({
                     "messageType": "claims",
                     "claims": ([{
                     "claim": claim,
-                    "answer": "",
+                    "answer": None,
                     "type": 5,
-                    "explanation": "",
+                    "explanation": None,
                     "references": []} for claim in claims]),
                     "sentenceIndex": i
                 }) + "\n\n")
@@ -121,8 +123,8 @@ def launch_processing_job(job_id):
                         "claim": claim,
                         "answer": answer,
                         "type": None,
-                        "explanation": "",
-                        "references": [],
+                        "explanation": None,
+                        "references": None,
                     }
                     if answer == "Correct" or "Correct" in answer: 
                         claim_dict['type'] = 1
@@ -182,6 +184,7 @@ def launch_processing_job(job_id):
                         }) + "\n\n")    
                         explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))
                         claim_dict['explanation'] = explanation
+                        claim_dict['references'] = []
                         yield ("data: " + json.dumps({
                             "messageType": "claimExplanation",
                             "claim": claim_dict,
@@ -367,6 +370,42 @@ def analyse_sentence():
         return jsonify({"claims": claims_processed})
     except Exception as e:
         return jsonify({"claims": request.json['claims']})
+
+@app.route('/generate_pdf', methods=['POST'])
+def upload():
+    file_input = request.files.get("file")
+    text_input = request.form.get("textInput")
+
+    print(text_input)
+    if file_input:
+        # Handle PDF file upload
+        filename = secure_filename(file_input.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_input.save(filepath)
+        return send_file(filepath, as_attachment=True)
+
+    elif text_input:
+        print("whatafauck")
+        # Handle text input and convert to PDF using Fitz
+
+        pdf_path = 'output.pdf'
+
+        # Create PDF using FPDF
+        pdf = FPDF()
+        pdf.add_page()
+
+        # Set font and size
+        pdf.set_font('Arial', size=12)
+
+        # Set the width of the multi_cell (page width minus margin)
+        page_width = pdf.w - 2 * pdf.l_margin
+        pdf.multi_cell(page_width, 10, text_input)
+
+        # Save the PDF
+        pdf.output(pdf_path)
+        return send_file(pdf_path, as_attachment=True)
+
+    # return 'No file or text provided.', 401
 
 if __name__=='__main__':
    app.run()
