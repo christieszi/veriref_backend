@@ -101,14 +101,14 @@ def launch_processing_job(job_id):
                 }) + "\n\n")
                 claims_processed.append(claim_dict)
             else:
-                claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
+                claims = asyncio.run(ask(ask_question("Identify all the separate non-trivial claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
                 claims = extract_list_elements(claims)
                 yield ("data: " + json.dumps({
                     "messageType": "claims",
                     "claims": ([{
                     "claim": claim,
                     "answer": "",
-                    "type": 4,
+                    "type": 5,
                     "explanation": "",
                     "references": []} for claim in claims]),
                     "sentenceIndex": i
@@ -117,32 +117,78 @@ def launch_processing_job(job_id):
                 for j, claim in enumerate(claims): 
                     answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
                     answer = answer.lstrip()
-                    if answer == "Correct" or "Correct" in answer: 
-                        classification = 1
-                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
-                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
-                    elif answer == "Incorrect" or "Incorrect" in answer:
-                        classification = 2
-                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
-                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))     
-                    else:
-                        classification = 3
-                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
-                        references = []
                     claim_dict = {
                         "claim": claim,
                         "answer": answer,
-                        "type": classification,
-                        "explanation": explanation,
-                        "references": references,
+                        "type": None,
+                        "explanation": "",
+                        "references": [],
                     }
-                    yield ("data: " + json.dumps({
-                        "messageType": "claim",
-                        "claim": claim_dict,
-                        "sentenceIndex": i,
-                        "claimIndex": j
-                    }) + "\n\n")
-                    claims_processed.append(claim_dict)
+                    if answer == "Correct" or "Correct" in answer: 
+                        claim_dict['type'] = 1
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                  
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
+                        claim_dict['explanation'] = explanation
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                            
+                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
+                        claim_dict['references'] = references
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimReferences",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")   
+                    elif answer == "Incorrect" or "Incorrect" in answer:
+                        claim_dict['type'] = 2
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                           
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
+                        claim_dict['explanation'] = explanation
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")   
+                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))  
+                        claim_dict['references'] = references
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimReferences",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")     
+                    else:
+                        claim_dict['type'] = 3
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")    
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))
+                        claim_dict['explanation'] = explanation
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")       
+
 
             sentences_processed.append({
                 "sentence": sentence,
