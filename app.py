@@ -1,5 +1,5 @@
 # importing Flask and other modules
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, Response, send_file
 from flask_cors import CORS
 import asyncio
 from utils import mistral_stream, mistral, ask_question, extract_references, get_source_text_from_link, extract_url
@@ -8,12 +8,17 @@ import os
 import re
 from werkzeug.utils import secure_filename
 import json
+import uuid
+from fpdf import FPDF
  
 app = Flask(__name__)   
 CORS(app, resources={r"/process": {"origins": "*"}, 
                      r"/prompt": {"origins": "*"}, 
                      r"/add_source": {"origins": "*"},
-                     r"/analyse_sentence": {"origins": "*"}})
+                     r"/analyse_sentence": {"origins": "*"},
+                     r"/launch_processing_job/*": {"origins": "*"},
+                     r"/stream": {"origins": "*"},
+                     r"/generate_pdf": {"origins": "*"}})
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -57,6 +62,151 @@ def extract_sentences_elements(text):
     matches = re.findall(pattern, text)
     return matches
 
+jobs = {} # Example: {"job_id": {"references": [], "sentences": [], "time_submitted": TODO}}
+
+@app.route('/launch_processing_job/<job_id>')
+def launch_processing_job(job_id):
+    def generate(doc_references, sentences_with_citations):
+        yield ("data: " + json.dumps({
+            "messageType": "sentences",
+            "sentences": [{"sentence": sentence,"claims": [],"sources": []} for sentence, _ in sentences_with_citations.items()]
+        }) + "\n\n")
+
+        sentences_processed = [] 
+        for i, (sentence, source_numbers) in enumerate(sentences_with_citations.items()): 
+            source_text = ""
+            claims_processed = []
+            sources = [] 
+
+            for source_number in source_numbers:
+                if source_number and doc_references.get(source_number, None):
+                    try:
+                        source = doc_references[source_number]
+                        source_text += get_source_text_from_link(source)
+                        source_text += "\n"
+                        sources.append(source)
+                    except:
+                        source_text = source_text
+
+            if len(source_text) == 0: 
+                claim_dict = {
+                    "claim": sentence,
+                    "answer": "Could not check",
+                    "type": 4,
+                    "explanation": "Could not access source",
+                    "references": None
+                }
+                yield ("data: " + json.dumps({
+                    "messageType": "claimNoResource",
+                    "claim": claim_dict,
+                    "sentenceIndex": i
+                }) + "\n\n")
+
+            else:
+                claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
+                claims = extract_list_elements(claims)
+                yield ("data: " + json.dumps({
+                    "messageType": "claims",
+                    "claims": ([{
+                    "claim": claim,
+                    "answer": None,
+                    "type": 5,
+                    "explanation": None,
+                    "references": None} for claim in claims]),
+                    "sentenceIndex": i
+                }) + "\n\n")
+
+                for j, claim in enumerate(claims): 
+                    answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', 'Cannot Say', 'Not Provided', or 'Does not mention'")))
+                    answer = answer.lstrip()
+                    claim_dict = {
+                        "claim": claim,
+                        "answer": answer,
+                        "type": None,
+                        "explanation": None,
+                        "references": None,
+                    }
+                    if answer == "Correct" or "Correct" in answer: 
+                        claim_dict['type'] = 1
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                  
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
+                        claim_dict['explanation'] = explanation
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                            
+                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
+                        claim_dict['references'] = references
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimReferences",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")   
+                    elif answer == "Incorrect" or "Incorrect" in answer:
+                        claim_dict['type'] = 2
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                           
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
+                        claim_dict['explanation'] = explanation
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")   
+                        references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))  
+                        claim_dict['references'] = references
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimReferences",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")     
+                    else:
+                        claim_dict['type'] = 3
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")    
+                        explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))
+                        claim_dict['explanation'] = explanation
+                        claim_dict['references'] = None
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")       
+
+
+            sentences_processed.append({
+                "sentence": sentence,
+                "claims": claims_processed,
+                "sources": sources
+            })
+
+        yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
+        jobs.pop(job_id)
+
+    doc_references = jobs[job_id]["references"]
+    sentences_with_citations = jobs[job_id]["sentences"]
+
+    return Response(generate(doc_references, sentences_with_citations), content_type='text/event-stream')
+
 @app.route('/process', methods=['POST'])
 def process_inputs():
     file = request.files.get("file")
@@ -75,66 +225,10 @@ def process_inputs():
         text_to_verify = text_input
 
     doc_references, sentences_with_citations = extract_references(text_to_verify)
+    job_id = str(uuid.uuid4())
 
-    sentences_processed = [] 
-    for sentence, source_numbers in sentences_with_citations.items(): 
-        source_text = ""
-        claims_processed = []
-        sources = [] 
-
-        for source_number in source_numbers:
-            if source_number and doc_references[source_number]:
-                try:
-                    source = doc_references[source_number]
-                    source_text += get_source_text_from_link(source)
-                    source_text += "\n"
-                    sources.append(source)
-                except:
-                    source_text = source_text
-
-        if len(source_text) == 0: 
-            claim_dict = {
-                "claim": sentence,
-                "answer": "Could not check",
-                "type": 4,
-                "explanation": "Could not access source",
-                "references": []
-            }
-            claims_processed.append(claim_dict)
-        else:
-            claims = asyncio.run(ask(ask_question("Identify all the separate claims or facts in the following sentence '" + sentence + "'. Output only enumerated claims and facts without any extra information.")))
-            claims = extract_list_elements(claims)
-            for claim in claims: 
-                answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
-                answer = answer.lstrip()
-                if answer == "Correct" or "Correct" in answer: 
-                    classification = 1
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is correct.")))
-                    references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' which specific setences from this text support the following claim '" + claim + "'? Output only enumerated sentences without any extra information.")))
-                elif answer == "Incorrect" or "Incorrect" in answer:
-                    classification = 2
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why the following claim '" + claim + "' is incorrect.")))
-                    references = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' give specific setences from the text which contradict the following claim '" + claim + "'. Output only enumerated sentences without any extra information.")))     
-                else:
-                    classification = 3
-                    explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))    
-                    references = []
-                claim_dict = {
-                    "claim": claim,
-                    "answer": answer,
-                    "type": classification,
-                    "explanation": explanation,
-                    "references": references
-                }
-                claims_processed.append(claim_dict)
-
-        sentences_processed.append({
-            "sentence": sentence,
-            "claims": claims_processed,
-            "sources": sources
-        })
-
-    return jsonify({"sentences": sentences_processed})
+    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations}
+    return jsonify({"jobId": job_id})
  
 @app.route('/prompt', methods=['POST'])
 def process_prompt():
@@ -276,6 +370,105 @@ def analyse_sentence():
         return jsonify({"claims": claims_processed})
     except Exception as e:
         return jsonify({"claims": request.json['claims']})
+
+@app.route('/generate_pdf', methods=['POST'])
+def upload():
+    file_input = request.files.get("file")
+    text_input = request.form.get("textInput")
+    sentences = json.loads(request.form.get("sentences")) 
+
+    file_path = None
+    if file_input:
+        # Handle PDF file upload
+        filename = secure_filename(file_input.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_input.save(file_path)
+        # return send_file(filepath, as_attachment=True)
+
+    elif text_input:
+        # Handle text input and convert to PDF using Fitz
+
+        file_path = 'output.pdf'
+
+        # Create PDF using FPDF
+        pdf = FPDF()
+        pdf.add_page()
+
+        # Set font and size
+        pdf.set_font('Arial', size=12)
+
+        # Set the width of the multi_cell (page width minus margin)
+        page_width = pdf.w - 2 * pdf.l_margin
+        pdf.multi_cell(page_width, 10, text_input)
+
+        # Save the PDF
+        pdf.output(file_path)
+        # return send_file(pdf_path, as_attachment=True)
+    
+    def get_sentence_classification(sentence_json): 
+        comment = "The sentence can be split into the following claims: \n\n"
+        sentence = sentence_json['sentence']
+        classification =  0
+        claims = sentence_json['claims']
+        for claim_json in claims:
+            claim = claim_json['claim']
+            claim_type = claim_json['type'] 
+            if classification == 2 or claim_type == 2: 
+                comment += claim 
+                comment += " - INCORRECT \n" 
+                comment += claim_json['explanation']
+                comment += "\n\n"
+                classification = 2 
+            elif classification == 3 or claim_type == 3 or claim_type == 4: 
+                comment += claim 
+                comment += " - COULD NOT CHECK \n" 
+                comment += claim_json['explanation']
+                comment += "\n\n"
+                classification = 3 
+            elif claim_type == 1:
+                classification = 1 
+                comment += claim 
+                comment += " - CORRECT \n" 
+                comment += claim_json['explanation']
+                comment += "\n\n"
+        return sentence, classification, comment
+
+    processed_sentences = [get_sentence_classification(sentence_json) for sentence_json in sentences]
+
+    doc = fitz.open(file_path)
+
+    for page_num in range(doc.page_count):
+        sentenceNotFound = False 
+
+        while (not sentenceNotFound) and len(processed_sentences) > 0:
+
+            page = doc.load_page(page_num)
+
+            cur_sentence, cur_class, comment = processed_sentences[0]
+
+            text_instances = page.search_for(cur_sentence)
+            
+            if text_instances:
+                for inst in text_instances:
+                    # Add a highlight annotation for the found text
+                    highlight = page.add_highlight_annot(inst)
+                    if cur_class == 1:
+                        highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                    elif cur_class == 2:
+                        highlight.set_colors(stroke=(1, 0.6, 0.6))
+                    else:
+                        highlight.set_colors(stroke=(1, 1, 0.6))
+                    highlight.update()
+                    comment_position = fitz.Rect(inst.x0, inst.y0, inst.x1, inst.y1)
+                    page.add_freetext_annot(comment_position, comment, fontsize=12)
+                del processed_sentences[0]
+            else: 
+                sentenceNotFound = True
+
+    # Save the modified PDF
+    doc.save("highlighted_output.pdf")
+    return send_file("highlighted_output.pdf", as_attachment=True)
+    # return 'No file or text provided.', 401
 
 if __name__=='__main__':
     port = int(os.environ.get('PORT', 5000))
