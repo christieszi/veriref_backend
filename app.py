@@ -79,7 +79,7 @@ def launch_processing_job(job_id):
             sources = [] 
 
             for source_number in source_numbers:
-                if source_number and doc_references[source_number]:
+                if source_number and doc_references.get(source_number, None):
                     try:
                         source = doc_references[source_number]
                         source_text += get_source_text_from_link(source)
@@ -112,12 +112,12 @@ def launch_processing_job(job_id):
                     "answer": None,
                     "type": 5,
                     "explanation": None,
-                    "references": []} for claim in claims]),
+                    "references": None} for claim in claims]),
                     "sentenceIndex": i
                 }) + "\n\n")
 
                 for j, claim in enumerate(claims): 
-                    answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', or 'Cannot Say'.")))
+                    answer = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' say whether the following claim '" + claim + "' is true or false? Reply with 'Correct', 'Incorrect', 'Cannot Say', 'Not Provided', or 'Does not mention'")))
                     answer = answer.lstrip()
                     claim_dict = {
                         "claim": claim,
@@ -184,7 +184,7 @@ def launch_processing_job(job_id):
                         }) + "\n\n")    
                         explanation = asyncio.run(ask(ask_question("Based only on the following text '" + source_text + "' explain why it is impossible to say whether following claim '" + claim + "' is correct or incorrect.")))
                         claim_dict['explanation'] = explanation
-                        claim_dict['references'] = []
+                        claim_dict['references'] = None
                         yield ("data: " + json.dumps({
                             "messageType": "claimExplanation",
                             "claim": claim_dict,
@@ -377,8 +377,6 @@ def upload():
     text_input = request.form.get("textInput")
     sentences = json.loads(request.form.get("sentences")) 
 
-    print(sentences)
-
     file_path = None
     if file_input:
         # Handle PDF file upload
@@ -388,7 +386,6 @@ def upload():
         # return send_file(filepath, as_attachment=True)
 
     elif text_input:
-        print("whatafauck")
         # Handle text input and convert to PDF using Fitz
 
         file_path = 'output.pdf'
@@ -409,23 +406,34 @@ def upload():
         # return send_file(pdf_path, as_attachment=True)
     
     def get_sentence_classification(sentence_json): 
+        comment = "The sentence can be split into the following claims: \n\n"
         sentence = sentence_json['sentence']
         classification =  0
         claims = sentence_json['claims']
         for claim_json in claims:
-            claim = claim_json['claim'] 
+            claim = claim_json['claim']
             claim_type = claim_json['type'] 
-            if claim_type == 2: 
+            if classification == 2 or claim_type == 2: 
+                comment += claim 
+                comment += " - INCORRECT \n" 
+                comment += claim_json['explanation']
+                comment += "\n\n"
                 classification = 2 
-                break 
-            elif claim_type == 3 or claim_type == 4: 
+            elif classification == 3 or claim_type == 3 or claim_type == 4: 
+                comment += claim 
+                comment += " - COULD NOT CHECK \n" 
+                comment += claim_json['explanation']
+                comment += "\n\n"
                 classification = 3 
             elif claim_type == 1:
                 classification = 1 
-        return sentence, classification
+                comment += claim 
+                comment += " - CORRECT \n" 
+                comment += claim_json['explanation']
+                comment += "\n\n"
+        return sentence, classification, comment
 
     processed_sentences = [get_sentence_classification(sentence_json) for sentence_json in sentences]
-    print(processed_sentences)
 
     doc = fitz.open(file_path)
 
@@ -436,7 +444,7 @@ def upload():
 
             page = doc.load_page(page_num)
 
-            cur_sentence, cur_class = processed_sentences[0]
+            cur_sentence, cur_class, comment = processed_sentences[0]
 
             text_instances = page.search_for(cur_sentence)
             
@@ -451,6 +459,8 @@ def upload():
                     else:
                         highlight.set_colors(stroke=(1, 1, 0.6))
                     highlight.update()
+                    comment_position = fitz.Rect(inst.x0, inst.y0, inst.x1, inst.y1)
+                    page.add_freetext_annot(comment_position, comment, fontsize=12)
                 del processed_sentences[0]
             else: 
                 sentenceNotFound = True
