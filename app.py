@@ -125,6 +125,7 @@ def launch_processing_job(job_id):
                         "type": None,
                         "explanation": None,
                         "references": None,
+                        "sentenceParts": None
                     }
                     if answer == "Correct" or "Correct" in answer: 
                         claim_dict['type'] = 1
@@ -191,6 +192,14 @@ def launch_processing_job(job_id):
                             "sentenceIndex": i,
                             "claimIndex": j
                         }) + "\n\n")       
+                    sentence_parts = process_sentence_parts(asyncio.run(ask(ask_question(claim_to_parts_of_sentence_mapping(claim, sentence))))) 
+                    claim_dict['sentenceParts'] = sentence_parts
+                    yield ("data: " + json.dumps({
+                        "messageType": "claimExplanation",
+                        "claim": claim_dict,
+                        "sentenceIndex": i,
+                        "claimIndex": j
+                    }) + "\n\n")                 
 
 
             sentences_processed.append({
@@ -413,16 +422,19 @@ def upload():
         for claim_json in claims:
             claim = claim_json['claim']
             claim_type = claim_json['type'] 
+            claim_parts = claim_json['sentenceParts']
             if classification == 2 or claim_type == 2: 
                 comment += claim 
                 comment += " - INCORRECT \n" 
-                comment += claim_json['explanation']
+                comment += claim_json['explanation'] 
+                comment += " + " + str(claim_parts)
                 comment += "\n\n"
                 classification = 2 
             elif classification == 3 or claim_type == 3 or claim_type == 4: 
                 comment += claim 
                 comment += " - COULD NOT CHECK \n" 
                 comment += claim_json['explanation']
+                comment += " + " + str(claim_parts)
                 comment += "\n\n"
                 classification = 3 
             elif claim_type == 1:
@@ -430,6 +442,7 @@ def upload():
                 comment += claim 
                 comment += " - CORRECT \n" 
                 comment += claim_json['explanation']
+                comment += " + " + str(claim_parts)
                 comment += "\n\n"
         return sentence, classification, comment
 
