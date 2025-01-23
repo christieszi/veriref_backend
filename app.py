@@ -138,31 +138,8 @@ def launch_processing_job(job_id):
                         "references": None,
                         "sentenceParts": parts
                     }
-                    if answer == "Correct" or "Correct" in answer: 
-                        claim_dict['type'] = 1
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimAnswer",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")                  
-                        explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
-                        claim_dict['explanation'] = explanation
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimExplanation",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")                            
-                        references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
-                        claim_dict['references'] = references
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimReferences",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")   
-                    elif answer == "Incorrect" or "Incorrect" in answer:
+ 
+                    if answer == "Incorrect" or "incorrect" in answer.lower():
                         claim_dict['type'] = 2
                         yield ("data: " + json.dumps({
                             "messageType": "claimAnswer",
@@ -179,6 +156,30 @@ def launch_processing_job(job_id):
                             "claimIndex": j
                         }) + "\n\n")   
                         references = asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text))))  
+                        claim_dict['references'] = references
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimReferences",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")  
+                    elif answer == "Correct" or "correct" in answer.lower(): 
+                        claim_dict['type'] = 1
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                  
+                        explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
+                        claim_dict['explanation'] = explanation
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")                            
+                        references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
                         claim_dict['references'] = references
                         yield ("data: " + json.dumps({
                             "messageType": "claimReferences",
