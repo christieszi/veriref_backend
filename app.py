@@ -105,8 +105,6 @@ def launch_processing_job(job_id):
 
             else:
                 claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
-                print("yooooo")
-                print(sentence)
                 print(claims_response)
                 claims_and_parts = extract_claims_and_word_combinations(claims_response) 
                 claims = [claim for (claim, _) in claims_and_parts]
@@ -121,6 +119,14 @@ def launch_processing_job(job_id):
                     "sentenceIndex": i
                 }) + "\n\n")
 
+                # claim_dicts = [{
+                #         "claim": claim,
+                #         "answer": None,
+                #         "type": None,
+                #         "explanation": None,
+                #         "references": None,
+                #         "sentenceParts": parts
+                #     } for (claim, parts) in claims_and_parts]
                 for j, (claim, parts) in enumerate(claims_and_parts): 
                     answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
                     answer = answer.lstrip()
@@ -497,7 +503,7 @@ def upload():
                                     comment += "\n"
                                     comment += explanation
 
-                                    page.add_freetext_annot(comment_position, comment, fontsize=12)
+                                    page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
                         else:
                             for word in parts:
                                 word_instances = page.search_for(word)  # Search for the word
@@ -524,7 +530,7 @@ def upload():
                                         comment += "\n"
                                         comment += explanation
 
-                                        page.add_freetext_annot(comment_position, comment, fontsize=12)
+                                        page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
 
                 del processed_sentences[0]
             else: 
