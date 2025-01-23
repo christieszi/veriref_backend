@@ -104,8 +104,12 @@ def launch_processing_job(job_id):
                 }) + "\n\n")
 
             else:
-                claims = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
-                claims = extract_list_elements(claims)
+                claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
+                print("yooooo")
+                print(sentence)
+                print(claims_response)
+                claims_and_parts = extract_claims_and_word_combinations(claims_response) 
+                claims = [claim for (claim, _) in claims_and_parts]
                 yield ("data: " + json.dumps({
                     "messageType": "claims",
                     "claims": ([{
@@ -117,7 +121,7 @@ def launch_processing_job(job_id):
                     "sentenceIndex": i
                 }) + "\n\n")
 
-                for j, claim in enumerate(claims): 
+                for j, (claim, parts) in enumerate(claims_and_parts): 
                     answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
                     answer = answer.lstrip()
                     claim_dict = {
@@ -126,7 +130,7 @@ def launch_processing_job(job_id):
                         "type": None,
                         "explanation": None,
                         "references": None,
-                        "sentenceParts": None
+                        "sentenceParts": parts
                     }
                     if answer == "Correct" or "Correct" in answer: 
                         claim_dict['type'] = 1
@@ -192,18 +196,7 @@ def launch_processing_job(job_id):
                             "claim": claim_dict,
                             "sentenceIndex": i,
                             "claimIndex": j
-                        }) + "\n\n")       
-                    sentence_parts = asyncio.run(ask(ask_question(claim_to_parts_of_sentence_mapping(claim, sentence))))
-                    print("EEEEEE")
-                    print(claim)
-                    print(sentence_parts)
-                    claim_dict['sentenceParts'] = process_sentence_parts(sentence_parts)
-                    yield ("data: " + json.dumps({
-                        "messageType": "claimExplanation",
-                        "claim": claim_dict,
-                        "sentenceIndex": i,
-                        "claimIndex": j
-                    }) + "\n\n")                 
+                        }) + "\n\n")                 
 
 
             sentences_processed.append({
@@ -355,8 +348,9 @@ def analyse_sentence():
             }
             claims_processed.append(claim_dict)
         else:
-            claims = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
-            claims = extract_list_elements(claims)
+            claims_raw = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
+            print(claims_raw)
+            claims = extract_list_elements(claims_raw)
             for claim in claims:
                 answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
                 answer = answer.lstrip()
@@ -452,12 +446,12 @@ def upload():
                 comment += "\n\n"
             claims_mappings.append((claim, claim_type, explanation, claim_parts))
 
-        
-        subs_to_claim_mappings = map_colours_to_sentence(sentence, claims_mappings)
         # return sentence, classification, comment
-        return sentence, subs_to_claim_mappings
+        return sentence, claims_mappings
 
     processed_sentences = [get_sentence_classification(sentence_json) for sentence_json in sentences]
+
+    print(processed_sentences)
 
     doc = fitz.open(file_path)
 
@@ -476,55 +470,61 @@ def upload():
                 for text_instance in text_instances:
                     sentence_rect = text_instance
                     # Highlight specific words within the sentence's bounding box
-                    for (index, end, claim, claim_type, explanation) in subs_to_claim_mappings:
-                        # print("FFFFFFF")
-                        # print(index) 
-                        # print(end)
-                        # print(cur_sentence)
-                        # print(claim)
-                        word = cur_sentence[index : end]
-                        print(word)
-                        # print(cur_sentence)
-                        # print(word)
+                    for (claim, claim_type, explanation, parts) in subs_to_claim_mappings:
+                        if isinstance(parts, str): 
+                            word = parts 
+                            word_instances = page.search_for(word)  # Search for the word
+                            for word_inst in word_instances:
+                                if (word_inst.intersects(sentence_rect)):
+                                    word_highlight = page.add_highlight_annot(word_inst)
+                                    if claim_type == 1:
+                                        word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                                        answer = "CORRECT"
+                                        colour = (0.6, 1, 0.6)
+                                    elif claim_type == 2:
+                                        word_highlight.set_colors(stroke=(1, 0.6, 0.6))
+                                        answer = "INCORRECT"
+                                        colour = (1, 0.6, 0.6)
+                                    else:
+                                        word_highlight.set_colors(stroke=(1, 1, 0.6))
+                                        answer = "COULD NOT VERIFY"
+                                        colour = (1, 1, 0.6)
+                                    word_highlight.update()
+                                    comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
+                                    comment = claim
+                                    comment += "\n"
+                                    comment += answer 
+                                    comment += "\n"
+                                    comment += explanation
 
-                        word_instances = page.search_for(word)  # Search for the word
-                        for word_inst in word_instances:
-                            if (word_inst.intersects(sentence_rect)):
-                                print("found!")
-                                # print("found")
-                                word_highlight = page.add_highlight_annot(word_inst)
-                                if claim_type == 1:
-                                    word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
-                                    answer = "CORRECT"
-                                    colour = (0.6, 1, 0.6)
-                                elif claim_type == 2:
-                                    word_highlight.set_colors(stroke=(1, 0.6, 0.6))
-                                    answer = "INCORRECT"
-                                    colour = (1, 0.6, 0.6)
-                                else:
-                                    word_highlight.set_colors(stroke=(1, 1, 0.6))
-                                    answer = "COULD NOT VERIFY"
-                                    colour = (1, 1, 0.6)
-                                word_highlight.update()
-                                comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
-                                comment = claim
-                                comment += "\n"
-                                comment += answer 
-                                comment += "\n"
-                                comment += explanation
+                                    page.add_freetext_annot(comment_position, comment, fontsize=12)
+                        else:
+                            for word in parts:
+                                word_instances = page.search_for(word)  # Search for the word
+                                for word_inst in word_instances:
+                                    if (word_inst.intersects(sentence_rect)):
+                                        word_highlight = page.add_highlight_annot(word_inst)
+                                        if claim_type == 1:
+                                            word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                                            answer = "CORRECT"
+                                            colour = (0.6, 1, 0.6)
+                                        elif claim_type == 2:
+                                            word_highlight.set_colors(stroke=(1, 0.6, 0.6))
+                                            answer = "INCORRECT"
+                                            colour = (1, 0.6, 0.6)
+                                        else:
+                                            word_highlight.set_colors(stroke=(1, 1, 0.6))
+                                            answer = "COULD NOT VERIFY"
+                                            colour = (1, 1, 0.6)
+                                        word_highlight.update()
+                                        comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
+                                        comment = claim
+                                        comment += "\n"
+                                        comment += answer 
+                                        comment += "\n"
+                                        comment += explanation
 
-                                page.add_freetext_annot(comment_position, comment, fontsize=12)
-                        # # Add a highlight annotation for the found text
-                        # highlight = page.add_highlight_annot(inst)
-                        # if cur_class == 1:
-                        #     highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
-                        # elif cur_class == 2:
-                        #     highlight.set_colors(stroke=(1, 0.6, 0.6))
-                        # else:
-                        #     highlight.set_colors(stroke=(1, 1, 0.6))
-                        # highlight.update()
-                        # comment_position = fitz.Rect(inst.x0, inst.y0, inst.x1, inst.y1)
-                        # page.add_freetext_annot(comment_position, comment, fontsize=12)
+                                        page.add_freetext_annot(comment_position, comment, fontsize=12)
 
                 del processed_sentences[0]
             else: 
