@@ -106,7 +106,7 @@ def launch_processing_job(job_id):
             else:
                 claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
                 print(claims_response)
-                claims_and_parts = extract_claims_and_word_combinations(claims_response) 
+                claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
                 claims = [claim for (claim, _) in claims_and_parts]
                 yield ("data: " + json.dumps({
                     "messageType": "claims",
@@ -139,7 +139,24 @@ def launch_processing_job(job_id):
                         "sentenceParts": parts
                     }
  
-                    if answer == "Incorrect" or "incorrect" in answer.lower():
+                    if answer == "Cannot Say" or "cannot say" in answer.lower(): 
+                        claim_dict['type'] = 3
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimAnswer",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")    
+                        explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text))))
+                        claim_dict['explanation'] = explanation
+                        claim_dict['references'] = None
+                        yield ("data: " + json.dumps({
+                            "messageType": "claimExplanation",
+                            "claim": claim_dict,
+                            "sentenceIndex": i,
+                            "claimIndex": j
+                        }) + "\n\n")   
+                    elif answer == "Incorrect" or "incorrect" in answer.lower():
                         claim_dict['type'] = 2
                         yield ("data: " + json.dumps({
                             "messageType": "claimAnswer",
@@ -458,8 +475,6 @@ def upload():
 
     processed_sentences = [get_sentence_classification(sentence_json) for sentence_json in sentences]
 
-    print(processed_sentences)
-
     doc = fitz.open(file_path)
 
     for page_num in range(doc.page_count):
@@ -481,30 +496,35 @@ def upload():
                         if isinstance(parts, str): 
                             word = parts 
                             word_instances = page.search_for(word)  # Search for the word
-                            for word_inst in word_instances:
-                                if (word_inst.intersects(sentence_rect)):
-                                    word_highlight = page.add_highlight_annot(word_inst)
-                                    if claim_type == 1:
-                                        word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
-                                        answer = "CORRECT"
-                                        colour = (0.6, 1, 0.6)
-                                    elif claim_type == 2:
-                                        word_highlight.set_colors(stroke=(1, 0.6, 0.6))
-                                        answer = "INCORRECT"
-                                        colour = (1, 0.6, 0.6)
-                                    else:
-                                        word_highlight.set_colors(stroke=(1, 1, 0.6))
-                                        answer = "COULD NOT VERIFY"
-                                        colour = (1, 1, 0.6)
-                                    word_highlight.update()
-                                    comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
-                                    comment = claim
-                                    comment += "\n"
-                                    comment += answer 
-                                    comment += "\n"
-                                    comment += explanation
+                            if word_instances is None: 
+                                print("WHY?")
+                                print(claim)
+                                print(word)
+                            else:
+                                for word_inst in word_instances:
+                                    if (word_inst.intersects(sentence_rect)):
+                                        word_highlight = page.add_highlight_annot(word_inst)
+                                        if claim_type == 1:
+                                            word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                                            answer = "CORRECT"
+                                            colour = (0.6, 1, 0.6)
+                                        elif claim_type == 2:
+                                            word_highlight.set_colors(stroke=(1, 0.6, 0.6))
+                                            answer = "INCORRECT"
+                                            colour = (1, 0.6, 0.6)
+                                        else:
+                                            word_highlight.set_colors(stroke=(1, 1, 0.6))
+                                            answer = "COULD NOT VERIFY"
+                                            colour = (1, 1, 0.6)
+                                        word_highlight.update()
+                                        comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
+                                        comment = claim
+                                        comment += "\n"
+                                        comment += answer 
+                                        comment += "\n"
+                                        comment += explanation
 
-                                    page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
+                                        page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
                         else:
                             for word in parts:
                                 word_instances = page.search_for(word)  # Search for the word

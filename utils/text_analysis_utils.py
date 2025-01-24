@@ -54,14 +54,13 @@ def map_colours_to_sentence(sentence, mappings):
 
     return coloured_parts
 
-def extract_claims_and_word_combinations(data):
+def extract_claims_and_word_combinations(data, sentence):
     print(data)
     match = re.search(r'\[.*?\]', data, re.DOTALL)
     print(match)
     parsed_data = json.loads(match.group(0))
 
-    # Extract the list of pairs (claim, word_combinations)
-    pairs = [(entry['claim'], entry['word_combinations']) for entry in parsed_data]
+    pairs = [(entry['claim'], check_substring(entry['word_combinations'], sentence)) for entry in parsed_data]
 
     print(pairs)
     return pairs
@@ -72,17 +71,66 @@ def process_unifinished_output(text):
     result_lines = []
     
     for line in lines:
-        # Check if the line is part of an enumerated list
-        if re.match(r"^\s*(\d+\.|-|\*)\s+", line):  # Matches "1.", "-", or "*"
-            # If the line doesn't end with punctuation, skip it
+        if re.match(r"^\s*(\d+\.|-|\*)\s+", line): 
             if not re.search(r"[.!?]$", line.strip()):
                 continue
-        # Check if the line is an unfinished sentence
         elif not re.search(r"[.!?]$", line.strip()) and line.strip():
-            # Skip the unfinished line
             continue
         
-        # Add valid lines to the result
         result_lines.append(line)
 
     return " ".join(result_lines)
+
+def check_substring(parts, sentence):
+    if isinstance(parts, str):
+        if parts in sentence:
+            return parts
+        else: 
+            return longest_common_substring(parts, sentence)
+    else: 
+        processed_parts = []
+        for part in parts: 
+            if part in sentence:
+                processed_parts.append(part)
+            else: 
+                processed_parts(longest_common_substring(parts, sentence))     
+        return processed_parts    
+
+def find_overlap(s1, s2):
+    """
+    Finds the largest overlap string between two strings, s1 and s2.
+    Returns the overlapping portion or an empty string if no overlap exists.
+    """
+    for i in range(len(s1)):
+        if s2.startswith(s1[i:]):
+            return s1[i:]
+
+    for i in range(len(s2)):
+        if s1.startswith(s2[i:]):
+            return s2[i:]
+    
+    return ""
+
+def longest_common_substring(s1, s2):
+    """
+    Finds the longest common substring between two strings, s1 and s2.
+    Returns the common substring or an empty string if no common substring exists.
+    """
+    # Initialize the DP table
+    n, m = len(s1), len(s2)
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+    max_length = 0
+    end_index_s1 = 0
+
+    # Fill the DP table
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                if dp[i][j] > max_length:
+                    max_length = dp[i][j]
+                    end_index_s1 = i
+
+    # Extract the longest common substring
+    longest_substring = s1[end_index_s1 - max_length:end_index_s1]
+    return longest_substring

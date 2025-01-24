@@ -21,7 +21,7 @@ def short_response(claim, source_text):
     return '''
     Based only on the following text '{source_text}' say whether the following claim '{claim}' is correct or incorrect? 
     If it is not possible to conclude whether the claim is correct or not based on the given text, return 'Cannot Say'. 
-    The response must contain one of the following: Correct, Incorrect, Cannot Say, or Not Provided.
+    The response must contain one of the following: Correct, Incorrect, or Cannot Say.
     '''.format(claim=claim, source_text=source_text) 
 
 def explain_correct(claim, source_text):
