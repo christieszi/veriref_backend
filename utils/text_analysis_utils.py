@@ -56,8 +56,13 @@ def map_colours_to_sentence(sentence, mappings):
 
 def extract_claims_and_word_combinations(data, sentence):
     print(data)
+    data = data.strip()
+    if data[0] == "[" and data[-1] == "]":
+        return data
     match = re.search(r'\[.*?\]', data, re.DOTALL)
-    print(match)
+    print("MATCH:")
+    print(match.group(0))
+    print("Now parsing...")
     parsed_data = json.loads(match.group(0))
 
     pairs = [(entry['claim'], check_substring(entry['word_combinations'], sentence)) for entry in parsed_data]

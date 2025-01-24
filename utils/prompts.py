@@ -1,7 +1,8 @@
 def split_claims_prompt(sentence):
     res =   '''
-    Your task is extract the key claims mentioned in the given sentence {sentence}. 
+    Your task is extract all the key claims mentioned in the given sentence {sentence}. 
     Extract only the most important and atomistic claims, if needed break the claims down to the simpler claims.
+    Avoid returning trivial and tautologous claims.
     For each claim output the word combinations from the sentence that the claim is based on.
     Make sure that the word combinations returned for different claims do not overlap. 
     Make sure that the word combinations are formatted exactly as they appear in the given sentence. 
