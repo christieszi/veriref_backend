@@ -127,6 +127,7 @@ def launch_processing_job(job_id):
                 #         "references": None,
                 #         "sentenceParts": parts
                 #     } for (claim, parts) in claims_and_parts]
+
                 for j, (claim, parts) in enumerate(claims_and_parts): 
                     answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
                     answer = answer.lstrip()
@@ -138,6 +139,10 @@ def launch_processing_job(job_id):
                         "references": None,
                         "sentenceParts": parts
                     }
+
+                    # claim_dict = get_claim_classification(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                    # claim_dict = get_claim_explanation(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                    # claim_dict = get_claim_references(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
  
                     if answer == "Cannot Say" or "cannot say" in answer.lower(): 
                         claim_dict['type'] = 3

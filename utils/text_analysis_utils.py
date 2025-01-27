@@ -59,7 +59,7 @@ def extract_claims_and_word_combinations(data, sentence):
     data = data.strip()
     if data[0] == "[" and data[-1] == "]":
         return data
-    match = re.search(r'\[.*?\]', data, re.DOTALL)
+    match = re.search(r'\[.*\]', data, re.DOTALL)
     print("MATCH:")
     print(match.group(0))
     print("Now parsing...")
@@ -98,7 +98,7 @@ def check_substring(parts, sentence):
             if part in sentence:
                 processed_parts.append(part)
             else: 
-                processed_parts(longest_common_substring(parts, sentence))     
+                processed_parts.append(longest_common_substring(parts, sentence))     
         return processed_parts    
 
 def find_overlap(s1, s2):
