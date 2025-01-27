@@ -33,15 +33,6 @@ def get_claim_classification(claim, source_text, claim_dict, sentence_index, cla
     else:
         claim_dict['type'] = 3
 
-    print("I should yield")
-    print(claim_dict)
-    yield ("data: " + json.dumps({
-        "messageType": "claimAnswer",
-        "claim": claim_dict,
-        "sentenceIndex": sentence_index,
-        "claimIndex": claim_index
-    }) + "\n\n")    
-
     return claim_dict
 
 def get_claim_explanation(claim, source_text, claim_dict, sentence_index, claim_index):
@@ -56,13 +47,6 @@ def get_claim_explanation(claim, source_text, claim_dict, sentence_index, claim_
     claim_dict['explanation'] = explanation
     claim_dict['references'] = None
 
-    yield ("data: " + json.dumps({
-        "messageType": "claimExplanation",
-        "claim": claim_dict,
-        "sentenceIndex": sentence_index,
-        "claimIndex": claim_index
-    }) + "\n\n")   
-
     return claim_dict
 
 def get_claim_references(claim, source_text, claim_dict, sentence_index, claim_index):
@@ -76,11 +60,12 @@ def get_claim_references(claim, source_text, claim_dict, sentence_index, claim_i
     
     claim_dict['references'] = references
 
+    return claim_dict
+
+def yield_claim_data(message_type, claim_dict, sentence_index, claim_index): 
     yield ("data: " + json.dumps({
-        "messageType": "claimReferences",
+        "messageType": message_type,
         "claim": claim_dict,
         "sentenceIndex": sentence_index,
         "claimIndex": claim_index
     }) + "\n\n")  
-
-    return claim_dict

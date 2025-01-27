@@ -140,99 +140,12 @@ def launch_processing_job(job_id):
                         "sentenceParts": parts
                     }
 
-                    # claim_dict = get_claim_classification(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
-                    # claim_dict = get_claim_explanation(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
-                    # claim_dict = get_claim_references(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
- 
-                    if answer == "Cannot Say" or "cannot say" in answer.lower(): 
-                        claim_dict['type'] = 3
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimAnswer",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")    
-                        explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text))))
-                        claim_dict['explanation'] = explanation
-                        claim_dict['references'] = None
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimExplanation",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")   
-                    elif answer == "Incorrect" or "incorrect" in answer.lower():
-                        claim_dict['type'] = 2
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimAnswer",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")                           
-                        explanation = asyncio.run(ask(ask_question(explain_incorrect(claim, source_text))))
-                        claim_dict['explanation'] = explanation
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimExplanation",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")   
-                        references = asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text))))  
-                        claim_dict['references'] = references
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimReferences",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")  
-                    elif answer == "Correct" or "correct" in answer.lower(): 
-                        claim_dict['type'] = 1
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimAnswer",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")                  
-                        explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
-                        claim_dict['explanation'] = explanation
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimExplanation",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")                            
-                        references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
-                        claim_dict['references'] = references
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimReferences",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")     
-                    else:
-                        claim_dict['type'] = 3
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimAnswer",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")    
-                        explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text))))
-                        claim_dict['explanation'] = explanation
-                        claim_dict['references'] = None
-                        yield ("data: " + json.dumps({
-                            "messageType": "claimExplanation",
-                            "claim": claim_dict,
-                            "sentenceIndex": i,
-                            "claimIndex": j
-                        }) + "\n\n")                 
-
-
-            sentences_processed.append({
-                "sentence": sentence,
-                "claims": claims_processed,
-                "sources": sources
-            })
+                    claim_dict = get_claim_classification(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                    yield from yield_claim_data("claimAnswer", claim_dict, i, j)
+                    claim_dict = get_claim_explanation(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                    yield from yield_claim_data("claimExplanation", claim_dict, i, j)
+                    claim_dict = get_claim_references(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                    yield from yield_claim_data("claimReferences", claim_dict, i, j)
 
         yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
         jobs.pop(job_id)
