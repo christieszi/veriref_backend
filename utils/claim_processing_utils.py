@@ -19,7 +19,8 @@ async def ask(prompt,stream=False):
         return result['text']
     
 
-def get_claim_classification(claim, source_text, claim_dict, sentence_index, claim_index):
+def get_claim_classification(source_text, claim_dict):
+    claim = claim_dict['claim']
     answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
     answer = answer.lstrip()
     claim_dict['answer'] = answer
@@ -35,7 +36,8 @@ def get_claim_classification(claim, source_text, claim_dict, sentence_index, cla
 
     return claim_dict
 
-def get_claim_explanation(claim, source_text, claim_dict, sentence_index, claim_index):
+def get_claim_explanation(source_text, claim_dict):
+    claim = claim_dict['claim']
     claim_type = claim_dict['type'] 
     if claim_type == 1: 
         explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
@@ -49,7 +51,8 @@ def get_claim_explanation(claim, source_text, claim_dict, sentence_index, claim_
 
     return claim_dict
 
-def get_claim_references(claim, source_text, claim_dict, sentence_index, claim_index):
+def get_claim_references(source_text, claim_dict):
+    claim = claim_dict['claim']
     claim_type = claim_dict['type'] 
     if claim_type == 1: 
         references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))

@@ -72,10 +72,8 @@ def launch_processing_job(job_id):
             "sentences": [{"sentence": sentence,"claims": [],"sources": []} for sentence, _ in sentences_with_citations.items()]
         }) + "\n\n")
 
-        sentences_processed = [] 
-        for i, (sentence, source_numbers) in enumerate(sentences_with_citations.items()): 
+        for sentence_index, (sentence, source_numbers) in enumerate(sentences_with_citations.items()): 
             source_text = ""
-            claims_processed = []
             sources = [] 
 
             for source_number in source_numbers:
@@ -100,7 +98,7 @@ def launch_processing_job(job_id):
                 yield ("data: " + json.dumps({
                     "messageType": "claimNoResource",
                     "claim": claim_dict,
-                    "sentenceIndex": i
+                    "sentenceIndex": sentence_index
                 }) + "\n\n")
 
             else:
@@ -116,36 +114,61 @@ def launch_processing_job(job_id):
                     "type": 5,
                     "explanation": None,
                     "references": None} for claim in claims]),
-                    "sentenceIndex": i
+                    "sentenceIndex": sentence_index
                 }) + "\n\n")
 
-                # claim_dicts = [{
-                #         "claim": claim,
-                #         "answer": None,
-                #         "type": None,
-                #         "explanation": None,
-                #         "references": None,
-                #         "sentenceParts": parts
-                #     } for (claim, parts) in claims_and_parts]
-
-                for j, (claim, parts) in enumerate(claims_and_parts): 
-                    answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
-                    answer = answer.lstrip()
-                    claim_dict = {
+                claim_dicts = [{
                         "claim": claim,
-                        "answer": answer,
+                        "answer": None,
                         "type": None,
                         "explanation": None,
                         "references": None,
                         "sentenceParts": parts
-                    }
+                    } for (claim, parts) in claims_and_parts]
+                
+                enumerted_claim_dicts = list(enumerate(claim_dicts))
 
-                    claim_dict = get_claim_classification(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
-                    yield from yield_claim_data("claimAnswer", claim_dict, i, j)
-                    claim_dict = get_claim_explanation(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
-                    yield from yield_claim_data("claimExplanation", claim_dict, i, j)
-                    claim_dict = get_claim_references(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
-                    yield from yield_claim_data("claimReferences", claim_dict, i, j)
+                # provide short answers and classifications for all claims
+                for i in range(len(enumerted_claim_dicts)):
+                    claim_index, claim_dict = enumerted_claim_dicts[i]
+                    updated_claim_dict = get_claim_classification(source_text, claim_dict)
+                    enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+                    yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
+
+                # provide explanations for all claims
+                for i in range(len(enumerted_claim_dicts)):
+                    claim_index, claim_dict = enumerted_claim_dicts[i]
+                    updated_claim_dict = get_claim_explanation(source_text, claim_dict)
+                    enumerted_claim_dicts[i] = updated_claim_dict
+                    enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+                    yield from yield_claim_data("claimExplanation", claim_dict, sentence_index, claim_index)
+
+                # provide references for all claims
+                for i in range(len(enumerted_claim_dicts)):
+                    claim_index, claim_dict = enumerted_claim_dicts[i]
+                    updated_claim_dict = get_claim_references(source_text, claim_dict)
+                    enumerted_claim_dicts[i] = updated_claim_dict
+                    enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+                    yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)
+
+
+
+                # for j, (claim, parts) in enumerate(claims_and_parts): 
+                #     claim_dict = {
+                #         "claim": claim,
+                #         "answer": answer,
+                #         "type": None,
+                #         "explanation": None,
+                #         "references": None,
+                #         "sentenceParts": parts
+                #     }
+
+                #     claim_dict = get_claim_classification(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                #     yield from yield_claim_data("claimAnswer", claim_dict, i, j)
+                #     claim_dict = get_claim_explanation(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                #     yield from yield_claim_data("claimExplanation", claim_dict, i, j)
+                #     claim_dict = get_claim_references(claim, source_text, claim_dict, sentence_index=i, claim_index=j)
+                #     yield from yield_claim_data("claimReferences", claim_dict, i, j)
 
         yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
         jobs.pop(job_id)
