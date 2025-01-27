@@ -2,6 +2,8 @@ from .model_utils import ask_question, mistral_stream, mistral
 import asyncio
 from .prompts import *
 import json
+from .text_analysis_utils import extract_claims_and_word_combinations
+from .sources_utils import get_source_text_from_link
 
 async def ask(prompt,stream=False):
 
@@ -72,3 +74,82 @@ def yield_claim_data(message_type, claim_dict, sentence_index, claim_index):
         "sentenceIndex": sentence_index,
         "claimIndex": claim_index
     }) + "\n\n")  
+
+def process_sentence(source_numbers, doc_references, sentence, sentence_index):
+    source_text = ""
+    sources = [] 
+
+    for source_number in source_numbers:
+        if source_number and doc_references.get(source_number, None):
+            try:
+                source = doc_references[source_number]
+                source_text += get_source_text_from_link(source)
+                source_text += "\n"
+                sources.append(source)
+            except:
+                source_text = source_text
+
+    if len(source_text) == 0: 
+        claim_dict = {
+            "claim": sentence,
+            "answer": "Could not check",
+            "type": 4,
+            "explanation": "Could not access source",
+            "references": None,
+            "sentenceParts": sentence
+        }
+        yield ("data: " + json.dumps({
+            "messageType": "claimNoResource",
+            "claim": claim_dict,
+            "sentenceIndex": sentence_index
+        }) + "\n\n")
+
+    else:
+        claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
+        print(claims_response)
+        claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
+        claims = [claim for (claim, _) in claims_and_parts]
+        yield ("data: " + json.dumps({
+            "messageType": "claims",
+            "claims": ([{
+            "claim": claim,
+            "answer": None,
+            "type": 5,
+            "explanation": None,
+            "references": None} for claim in claims]),
+            "sentenceIndex": sentence_index
+        }) + "\n\n")
+
+        claim_dicts = [{
+                "claim": claim,
+                "answer": None,
+                "type": None,
+                "explanation": None,
+                "references": None,
+                "sentenceParts": parts
+            } for (claim, parts) in claims_and_parts]
+        
+        enumerted_claim_dicts = list(enumerate(claim_dicts))
+
+        # provide short answers and classifications for all claims
+        for i in range(len(enumerted_claim_dicts)):
+            claim_index, claim_dict = enumerted_claim_dicts[i]
+            updated_claim_dict = get_claim_classification(source_text, claim_dict)
+            enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+            yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
+
+        # provide explanations for all claims
+        for i in range(len(enumerted_claim_dicts)):
+            claim_index, claim_dict = enumerted_claim_dicts[i]
+            updated_claim_dict = get_claim_explanation(source_text, claim_dict)
+            enumerted_claim_dicts[i] = updated_claim_dict
+            enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+            yield from yield_claim_data("claimExplanation", claim_dict, sentence_index, claim_index)
+
+        # provide references for all claims
+        for i in range(len(enumerted_claim_dicts)):
+            claim_index, claim_dict = enumerted_claim_dicts[i]
+            updated_claim_dict = get_claim_references(source_text, claim_dict)
+            enumerted_claim_dicts[i] = updated_claim_dict
+            enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+            yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)
