@@ -18,6 +18,7 @@ CORS(app, resources={r"/process": {"origins": "*"},
                      r"/analyse_sentence": {"origins": "*"},
                      r"/launch_processing_job/*": {"origins": "*"},
                      r"/launch_source_job/*": {"origins": "*"},
+                     r"/launch_sentence_job/*": {"origins": "*"},
                      r"/stream": {"origins": "*"},
                      r"/generate_pdf": {"origins": "*"}})
 
@@ -66,6 +67,7 @@ def extract_sentences_elements(text):
 jobs = {} 
 # Example: {"job_id": {"references": [], "sentences": [], "time_submitted": TODO}}
 # {"job_id": {"source_text": [], "sources": [], "sentence": str, "claims" : [], "sentence_index": int, "time_submitted": TODO}}
+# {"job_id": {"sentence": str, "sources": [], "sentence_index": int, "time_submitted": TODO}}
 
 
 @app.route('/launch_processing_job/<job_id>')
@@ -124,6 +126,27 @@ def launch_source_job(job_id):
 
     return Response(generate(source_text, sources, sentence, claims, sentence_index), content_type='text/event-stream')
 
+@app.route('/launch_sentence_job/<job_id>')
+def launch_sentence_job(job_id):
+    def generate(sentence, sources, sentence_index):
+        source_text = ""
+        for source in sources: 
+            try:
+                source_text += get_source_text_from_link(source)
+                source_text += "\n"
+            except:
+                source_text = source_text
+        yield from process_sentence(None, source_text, sentence, sentence_index)
+ 
+        yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
+        jobs.pop(job_id)
+
+    sentence = jobs[job_id]["sentence"]
+    sources = jobs[job_id]["sources"]
+    sentence_index = jobs[job_id]["sentence_index"]
+
+    return Response(generate(sentence, sources, sentence_index), content_type='text/event-stream')
+
 
 @app.route('/process', methods=['POST'])
 def process_inputs():
@@ -163,60 +186,7 @@ def process_prompt():
     return jsonify({"output": output})
 
 @app.route('/add_source', methods=['POST'])
-def add_source():
-    def generate(source_text, sources, sentence, claims, sentence_index): 
-        for source in sources: 
-            try:
-                source_text += get_source_text_from_link(source)
-                source_text += "\n"
-            except:
-                source_text = source_text
-
-        yield from process_sentence(claims, source_text, sentence, sentence_index)
-
-        # claims_processed = [] 
-        # if len(source_text) == 0: 
-        #     claim_dict = {
-        #         "claim": sentence,
-        #         "answer": "Could not check",
-        #         "type": 4,
-        #         "explanation": "Could not access source",
-        #         "references": [],
-        #         "sentenceParts": sentence,
-        #     }
-        #     claims_processed.append(claim_dict)
-        # else:
-        #     if claims[0]['type'] == 4:
-        #         new_claims = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
-        #         new_claims = extract_list_elements(new_claims)
-        #     else:
-        #         new_claims = [claim['claim'] for claim in claims]
-
-        #     for claim in new_claims:
-        #         answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
-        #         answer = answer.lstrip()
-        #         if answer == "Correct" or "Correct" in answer: 
-        #             classification = 1
-        #             explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
-        #             references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
-        #         elif answer == "Incorrect" or "Incorrect" in answer:
-        #             classification = 2
-        #             explanation = asyncio.run(ask(ask_question(explain_incorrect(claim, source_text))))
-        #             references = asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text))))     
-        #         else:
-        #             classification = 3
-        #             explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text))))    
-        #             references = []
-        #         claim_dict = {
-        #             "claim": claim,
-        #             "answer": answer,
-        #             "type": classification,
-        #             "explanation": explanation,
-        #             "references": references
-        #         }
-        #         claims_processed.append(claim_dict)        
-
-
+def add_source():  
     file = request.files.get("file")
     text_input = request.form.get("textInput")
 
@@ -243,63 +213,20 @@ def add_source():
 
     job_id = str(uuid.uuid4())
     jobs[job_id] = {"source_text": source_text, "sources": sources, "sentence": sentence, "claims" : claims, "sentence_index": sentence_index}
-    return jsonify({"jobId": job_id})
-
-    return Response(generate(source_text, sources, sentence, claims, sentence_index), content_type='text/event-stream')        
+    return jsonify({"jobId": job_id})      
 
 @app.route('/analyse_sentence', methods=['POST'])
 def analyse_sentence():
-    try:
-        sentence = request.json['sentence'] 
-        sources = request.json['sources']  
-        source_text = ""
-        for source in sources: 
-            try:
-                source_text += get_source_text_from_link(source)
-                source_text += "\n"
-            except:
-                source_text = source_text
+    print("I start anaylsing")
+    sources = json.loads(request.form.get('sources'))
+    sentence = request.form.get('sentence')
+    print(sources)
+    sentence_index = json.loads(request.form.get("sentenceIndex"))
 
-        claims_processed = []
-        if len(source_text) == 0: 
-            claim_dict = {
-                "claim": sentence,
-                "answer": "Could not check",
-                "type": 4,
-                "explanation": "Could not access source",
-                "references": []
-            }
-            claims_processed.append(claim_dict)
-        else:
-            claims_raw = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
-            print(claims_raw)
-            claims = extract_list_elements(claims_raw)
-            for claim in claims:
-                answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
-                answer = answer.lstrip()
-                if answer == "Correct" or "Correct" in answer: 
-                    classification = 1
-                    explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
-                    references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
-                elif answer == "Incorrect" or "Incorrect" in answer:
-                    classification = 2
-                    explanation = asyncio.run(ask(ask_question(explain_incorrect(claim, source_text))))
-                    references = asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text))))     
-                else:
-                    classification = 3
-                    explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text))))    
-                    references = []
-                claim_dict = {
-                    "claim": claim,
-                    "answer": answer,
-                    "type": classification,
-                    "explanation": explanation,
-                    "references": references
-                }
-                claims_processed.append(claim_dict)         
-        return jsonify({"claims": claims_processed})
-    except Exception as e:
-        return jsonify({"claims": request.json['claims']})
+    job_id = str(uuid.uuid4())
+    jobs[job_id] = {"sources": sources, "sentence": sentence, "sentence_index": sentence_index}
+    print("created a job")
+    return jsonify({"jobId": job_id})     
 
 @app.route('/generate_pdf', methods=['POST'])
 def upload():
