@@ -128,18 +128,20 @@ def process_sentence(claims, source_text, sentence, sentence_index):
             enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
 
+        sorted_enum_dicts = sorted(enumerted_claim_dicts, key=lambda x: [2, 3, 4, 1, 5].index(x[1]["type"]))
+
         # provide explanations for all claims
-        for i in range(len(enumerted_claim_dicts)):
-            claim_index, claim_dict = enumerted_claim_dicts[i]
+        for i in range(len(sorted_enum_dicts)):
+            claim_index, claim_dict = sorted_enum_dicts[i]
             updated_claim_dict = get_claim_explanation(source_text, claim_dict)
-            enumerted_claim_dicts[i] = updated_claim_dict
-            enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+            sorted_enum_dicts[i] = updated_claim_dict
+            sorted_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimExplanation", claim_dict, sentence_index, claim_index)
 
         # provide references for all claims
-        for i in range(len(enumerted_claim_dicts)):
-            claim_index, claim_dict = enumerted_claim_dicts[i]
+        for i in range(len(sorted_enum_dicts)):
+            claim_index, claim_dict = sorted_enum_dicts[i]
             updated_claim_dict = get_claim_references(source_text, claim_dict)
-            enumerted_claim_dicts[i] = updated_claim_dict
-            enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
+            sorted_enum_dicts[i] = updated_claim_dict
+            sorted_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)
