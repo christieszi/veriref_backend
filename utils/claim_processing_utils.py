@@ -75,20 +75,7 @@ def yield_claim_data(message_type, claim_dict, sentence_index, claim_index):
         "claimIndex": claim_index
     }) + "\n\n")  
 
-def process_sentence(source_numbers, doc_references, sentence, sentence_index):
-    source_text = ""
-    sources = [] 
-
-    for source_number in source_numbers:
-        if source_number and doc_references.get(source_number, None):
-            try:
-                source = doc_references[source_number]
-                source_text += get_source_text_from_link(source)
-                source_text += "\n"
-                sources.append(source)
-            except:
-                source_text = source_text
-
+def process_sentence(claims, source_text, sentence, sentence_index):
     if len(source_text) == 0: 
         claim_dict = {
             "claim": sentence,
@@ -105,20 +92,23 @@ def process_sentence(source_numbers, doc_references, sentence, sentence_index):
         }) + "\n\n")
 
     else:
-        claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
-        print(claims_response)
-        claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
-        claims = [claim for (claim, _) in claims_and_parts]
-        yield ("data: " + json.dumps({
-            "messageType": "claims",
-            "claims": ([{
-            "claim": claim,
-            "answer": None,
-            "type": 5,
-            "explanation": None,
-            "references": None} for claim in claims]),
-            "sentenceIndex": sentence_index
-        }) + "\n\n")
+        if not claims or len(claims) == 0 or claims[0]['type'] == 4: 
+            claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence))))
+            print(claims_response)
+            claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
+            claims = [claim for (claim, _) in claims_and_parts]
+            yield ("data: " + json.dumps({
+                "messageType": "claims",
+                "claims": ([{
+                "claim": claim,
+                "answer": None,
+                "type": 5,
+                "explanation": None,
+                "references": None} for claim in claims]),
+                "sentenceIndex": sentence_index
+            }) + "\n\n")
+        else: 
+            claims_and_parts = [(claim['claim'], claim['sentenceParts']) for claim in claims]
 
         claim_dicts = [{
                 "claim": claim,
