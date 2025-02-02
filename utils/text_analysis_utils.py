@@ -58,12 +58,11 @@ def extract_claims_and_word_combinations(data, sentence):
     print(data)
     data = data.strip()
     if data[0] == "[" and data[-1] == "]":
-        return data
-    match = re.search(r'\[.*\]', data, re.DOTALL)
-    print("MATCH:")
-    print(match.group(0))
-    print("Now parsing...")
-    parsed_data = json.loads(match.group(0))
+        match = data
+    else:
+        match = re.search(r'\[.*\]', data, re.DOTALL).group(0)
+
+    parsed_data = json.loads(match)
 
     pairs = [(entry['claim'], check_substring(entry['word_combinations'], sentence)) for entry in parsed_data]
 
