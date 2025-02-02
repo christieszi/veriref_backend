@@ -75,7 +75,7 @@ def yield_claim_data(message_type, claim_dict, sentence_index, claim_index):
         "claimIndex": claim_index
     }) + "\n\n")  
 
-def process_sentence(claims, source_text, sentence, sentence_index):
+def process_sentence(claims, source_text, sentence, sentence_index, types_to_analyse=[1, 2, 3, 4, 5]):
     if len(source_text) == 0: 
         claim_dict = {
             "claim": sentence,
@@ -129,19 +129,20 @@ def process_sentence(claims, source_text, sentence, sentence_index):
             yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
 
         sorted_enum_dicts = sorted(enumerted_claim_dicts, key=lambda x: [2, 3, 4, 1, 5].index(x[1]["type"]))
+        filtered_enum_dicts = [item for item in sorted_enum_dicts if item[1]["type"] in types_to_analyse] 
 
         # provide explanations for all claims
-        for i in range(len(sorted_enum_dicts)):
-            claim_index, claim_dict = sorted_enum_dicts[i]
+        for i in range(len(filtered_enum_dicts)):
+            claim_index, claim_dict = filtered_enum_dicts[i]
             updated_claim_dict = get_claim_explanation(source_text, claim_dict)
-            sorted_enum_dicts[i] = updated_claim_dict
-            sorted_enum_dicts[i] = (claim_index, updated_claim_dict)
+            filtered_enum_dicts[i] = updated_claim_dict
+            filtered_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimExplanation", claim_dict, sentence_index, claim_index)
 
         # provide references for all claims
-        for i in range(len(sorted_enum_dicts)):
-            claim_index, claim_dict = sorted_enum_dicts[i]
+        for i in range(len(filtered_enum_dicts)):
+            claim_index, claim_dict = filtered_enum_dicts[i]
             updated_claim_dict = get_claim_references(source_text, claim_dict)
-            sorted_enum_dicts[i] = updated_claim_dict
-            sorted_enum_dicts[i] = (claim_index, updated_claim_dict)
+            filtered_enum_dicts[i] = updated_claim_dict
+            filtered_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)

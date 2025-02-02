@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 import json
 import uuid
 from fpdf import FPDF
+import ast
  
 app = Flask(__name__)   
 CORS(app, resources={r"/process": {"origins": "*"}, 
@@ -65,14 +66,14 @@ def extract_sentences_elements(text):
     return matches
 
 jobs = {} 
-# Example: {"job_id": {"references": [], "sentences": [], "time_submitted": TODO}}
+# Example: {"job_id": {"references": [], "sentences": [], "types_to_analyse": [], "time_submitted": TODO}}
 # {"job_id": {"source_text": [], "sources": [], "sentence": str, "claims" : [], "sentence_index": int, "time_submitted": TODO}}
 # {"job_id": {"sentence": str, "sources": [], "sentence_index": int, "time_submitted": TODO}}
 
 
 @app.route('/launch_processing_job/<job_id>')
 def launch_processing_job(job_id):
-    def generate(doc_references, sentences_with_citations):
+    def generate(doc_references, sentences_with_citations, types_to_analyse):
         yield ("data: " + json.dumps({
             "messageType": "sentences",
             "sentences": [{"sentence": sentence,"claims": [],"sources": []} for sentence, _ in sentences_with_citations.items()]
@@ -92,15 +93,16 @@ def launch_processing_job(job_id):
                     except:
                         source_text = source_text
 
-            yield from process_sentence(None, source_text, sentence, sentence_index)
+            yield from process_sentence(None, source_text, sentence, sentence_index, types_to_analyse)
  
         yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
         jobs.pop(job_id)
 
     doc_references = jobs[job_id]["references"]
     sentences_with_citations = jobs[job_id]["sentences"]
+    types_to_analyse = jobs[job_id]["types_to_analyse"]
 
-    return Response(generate(doc_references, sentences_with_citations), content_type='text/event-stream')
+    return Response(generate(doc_references, sentences_with_citations, types_to_analyse), content_type='text/event-stream')
 
 @app.route('/launch_source_job/<job_id>')
 def launch_source_job(job_id):
@@ -152,6 +154,7 @@ def launch_sentence_job(job_id):
 def process_inputs():
     file = request.files.get("file")
     text_input = request.form.get("textInput")
+    types_to_analyse = ast.literal_eval(request.form.get("typesToAnalyse"))
 
     if file:
         filename = secure_filename(file.filename)
@@ -168,7 +171,7 @@ def process_inputs():
     doc_references, sentences_with_citations = extract_references(text_to_verify)
     job_id = str(uuid.uuid4())
 
-    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations}
+    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations, "types_to_analyse": types_to_analyse}
     return jsonify({"jobId": job_id})
  
 @app.route('/prompt', methods=['POST'])
@@ -233,6 +236,7 @@ def upload():
     file_input = request.files.get("file")
     text_input = request.form.get("textInput")
     sentences = json.loads(request.form.get("sentences")) 
+    types_to_analyse = ast.literal_eval(request.form.get("typesToAnalyse"))
 
     file_path = None
     if file_input:
@@ -271,30 +275,31 @@ def upload():
         for claim_json in claims:
             claim = claim_json['claim']
             claim_type = claim_json['type'] 
-            claim_parts = claim_json['sentenceParts']
-            explanation = claim_json['explanation']
-            if classification == 2 or claim_type == 2: 
-                comment += claim 
-                comment += " - INCORRECT \n" 
-                comment += claim_json['explanation'] 
-                comment += " + " + str(claim_parts)
-                comment += "\n\n"
-                classification = 2 
-            elif classification == 3 or claim_type == 3 or claim_type == 4: 
-                comment += claim 
-                comment += " - COULD NOT CHECK \n" 
-                comment += claim_json['explanation']
-                comment += " + " + str(claim_parts)
-                comment += "\n\n"
-                classification = 3 
-            elif claim_type == 1:
-                classification = 1 
-                comment += claim 
-                comment += " - CORRECT \n" 
-                comment += claim_json['explanation']
-                comment += " + " + str(claim_parts)
-                comment += "\n\n"
-            claims_mappings.append((claim, claim_type, explanation, claim_parts))
+            if claim_type in types_to_analyse:
+                claim_parts = claim_json['sentenceParts']
+                explanation = claim_json['explanation']
+                if classification == 2 or claim_type == 2: 
+                    comment += claim 
+                    comment += " - INCORRECT \n" 
+                    comment += claim_json['explanation'] 
+                    comment += " + " + str(claim_parts)
+                    comment += "\n\n"
+                    classification = 2 
+                elif classification == 3 or claim_type == 3 or claim_type == 4: 
+                    comment += claim 
+                    comment += " - COULD NOT CHECK \n" 
+                    comment += claim_json['explanation']
+                    comment += " + " + str(claim_parts)
+                    comment += "\n\n"
+                    classification = 3 
+                elif claim_type == 1:
+                    classification = 1 
+                    comment += claim 
+                    comment += " - CORRECT \n" 
+                    comment += claim_json['explanation']
+                    comment += " + " + str(claim_parts)
+                    comment += "\n\n"
+                claims_mappings.append((claim, claim_type, explanation, claim_parts))
 
         # return sentence, classification, comment
         return sentence, claims_mappings
