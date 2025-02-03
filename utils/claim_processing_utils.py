@@ -3,7 +3,7 @@ import asyncio
 from .prompts import *
 import json
 from .text_analysis_utils import extract_claims_and_word_combinations
-from .sources_utils import get_source_text_from_link
+from .sources_utils import get_external_source_text, get_text_from_paragraphs
 
 async def ask(prompt,stream=False):
 
@@ -53,14 +53,15 @@ def get_claim_explanation(source_text, claim_dict):
 
     return claim_dict
 
-def get_claim_references(source_text, claim_dict):
+def get_claim_references(source_text, claim_dict, link):
     claim = claim_dict['claim']
     claim_type = claim_dict['type'] 
+    references = "" if link is None else "See source: " + link + "\n"
     if claim_type == 1: 
-        references = asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
+        references += asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
     elif claim_type == 2:
-        references = asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text))))  
-    else:
+        references += asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text)))) 
+    elif link is None:
         references = None
     
     claim_dict['references'] = references
@@ -77,6 +78,13 @@ def yield_claim_data(message_type, claim_dict, sentence_index, claim_index):
 
 def process_sentence(claims, source_text, sentence, sentence_index, types_to_analyse=[1, 2, 3, 4, 5]):
     if len(source_text) == 0: 
+        external_si, source_text, link = get_external_source_text(sentence, 0)[:500]
+    else:
+        external_si = None 
+        link = None
+
+    print(source_text)
+    if len(source_text.strip()) == 0:
         claim_dict = {
             "claim": sentence,
             "answer": "Could not check",
@@ -119,12 +127,22 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
                 "sentenceParts": parts
             } for (claim, parts) in claims_and_parts]
         
-        enumerted_claim_dicts = list(enumerate(claim_dicts))
+        enumerted_claim_dicts = list(enumerate(claim_dicts)) 
 
         # provide short answers and classifications for all claims
         for i in range(len(enumerted_claim_dicts)):
             claim_index, claim_dict = enumerted_claim_dicts[i]
             updated_claim_dict = get_claim_classification(source_text, claim_dict)
+
+            local_external_si, local_source_text, local_link = external_si, source_text, link
+
+            while local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
+                local_external_si, local_source_text, local_link = get_external_source_text(sentence, local_external_si)[:500]
+                updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
+
+            if local_link:
+                updated_claim_dict["references"] = local_link
+
             enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
 
@@ -134,7 +152,19 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
         # provide explanations for all claims
         for i in range(len(filtered_enum_dicts)):
             claim_index, claim_dict = filtered_enum_dicts[i]
-            updated_claim_dict = get_claim_explanation(source_text, claim_dict)
+
+            if claim_dict["references"] is not None:
+                local_source_text = get_text_from_paragraphs(claim_dict["references"])
+                local_link = claim_dict["references"]
+            else: 
+                local_source_text = source_text
+                local_link = None
+
+            updated_claim_dict = get_claim_explanation(local_source_text, claim_dict)
+
+            if local_link is not None:
+                updated_claim_dict["references"] = local_link
+
             filtered_enum_dicts[i] = updated_claim_dict
             filtered_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimExplanation", claim_dict, sentence_index, claim_index)
@@ -142,7 +172,15 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
         # provide references for all claims
         for i in range(len(filtered_enum_dicts)):
             claim_index, claim_dict = filtered_enum_dicts[i]
-            updated_claim_dict = get_claim_references(source_text, claim_dict)
+
+            if claim_dict["references"] is not None:
+                local_source_text = get_text_from_paragraphs(claim_dict["references"])
+                local_link = claim_dict["references"]
+            else: 
+                local_source_text = source_text
+                local_link = None
+
+            updated_claim_dict = get_claim_references(local_source_text, claim_dict, local_link)
             filtered_enum_dicts[i] = updated_claim_dict
             filtered_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)

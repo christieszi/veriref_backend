@@ -1,6 +1,7 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+from googlesearch import search
 
 def extract_references(text):
     ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
@@ -82,3 +83,24 @@ def get_source_text_from_link(source):
     response = requests.get(source)
     response.raise_for_status()
     return BeautifulSoup(response.content, "html.parser").get_text()
+
+def get_text_from_paragraphs(link):
+    response = requests.get(link)
+    html = BeautifulSoup(response.text, 'html.parser')
+
+    paragraphs = html.select("p")
+
+    intro = '\n'.join([ para.text for para in paragraphs[0:5]])
+
+    return intro
+
+def get_external_source_text(query, starting_index):
+    for (i, j) in enumerate(search(query, tld="co.in", num=starting_index + 5, stop= starting_index + 5, pause=1)):
+        if i < starting_index: 
+            continue
+
+        text = get_text_from_paragraphs(j)
+        if len(text.strip()) == 0:
+            continue
+        else:
+            return i + 1, text, j
