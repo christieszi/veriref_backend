@@ -8,6 +8,7 @@ def is_a_sentence_to_check(sentence):
     Trivial Claim - The sentence presents obvious or uncontroversial information that does not require verification.
     Intent Description - The sentence describes what will be done in the text (e.g., "we will examine," "this study will explore").
     Information Sentence - The sentence contains meaningful, non-trivial information or factual statements.
+    Incomplete Sentence - If sentence is not complete or contains only numbers, and thus, cannot be understood. 
 
     Return only the classification label (e.g., Title) without any extra text.
     '''.format(sentence=sentence)
