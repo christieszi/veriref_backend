@@ -39,7 +39,7 @@ def extract_references(text):
         lines = [line.strip() for line in references_text.splitlines() if line.strip()]
         references = {i + 1: line for i, line in enumerate(lines[:5])}
     
-    sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])', body_text.strip())
+    sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z0-9])', text.strip())
     
     in_text_citations = {}
     

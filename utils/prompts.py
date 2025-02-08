@@ -6,6 +6,7 @@ def split_claims_prompt(sentence):
     For each claim output the word combinations from the sentence that the claim is based on.
     Make sure that the word combinations returned for different claims do not overlap. 
     Make sure that the word combinations are formatted exactly as they appear in the given sentence. 
+    Avoid using pronouns or articles in the extracted claims, referring to other claims or the original sentence. Use complete words, names, or word combonations instead.
     Format your output as a list of json with the following format:
     [
         {{
