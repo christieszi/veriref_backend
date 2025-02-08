@@ -83,7 +83,6 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
         external_si = None 
         link = None
 
-    print(source_text)
     if len(source_text.strip()) == 0:
         claim_dict = {
             "claim": sentence,

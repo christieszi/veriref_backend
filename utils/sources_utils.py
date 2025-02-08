@@ -39,32 +39,34 @@ def extract_references(text):
         lines = [line.strip() for line in references_text.splitlines() if line.strip()]
         references = {i + 1: line for i, line in enumerate(lines[:5])}
     
-    sentences = re.split(r'(?<=[.!?])\s+', body_text.strip())
-
+    sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])', body_text.strip())
+    
     in_text_citations = {}
-
+    
     for sentence in sentences:
         if not sentence.strip():
             continue
 
-        matches = re.finditer(r'(.*?)[\[\()]([0-9,\s]+)[\]\)]', sentence)
-
+        if len(sentence.strip()) <= 5:
+            continue
+        
+        matches = re.finditer(r'(.*?)(?:\[(\d+(?:,\s*\d+)*)\])+(?:\((\d+)\))?', sentence)
+        
         current_sentence = sentence.strip()
+        all_numbers = set()
         sentence_processed = False
-
+        cleaned_sentence = re.sub(r'[\[(][0-9,\s]+[\])]', ' ', current_sentence).strip()
+        
         for match in matches:
-            part = (match.group(1) or "").strip() or (match.group(3) or "").strip()
             numbers = (match.group(2) or "").strip() or (match.group(3) or "").strip()
-
             number_list = [int(num.strip()) for num in numbers.split(',') if num.strip().isdigit()]
-
-            if part:
-                in_text_citations[part] = number_list
-                sentence_processed = True
-
-        if not sentence_processed:
-            clean_sentence = re.sub(r'\s*[\[(][0-9,\s]+[\])]\s*$', '', current_sentence)
-            in_text_citations[clean_sentence] = []
+            all_numbers.update(number_list)
+            sentence_processed = True
+        
+        if sentence_processed:
+            in_text_citations[cleaned_sentence] = sorted(all_numbers)
+        else:
+            in_text_citations[cleaned_sentence] = []
 
     return references, in_text_citations
 
