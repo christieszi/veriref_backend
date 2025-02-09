@@ -1,11 +1,12 @@
 def is_a_sentence_to_check(sentence):
     res = '''
-    Your task is to classify the given sentence '{sentence}' into one of the following categories based on its meaning and content:
+    Your task is to classify the given string '{sentence}' into one of the following categories based on its meaning and content:
 
-    Information Sentence - The sentence has a complete predicate. And the sentence contains meaningful, non-trivial information or factual statements. 
-    Title - The sentence is most likely the title of an article, chapter, section, etc.
-    General Information about the text - The sentence provides general metadata about the text, such as the date and place of publishing, authors of the text, or similar text details.
-    Intent Description - The sentence describes what will be done in the text (e.g., "we will examine," "this study will explore").
+    Information Sentence - The string is a sentence with a complete predicate. And the sentence contains meaningful, non-trivial information or factual statements. 
+    Title - The string is most likely the title of an article, chapter, section, etc.
+    General Information about the text - The string provides general metadata about the text, such as the date and place of publishing, authors of the text, or similar text details.
+    Intent Description - The string is a sentence describes what will be done next (e.g., "we will examine..." "this study will explore...", "in this article...").
+    Not a Sentence - If the string is not a sentence, i.e. it does not have a subject and a verb. 
 
     Return only the classification label (e.g., Title) without any extra text.
     '''.format(sentence=sentence)
