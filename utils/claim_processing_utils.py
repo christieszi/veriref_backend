@@ -172,7 +172,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
         claim_dicts = [{
                 "claim": claim,
                 "answer": None,
-                "type": None,
+                "type": 5,
                 "explanation": None,
                 "references": None,
                 "sentenceParts": parts, 
@@ -184,28 +184,33 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
         # provide short answers and classifications for all claims
         for i in range(len(enumerted_claim_dicts)):
             claim_index, claim_dict = enumerted_claim_dicts[i]
-            #yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
+
+            claim_dict["processingText"] = "Analysing sentence based on " + (link if link else "source text") + "."
+            yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
+
             updated_claim_dict = get_claim_classification(source_text, claim_dict)
 
             local_external_si, local_source_text, local_link = external_si, source_text, link 
 
             if local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
+                claim_dict["processingText"] = "Did not find an answer in " + link + ". Searching the web again."
+                yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
                 li = 0 
-                prev_link = link 
                 while li <=5 and updated_claim_dict['type'] == 3:
                     res = get_external_source_text(claim_dict["claim"], li) 
                     if res is not None: 
                         li, local_source_text, local_link =res[:500]
+                        claim_dict["processingText"] = "Analysing sentence based on " + local_link + "."
                         updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
                     else: 
-                        updated_claim_dict = get_claim_classification(source_text, claim_dict)
                         li = 6
-                    prev_link = local_link
 
             if local_link:
                 updated_claim_dict["references"] = local_link
+            elif link:
+                local_link = link
 
-            claim_dict["processingText"] = "Explaining the claim based on " + link if link else "source text provided" + "."
+            claim_dict["processingText"] = "Explaining the claim based on " + local_link if local_link else "source text provided" + "."
             enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
 
@@ -228,6 +233,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             if local_link is not None:
                 updated_claim_dict["references"] = local_link
 
+            claim_dict["processingText"] = "Looking for reference sentences in " + local_link if local_link else "source text provided" + "."
             filtered_enum_dicts[i] = updated_claim_dict
             filtered_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimExplanation", claim_dict, sentence_index, claim_index)
@@ -236,9 +242,14 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
         for i in range(len(filtered_enum_dicts)):
             claim_index, claim_dict = filtered_enum_dicts[i]
 
+
+
             if claim_dict["references"] is not None:
-                local_source_text = get_text_from_paragraphs(claim_dict["references"])
-                local_link = claim_dict["references"]
+                references = claim_dict["references"] 
+                claim_dict["references"] = None
+                yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)
+                local_source_text = get_text_from_paragraphs(references)
+                local_link = references
             else: 
                 local_source_text = source_text
                 local_link = None
