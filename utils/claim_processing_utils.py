@@ -74,8 +74,6 @@ def yield_claim_data(message_type, claim_dict, sentence_index, claim_index, proc
         "claim": claim_dict,
         "sentenceIndex": sentence_index,
         "claimIndex": claim_index,
-        "processingText": processing_text,
-        "processingTextState": 5
     }) + "\n\n")  
 
 def process_sentence(claims, source_text, sentence, sentence_index, original_text, types_to_analyse=[1, 2, 3, 4, 5]):
@@ -93,7 +91,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
     yield ("data: " + json.dumps({
         "messageType": "sentenceProcessingText",
         "sentenceIndex": sentence_index,
-        "processingText": "The sentence is a " + sentence_classification,
+        "processingText": "The sentence contains " + sentence_classification,
         "processingTextState": 0
     }) + "\n\n")
 
@@ -144,9 +142,16 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             "processingText": "Splitting the sentence into claims", 
             "processingTextState": 5
             }) + "\n\n")
-            claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence, sentence_with_context)), max_tokens=500))
-            print(claims_response)
-            claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
+            extracted = False 
+            while not extracted: 
+                try:
+                    claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence, sentence_with_context)), max_tokens=500))
+                    print(claims_response)
+                    claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
+                    extracted = True 
+                except: 
+                    extracted = False
+
             claims = [claim for (claim, _) in claims_and_parts]
             yield ("data: " + json.dumps({
                 "messageType": "claims",
@@ -155,9 +160,11 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 "answer": None,
                 "type": 5,
                 "explanation": None,
-                "references": None} for claim in claims]),
+                "references": None,
+                "processingText": "Waiting to be processed"
+                } for claim in claims]),
                 "sentenceIndex": sentence_index,
-                "processingText": "Processing"
+                "processingText": ""
             }) + "\n\n")
         else: 
             claims_and_parts = [(claim['claim'], claim['sentenceParts']) for claim in claims]
@@ -168,8 +175,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 "type": None,
                 "explanation": None,
                 "references": None,
-                "sentenceParts": parts,
-                "processingText": "Processing"
+                "sentenceParts": parts, 
+                "processingText": "Waiting to be processed"
             } for (claim, parts) in claims_and_parts]
         
         enumerted_claim_dicts = list(enumerate(claim_dicts)) 
@@ -177,17 +184,28 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
         # provide short answers and classifications for all claims
         for i in range(len(enumerted_claim_dicts)):
             claim_index, claim_dict = enumerted_claim_dicts[i]
+            #yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
             updated_claim_dict = get_claim_classification(source_text, claim_dict)
 
-            local_external_si, local_source_text, local_link = external_si, source_text, link
+            local_external_si, local_source_text, local_link = external_si, source_text, link 
 
-            while local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
-                local_external_si, local_source_text, local_link = get_external_source_text(claim_dict["claim"], local_external_si)[:500]
-                updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
+            if local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
+                li = 0 
+                prev_link = link 
+                while li <=5 and updated_claim_dict['type'] == 3:
+                    res = get_external_source_text(claim_dict["claim"], li) 
+                    if res is not None: 
+                        li, local_source_text, local_link =res[:500]
+                        updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
+                    else: 
+                        updated_claim_dict = get_claim_classification(source_text, claim_dict)
+                        li = 6
+                    prev_link = local_link
 
             if local_link:
                 updated_claim_dict["references"] = local_link
 
+            claim_dict["processingText"] = "Explaining the claim based on " + link if link else "source text provided" + "."
             enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
 

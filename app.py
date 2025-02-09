@@ -318,83 +318,97 @@ def upload():
 
     for page_num in range(doc.page_count):
         sentenceNotFound = False 
+        page = doc.load_page(page_num)
 
         while (not sentenceNotFound) and len(processed_sentences) > 0:
+            try:
 
-            page = doc.load_page(page_num)
-
-            cur_sentence, subs_to_claim_mappings = processed_sentences[0]
-
-            text_instances = page.search_for(cur_sentence)
-            
-            if text_instances:
-                for text_instance in text_instances:
-                    sentence_rect = text_instance
-                    # Highlight specific words within the sentence's bounding box
-                    for (claim, claim_type, explanation, parts) in subs_to_claim_mappings:
-                        if isinstance(parts, str): 
-                            word = parts 
-                            word_instances = page.search_for(word)  # Search for the word
-                            if word_instances is None: 
-                                print("WHY?")
-                                print(claim)
-                                print(word)
-                            else:
-                                for word_inst in word_instances:
-                                    if (word_inst.intersects(sentence_rect)):
-                                        word_highlight = page.add_highlight_annot(word_inst)
-                                        if claim_type == 1:
-                                            word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
-                                            answer = "CORRECT"
-                                            colour = (0.6, 1, 0.6)
-                                        elif claim_type == 2:
-                                            word_highlight.set_colors(stroke=(1, 0.6, 0.6))
-                                            answer = "INCORRECT"
-                                            colour = (1, 0.6, 0.6)
+                cur_sentence, subs_to_claim_mappings = processed_sentences[0]
+                text_instances = page.search_for(cur_sentence)
+                
+                if text_instances:
+                    for text_instance in text_instances:
+                        sentence_rect = text_instance
+                        # Highlight specific words within the sentence's bounding box
+                        for (claim, claim_type, explanation, parts) in subs_to_claim_mappings:
+                            try:
+                                if isinstance(parts, str): 
+                                    word = parts 
+                                    try:
+                                        word_instances = page.search_for(word)  # Search for the word
+                                        if word_instances is None: 
+                                            print("WHY?")
+                                            print(claim)
+                                            print(word)
                                         else:
-                                            word_highlight.set_colors(stroke=(1, 1, 0.6))
-                                            answer = "COULD NOT VERIFY"
-                                            colour = (1, 1, 0.6)
-                                        word_highlight.update()
-                                        comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
-                                        comment = claim
-                                        comment += "\n"
-                                        comment += answer 
-                                        comment += "\n"
-                                        comment += explanation
+                                            for word_inst in word_instances:
+                                                if (word_inst.intersects(sentence_rect)):
+                                                    word_highlight = page.add_highlight_annot(word_inst)
+                                                    if claim_type == 1:
+                                                        word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                                                        answer = "CORRECT"
+                                                        colour = (0.6, 1, 0.6)
+                                                    elif claim_type == 2:
+                                                        word_highlight.set_colors(stroke=(1, 0.6, 0.6))
+                                                        answer = "INCORRECT"
+                                                        colour = (1, 0.6, 0.6)
+                                                    else:
+                                                        word_highlight.set_colors(stroke=(1, 1, 0.6))
+                                                        answer = "COULD NOT VERIFY"
+                                                        colour = (1, 1, 0.6)
+                                                    word_highlight.update()
+                                                    comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
+                                                    comment = claim
+                                                    comment += "\n"
+                                                    comment += answer 
+                                                    comment += "\n"
+                                                    comment += explanation
 
-                                        page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
-                        else:
-                            for word in parts:
-                                word_instances = page.search_for(word)  # Search for the word
-                                for word_inst in word_instances:
-                                    if (word_inst.intersects(sentence_rect)):
-                                        word_highlight = page.add_highlight_annot(word_inst)
-                                        if claim_type == 1:
-                                            word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
-                                            answer = "CORRECT"
-                                            colour = (0.6, 1, 0.6)
-                                        elif claim_type == 2:
-                                            word_highlight.set_colors(stroke=(1, 0.6, 0.6))
-                                            answer = "INCORRECT"
-                                            colour = (1, 0.6, 0.6)
-                                        else:
-                                            word_highlight.set_colors(stroke=(1, 1, 0.6))
-                                            answer = "COULD NOT VERIFY"
-                                            colour = (1, 1, 0.6)
-                                        word_highlight.update()
-                                        comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
-                                        comment = claim
-                                        comment += "\n"
-                                        comment += answer 
-                                        comment += "\n"
-                                        comment += explanation
+                                                    page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
+                                    except:    
+                                        print("nvm")
+                                else:
+                                    for word in parts:
+                                        word_instances = page.search_for(word)  # Search for the word
+                                        for word_inst in word_instances:
+                                            if (word_inst.intersects(sentence_rect)):
+                                                word_highlight = page.add_highlight_annot(word_inst)
+                                                if claim_type == 1:
+                                                    word_highlight.set_colors(stroke=(0.6, 1, 0.6))  # Light yellow highlight
+                                                    answer = "CORRECT"
+                                                    colour = (0.6, 1, 0.6)
+                                                elif claim_type == 2:
+                                                    word_highlight.set_colors(stroke=(1, 0.6, 0.6))
+                                                    answer = "INCORRECT"
+                                                    colour = (1, 0.6, 0.6)
+                                                else:
+                                                    word_highlight.set_colors(stroke=(1, 1, 0.6))
+                                                    answer = "COULD NOT VERIFY"
+                                                    colour = (1, 1, 0.6)
+                                                word_highlight.update()
+                                                comment_position = fitz.Rect(word_inst.x0, word_inst.y0, word_inst.x1, word_inst.y1)
+                                                comment = claim
+                                                comment += "\n"
+                                                comment += answer 
+                                                comment += "\n"
+                                                comment += explanation
 
-                                        page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
+                                                page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
+                            except: 
+                                continue
 
+                    del processed_sentences[0]
+                else: 
+                    if page_num + 1 < doc.page_count:
+                        page_next = doc.load_page(page_num + 1)
+                        if page_next.search_for(cur_sentence): 
+                            sentenceNotFound = True
+                        else: 
+                            del processed_sentences[0]
+                    else: 
+                        del processed_sentences[0]
+            except: 
                 del processed_sentences[0]
-            else: 
-                sentenceNotFound = True
 
     # Save the modified PDF
     doc.save("highlighted_output.pdf")

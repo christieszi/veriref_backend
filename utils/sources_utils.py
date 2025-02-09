@@ -97,8 +97,6 @@ def get_text_from_paragraphs(link):
     return intro
 
 def get_external_source_text(query, starting_index):
-    print("SEARCH SHIT")
-    print(query)
     for (i, j) in enumerate(search(query, tld="co.in", num=starting_index + 5, stop= starting_index + 5, pause=1)):
         if i < starting_index: 
             continue

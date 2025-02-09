@@ -13,7 +13,7 @@ def is_a_sentence_to_check(sentence):
 
 def replace_pronouns(sentence, source_text):
     res = '''
-    Your task is to replace all pronouns, demonstratives, and reference nouns in the given sentence so that it can be understood without additional context.
+    Your task is to replace all pronouns, this, that, these, those, and reference nouns in the given sentence so that it can be understood without additional context.
         Sentence: "{sentence}"
         Source text: "{source_text}"
     Instructions:
