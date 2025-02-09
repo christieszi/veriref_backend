@@ -66,22 +66,29 @@ def extract_sentences_elements(text):
     return matches
 
 jobs = {} 
-# Example: {"job_id": {"references": [], "sentences": [], "types_to_analyse": [], "time_submitted": TODO}}
+# Example: {"job_id": {"references": [], "sentences": [], "types_to_analyse": [], "original_text": str, "time_submitted": TODO}}
 # {"job_id": {"source_text": [], "sources": [], "sentence": str, "claims" : [], "sentence_index": int, "time_submitted": TODO}}
 # {"job_id": {"sentence": str, "sources": [], "sentence_index": int, "time_submitted": TODO}}
 
 
 @app.route('/launch_processing_job/<job_id>')
 def launch_processing_job(job_id):
-    def generate(doc_references, sentences_with_citations, types_to_analyse):
+    def generate(doc_references, sentences_with_citations, types_to_analyse, original_text):
         yield ("data: " + json.dumps({
             "messageType": "sentences",
-            "sentences": [{"sentence": sentence,"claims": [],"sources": []} for sentence, _ in sentences_with_citations.items()]
+            "sentences": [{"sentence": sentence,"claims": [],"sources": [], "processingText": "Waiting to be processed", "processingTextState": 5} for sentence, _ in sentences_with_citations.items()]
         }) + "\n\n")
 
         for sentence_index, (sentence, source_numbers) in enumerate(sentences_with_citations.items()): 
             source_text = ""
             sources = [] 
+
+            yield ("data: " + json.dumps({
+                "messageType": "sentenceProcessingText",
+                "sentenceIndex": sentence_index,
+                "processingText": "Extracting source text",
+                "processingTextState": 5
+            }) + "\n\n")
 
             for source_number in source_numbers:
                 if source_number and doc_references.get(source_number, None):
@@ -93,7 +100,7 @@ def launch_processing_job(job_id):
                     except:
                         source_text = source_text
 
-            yield from process_sentence(None, source_text, sentence, sentence_index, types_to_analyse)
+            yield from process_sentence(None, source_text, sentence, sentence_index, original_text, types_to_analyse)
  
         yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
         jobs.pop(job_id)
@@ -101,8 +108,9 @@ def launch_processing_job(job_id):
     doc_references = jobs[job_id]["references"]
     sentences_with_citations = jobs[job_id]["sentences"]
     types_to_analyse = jobs[job_id]["types_to_analyse"]
+    original_text = jobs[job_id]["original_text"]
 
-    return Response(generate(doc_references, sentences_with_citations, types_to_analyse), content_type='text/event-stream')
+    return Response(generate(doc_references, sentences_with_citations, types_to_analyse, original_text), content_type='text/event-stream')
 
 @app.route('/launch_source_job/<job_id>')
 def launch_source_job(job_id):
@@ -168,10 +176,10 @@ def process_inputs():
     else:
         text_to_verify = text_input
 
-    doc_references, sentences_with_citations = extract_references(text_to_verify)
+    doc_references, sentences_with_citations, original_text = extract_references(text_to_verify)
     job_id = str(uuid.uuid4())
 
-    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations, "types_to_analyse": types_to_analyse}
+    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations, "types_to_analyse": types_to_analyse, "original_text": original_text}
     return jsonify({"jobId": job_id})
  
 @app.route('/prompt', methods=['POST'])

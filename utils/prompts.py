@@ -2,7 +2,7 @@ def is_a_sentence_to_check(sentence):
     res = '''
     Your task is to classify the given sentence '{sentence}' into one of the following categories based on its meaning and content:
 
-    Information Sentence - The sentence contains meaningful, non-trivial information or factual statements.
+    Information Sentence - The sentence has a complete predicate. And the sentence contains meaningful, non-trivial information or factual statements. 
     Title - The sentence is most likely the title of an article, chapter, section, etc.
     General Information about the text - The sentence provides general metadata about the text, such as the date and place of publishing, authors of the text, or similar text details.
     Intent Description - The sentence describes what will be done in the text (e.g., "we will examine," "this study will explore").
@@ -13,7 +13,7 @@ def is_a_sentence_to_check(sentence):
 
 def replace_pronouns(sentence, source_text):
     res = '''
-    Your task is to replace all pronouns and reference nouns in the given sentence so that it can be understood without additional context.
+    Your task is to replace all pronouns, demonstratives, and reference nouns in the given sentence so that it can be understood without additional context.
         Sentence: "{sentence}"
         Source text: "{source_text}"
     Instructions:
@@ -43,7 +43,7 @@ def split_claims_prompt(sentence, sentence_with_context):
 
     Map each claim to the exact reference word combinations in the original sentence.
         Each claim must be linked to specific word combinations as they appear in the original sentence.
-        Ensure that different claims do not have overlapping word combinations.
+        Ensure that word combinations for different claims do not have overlapping words.
 
     Output Format:
 

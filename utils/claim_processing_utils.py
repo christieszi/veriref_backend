@@ -5,10 +5,10 @@ import json
 from .text_analysis_utils import extract_claims_and_word_combinations
 from .sources_utils import get_external_source_text, get_text_from_paragraphs
 
-async def ask(prompt,stream=False):
+async def ask(prompt,stream=False, max_tokens=200):
 
     sampling_params = {
-        "max_tokens": 200,
+        "max_tokens": max_tokens,
         "temperature":1,
     }
     if stream:
@@ -68,21 +68,54 @@ def get_claim_references(source_text, claim_dict, link):
 
     return claim_dict
 
-def yield_claim_data(message_type, claim_dict, sentence_index, claim_index): 
+def yield_claim_data(message_type, claim_dict, sentence_index, claim_index, processing_text="Processing"): 
     yield ("data: " + json.dumps({
         "messageType": message_type,
         "claim": claim_dict,
         "sentenceIndex": sentence_index,
-        "claimIndex": claim_index
+        "claimIndex": claim_index,
+        "processingText": processing_text,
+        "processingTextState": 5
     }) + "\n\n")  
 
-def process_sentence(claims, source_text, sentence, sentence_index, types_to_analyse=[1, 2, 3, 4, 5]):
+def process_sentence(claims, source_text, sentence, sentence_index, original_text, types_to_analyse=[1, 2, 3, 4, 5]):
+    yield ("data: " + json.dumps({
+        "messageType": "sentenceProcessingText",
+        "sentenceIndex": sentence_index,
+        "processingText": "Classifying sentence type",
+        "processingTextState": 5
+    }) + "\n\n")
+
     sentence_classification = asyncio.run(ask(ask_question(is_a_sentence_to_check(sentence))))
     print(sentence_classification) 
-    if sentence_classification.strip().lower() == "information sentence":
-        sentence_with_context = asyncio.run(ask(ask_question(replace_pronouns(sentence, "William Knottenbelt serves in Imperial College London. He works as proffessor of graphics there. "))))
+
+
+    yield ("data: " + json.dumps({
+        "messageType": "sentenceProcessingText",
+        "sentenceIndex": sentence_index,
+        "processingText": "The sentence is a " + sentence_classification,
+        "processingTextState": 0
+    }) + "\n\n")
+
+    if sentence_classification.strip().lower() == "information sentence" or "information sentence" in sentence_classification.strip().lower():
+        yield ("data: " + json.dumps({
+            "messageType": "sentenceProcessingText",
+            "sentenceIndex": sentence_index,
+            "processingText": "Extracting sentence context from the original text", 
+            "processingTextState": 5
+            }) + "\n\n")
+
+        sentence_with_context = asyncio.run(ask(ask_question(replace_pronouns(sentence, original_text))))
         print(sentence_with_context)
+
+        # EXTRACTING EXTERNAL RESOURCE
         if len(source_text) == 0: 
+            yield ("data: " + json.dumps({
+            "messageType": "sentenceProcessingText",
+            "sentenceIndex": sentence_index,
+            "processingText": "No source text provided. Searching the web.", 
+            "processingTextState": 5
+            }) + "\n\n")
             external_si, source_text, link = get_external_source_text(sentence_with_context, 0)[:500]
         else:
             external_si = None 
@@ -95,7 +128,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
                 "type": 4,
                 "explanation": "Could not access source",
                 "references": None,
-                "sentenceParts": sentence
+                "sentenceParts": sentence,
+                "processingText": ""
             }
             yield ("data: " + json.dumps({
                 "messageType": "claimNoResource",
@@ -104,7 +138,13 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
             }) + "\n\n")
 
         if not claims or len(claims) == 0 or claims[0]['type'] == 4: 
-            claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence, sentence_with_context))))
+            yield ("data: " + json.dumps({
+            "messageType": "sentenceProcessingText",
+            "sentenceIndex": sentence_index,
+            "processingText": "Splitting the sentence into claims", 
+            "processingTextState": 5
+            }) + "\n\n")
+            claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence, sentence_with_context)), max_tokens=500))
             print(claims_response)
             claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
             claims = [claim for (claim, _) in claims_and_parts]
@@ -116,7 +156,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
                 "type": 5,
                 "explanation": None,
                 "references": None} for claim in claims]),
-                "sentenceIndex": sentence_index
+                "sentenceIndex": sentence_index,
+                "processingText": "Processing"
             }) + "\n\n")
         else: 
             claims_and_parts = [(claim['claim'], claim['sentenceParts']) for claim in claims]
@@ -127,7 +168,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
                 "type": None,
                 "explanation": None,
                 "references": None,
-                "sentenceParts": parts
+                "sentenceParts": parts,
+                "processingText": "Processing"
             } for (claim, parts) in claims_and_parts]
         
         enumerted_claim_dicts = list(enumerate(claim_dicts)) 
@@ -140,7 +182,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, types_to_ana
             local_external_si, local_source_text, local_link = external_si, source_text, link
 
             while local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
-                local_external_si, local_source_text, local_link = get_external_source_text(sentence, local_external_si)[:500]
+                local_external_si, local_source_text, local_link = get_external_source_text(claim_dict["claim"], local_external_si)[:500]
                 updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
 
             if local_link:

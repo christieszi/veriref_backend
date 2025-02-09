@@ -68,7 +68,7 @@ def extract_references(text):
         else:
             in_text_citations[cleaned_sentence] = []
 
-    return references, in_text_citations
+    return references, in_text_citations, body_text
 
 def extract_url(text):
     url_pattern = r'https?://[^\s]+'
@@ -103,8 +103,11 @@ def get_external_source_text(query, starting_index):
         if i < starting_index: 
             continue
 
-        text = get_text_from_paragraphs(j)
-        if len(text.strip()) == 0:
+        try:
+            text = get_text_from_paragraphs(j)
+            if len(text.strip()) == 0:
+                continue
+            else:
+                return i + 1, text, j
+        except Exception: 
             continue
-        else:
-            return i + 1, text, j
