@@ -29,10 +29,10 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.urandom(24)
 
-async def ask(prompt,stream=False):
+async def ask(prompt,stream=False, max_tokens=200):
 
     sampling_params = {
-        "max_tokens": 200,
+        "max_tokens": max_tokens,
         "temperature":1,
     }
     if stream:
@@ -66,18 +66,58 @@ def extract_sentences_elements(text):
     return matches
 
 jobs = {} 
-# Example: {"job_id": {"references": [], "sentences": [], "types_to_analyse": [], "original_text": str, "time_submitted": TODO}}
+# Example: {"job_id": {"references": [], "sentences": [], "types_to_analyse": [], "original_text": str, "time_submitted": TODO, "paragraphs": [str]}}
 # {"job_id": {"source_text": [], "sources": [], "sentence": str, "claims" : [], "sentence_index": int, "time_submitted": TODO}}
 # {"job_id": {"sentence": str, "sources": [], "sentence_index": int, "time_submitted": TODO}}
 
 
 @app.route('/launch_processing_job/<job_id>')
 def launch_processing_job(job_id):
-    def generate(doc_references, sentences_with_citations, types_to_analyse, original_text):
+    def generate(doc_references, sentences_with_citations, types_to_analyse, original_text, paragraphs):
+        yield("data: " + json.dumps({
+            "messageType": "generalMessage",
+            "message": "Analysing text",
+            "messageState": 5,
+        }) + "\n\n")
+
+        res = asyncio.run(ask(ask_question(get_keywords(original_text))))
+        summary, keywords = extract_summary_and_keywords(res)
+
+        yield("data: " + json.dumps({
+            "messageType": "generalMessage",
+            "message": summary,
+            "messageState": 0,
+        }) + "\n\n")
+
+        keyword_to_source_link = []
+        keyword_to_source = {}
+        for keyword in keywords: 
+            keyword_link = get_data_from_knowledge_graph(keyword)
+            if (keyword_link):
+                keyword_to_source_link.append((keyword, keyword_link))
+                keyword_to_source[keyword] = get_text_from_paragraphs(keyword_link)
+
+        yield("data: " + json.dumps({
+            "messageType": "suggestedSources",
+            "suggestedSources": keyword_to_source_link 
+        }) + "\n\n")
+
+        # START PROCESSING SENTENCES
+
         yield ("data: " + json.dumps({
             "messageType": "sentences",
             "sentences": [{"sentence": sentence,"claims": [],"sources": [], "processingText": "Waiting to be processed", "processingTextState": 5} for sentence, _ in sentences_with_citations.items()]
-        }) + "\n\n")
+        }) + "\n\n") 
+
+        print("SHHHHHHHHHHHH")
+
+        cur_p_i = 0
+        info_communicator = {"prev_sentence_with_context": None, 
+                             "keywords": keywords, 
+                             "keywords_to_sources": keyword_to_source, 
+                             "summary": summary, 
+                             "cur_p_i": cur_p_i, 
+                             "paragraph_summary": None}
 
         for sentence_index, (sentence, source_numbers) in enumerate(sentences_with_citations.items()): 
             source_text = ""
@@ -100,7 +140,8 @@ def launch_processing_job(job_id):
                     except:
                         source_text = source_text
 
-            yield from process_sentence(None, source_text, sentence, sentence_index, original_text, types_to_analyse)
+            yield from process_sentence(None, source_text, sentence, sentence_index, original_text, info_communicator, paragraphs, types_to_analyse) 
+
  
         yield "data: " + json.dumps({"messageType": "end"}) + "\n\n"
         jobs.pop(job_id)
@@ -109,8 +150,9 @@ def launch_processing_job(job_id):
     sentences_with_citations = jobs[job_id]["sentences"]
     types_to_analyse = jobs[job_id]["types_to_analyse"]
     original_text = jobs[job_id]["original_text"]
+    paragraphs = jobs[job_id]["paragraphs"]
 
-    return Response(generate(doc_references, sentences_with_citations, types_to_analyse, original_text), content_type='text/event-stream')
+    return Response(generate(doc_references, sentences_with_citations, types_to_analyse, original_text, paragraphs), content_type='text/event-stream')
 
 @app.route('/launch_source_job/<job_id>')
 def launch_source_job(job_id):
@@ -169,17 +211,19 @@ def process_inputs():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         text_to_verify = extract_text_from_pdf(filepath)
+        paragraphs = extract_paragraphs_from_pdf(filepath)
         try:
             os.remove(filepath)
         except Exception as e:
             return render_template('upload.html', error=f"Error deleting file: {e}")
     else:
         text_to_verify = text_input
+        paragraphs = text_to_verify
 
     doc_references, sentences_with_citations, original_text = extract_references(text_to_verify)
     job_id = str(uuid.uuid4())
 
-    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations, "types_to_analyse": types_to_analyse, "original_text": original_text}
+    jobs[job_id] = {"references": doc_references, "sentences": sentences_with_citations, "types_to_analyse": types_to_analyse, "original_text": original_text, "paragraphs": paragraphs}
     return jsonify({"jobId": job_id})
  
 @app.route('/prompt', methods=['POST'])
@@ -228,15 +272,12 @@ def add_source():
 
 @app.route('/analyse_sentence', methods=['POST'])
 def analyse_sentence():
-    print("I start anaylsing")
     sources = json.loads(request.form.get('sources'))
     sentence = request.form.get('sentence')
-    print(sources)
     sentence_index = json.loads(request.form.get("sentenceIndex"))
 
     job_id = str(uuid.uuid4())
     jobs[job_id] = {"sources": sources, "sentence": sentence, "sentence_index": sentence_index}
-    print("created a job")
     return jsonify({"jobId": job_id})     
 
 @app.route('/generate_pdf', methods=['POST'])
@@ -337,9 +378,7 @@ def upload():
                                     try:
                                         word_instances = page.search_for(word)  # Search for the word
                                         if word_instances is None: 
-                                            print("WHY?")
-                                            print(claim)
-                                            print(word)
+                                            print("")
                                         else:
                                             for word_inst in word_instances:
                                                 if (word_inst.intersects(sentence_rect)):
@@ -366,7 +405,7 @@ def upload():
 
                                                     page.add_freetext_annot(comment_position, comment, fill_color = colour, fontsize=12)
                                     except:    
-                                        print("nvm")
+                                        print("")
                                 else:
                                     for word in parts:
                                         word_instances = page.search_for(word)  # Search for the word

@@ -1,7 +1,15 @@
 import re
+import time
 import requests
 from bs4 import BeautifulSoup
 from googlesearch import search
+import urllib
+import os
+from dotenv import load_dotenv
+import json
+
+load_dotenv()
+api_key = os.getenv('GOOGLE_API_KEY')
 
 def extract_references(text):
     ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
@@ -96,16 +104,166 @@ def get_text_from_paragraphs(link):
 
     return intro
 
-def get_external_source_text(query, starting_index):
-    for (i, j) in enumerate(search(query, tld="co.in", num=starting_index + 5, stop= starting_index + 5, pause=1)):
-        if i < starting_index: 
-            continue
+# def get_external_source_text(query, starting_index):
+#     try:
+#         for (i, j) in enumerate(search(query, tld="co.in", num=starting_index + 5, stop= starting_index + 5, pause=1)):
+#             if i < starting_index: 
+#                 continue
+            
+#             try:
+#                 text = get_text_from_paragraphs(j)
+#                 if len(text.strip()) == 0:
+#                     continue
+#                 else:
+#                     return i + 1, text, j
+#             except Exception: 
+#                 continue
+#     except urllib.error.HTTPError as e:
+#         if e.code == 429:
+#             print("Rate limited, waiting...")
+#             time.sleep(10)
+#     return None
+
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.firefox import GeckoDriverManager
+import time
+
+from urllib.parse import urlparse, parse_qs, unquote
+
+def get_clean_bing_links(driver, link):
+    driver.execute_script("window.open(arguments[0]);", link)  # Open link in new tab
+    driver.switch_to.window(driver.window_handles[-1])  # Switch to new tab
+    time.sleep(3)  # Allow the redirect to complete
+    clean_link = driver.current_url  # Get final resolved URL
+    driver.close()  # Close the new tab
+    driver.switch_to.window(driver.window_handles[0])  # Switch back to main tab
+    return clean_link
+
+def get_external_source_text(query, starting_index, sentence):
+    query=query[2:-1]
+    print("QUERY")
+    print(query)
+    options = Options()
+    options.add_argument("--headless")  # Disable headless mode to see what's happening
+    
+    service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
+    driver = webdriver.Firefox(service=service, options=options)
+
+    links = None
+    linky = None 
+    text_ret = None
+    extracted_data = {}
+
+    sentence_cleaned = " ".join(sentence.split())
+
+    try:
+        driver.get("https://www.bing.com/")
+
+        time.sleep(2)
 
         try:
-            text = get_text_from_paragraphs(j)
-            if len(text.strip()) == 0:
+            reject_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Reject')]" or "//button[contains(text(), 'Decline')]")
+            reject_button.click()
+            time.sleep(2)  # Allow time for changes to take effect
+        except:
+            pass 
+
+        # Find the search bar and enter the query
+        search_box = driver.find_element(By.NAME, "q")
+        search_box.send_keys(query)
+        search_box.send_keys(Keys.RETURN)
+
+        # Wait for results to load
+        time.sleep(2)
+
+        search_results = driver.find_elements(By.CSS_SELECTOR, "li.b_algo h2 a")
+        
+        links = [result.get_attribute("href") for result in search_results[starting_index:starting_index + 5]]
+
+        for link in links:
+            driver.get(link)
+            time.sleep(3)  # Allow time for the page to load
+            paragraphs = driver.find_elements(By.TAG_NAME, "p")
+            combined_text = "\n".join([p.text for p in paragraphs[:5] if p.text.strip()])
+            text_cleaned = " ".join(combined_text.split())
+
+            if not (sentence_cleaned in text_cleaned):
+                clean_link = get_clean_bing_links(driver, link)
+                extracted_data[clean_link] = combined_text
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        driver.quit()
+        return extracted_data
+
+    print("LINKS")
+    print(links)
+    if links:
+        for i, link in enumerate(links):
+            try:
+                print("LINK")
+                print(link)
+                text = get_text_from_paragraphs(link)
+                if len(text.strip()) == 0:
+                    continue
+                else:
+                    return starting_index + i + 1, text, link
+            except Exception: 
                 continue
-            else:
-                return i + 1, text, j
-        except Exception: 
-            continue
+
+    return None 
+
+# Instructions for running on macOS:
+# 1. Install Firefox: `brew install --cask firefox`
+# 2. Install geckodriver: `brew install geckodriver`
+# 3. Install Selenium and WebDriver Manager: `pip install selenium webdriver-manager`
+# 4. Run script using: `python script.py`
+
+
+
+def get_data_from_knowledge_graph(query):
+    service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
+    params = {
+        'query': query,
+        'limit': 1,
+        'indent': True,
+        'key': api_key,
+    }
+
+    url = service_url + '?' + urllib.parse.urlencode(params)
+    response = json.loads(urllib.request.urlopen(url).read())
+    for element in response['itemListElement']:
+        if element['result'].get("detailedDescription", None): 
+            return element['result']["detailedDescription"]["url"]
+    
+    return None
+
+from scholarly import scholarly
+
+def search_google_scholar(query, num_results=5):
+    search_results = scholarly.search_pubs(query)
+    results = []
+
+    for _ in range(num_results):
+        try:
+            result = next(search_results)
+            bib = result.get('bib', {})
+
+            results.append({
+                'title': bib.get('title', None),
+                'author': bib.get('author', None),
+                'year': bib.get('pub_year', None),
+                'abstract': bib.get('abstract', None), 
+                'url': result.get('pub_url', None)
+            })
+        except StopIteration:
+            break
+
+    return results

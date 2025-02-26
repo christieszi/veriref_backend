@@ -2,7 +2,7 @@ from .model_utils import ask_question, mistral_stream, mistral
 import asyncio
 from .prompts import *
 import json
-from .text_analysis_utils import extract_claims_and_word_combinations
+from .text_analysis_utils import extract_claims_and_word_combinations, extract_summary_and_keywords
 from .sources_utils import get_external_source_text, get_text_from_paragraphs
 
 async def ask(prompt,stream=False, max_tokens=200):
@@ -23,7 +23,7 @@ async def ask(prompt,stream=False, max_tokens=200):
 
 def get_claim_classification(source_text, claim_dict):
     claim = claim_dict['claim']
-    answer = asyncio.run(ask(ask_question(short_response(claim, source_text))))
+    answer = asyncio.run(ask(ask_question(short_response(claim, source_text[:600]))))
     answer = answer.lstrip()
     claim_dict['answer'] = answer
 
@@ -42,11 +42,11 @@ def get_claim_explanation(source_text, claim_dict):
     claim = claim_dict['claim']
     claim_type = claim_dict['type'] 
     if claim_type == 1: 
-        explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text))))
+        explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text[:600]))))
     elif claim_type == 2:
-        explanation = asyncio.run(ask(ask_question(explain_incorrect(claim, source_text))))
+        explanation = asyncio.run(ask(ask_question(explain_incorrect(claim, source_text[:600]))))
     else:
-        explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text))))
+        explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text[:600]))))
     
     claim_dict['explanation'] = explanation
     claim_dict['references'] = None
@@ -58,9 +58,9 @@ def get_claim_references(source_text, claim_dict, link):
     claim_type = claim_dict['type'] 
     references = "" if link is None else "See source: " + link + "\n"
     if claim_type == 1: 
-        references += asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text))))
+        references += asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text[:600]))))
     elif claim_type == 2:
-        references += asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text)))) 
+        references += asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text[:600])))) 
     elif link is None:
         references = None
     
@@ -76,7 +76,7 @@ def yield_claim_data(message_type, claim_dict, sentence_index, claim_index, proc
         "claimIndex": claim_index,
     }) + "\n\n")  
 
-def process_sentence(claims, source_text, sentence, sentence_index, original_text, types_to_analyse=[1, 2, 3, 4, 5]):
+def process_sentence(claims, source_text, sentence, sentence_index, original_text, info_communicator, paragraphs, types_to_analyse=[1, 2, 3, 4, 5]):
     yield ("data: " + json.dumps({
         "messageType": "sentenceProcessingText",
         "sentenceIndex": sentence_index,
@@ -85,8 +85,6 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
     }) + "\n\n")
 
     sentence_classification = asyncio.run(ask(ask_question(is_a_sentence_to_check(sentence))))
-    print(sentence_classification) 
-
 
     yield ("data: " + json.dumps({
         "messageType": "sentenceProcessingText",
@@ -103,8 +101,38 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             "processingTextState": 5
             }) + "\n\n")
 
-        sentence_with_context = asyncio.run(ask(ask_question(replace_pronouns(sentence, original_text))))
-        print(sentence_with_context)
+        keywords = info_communicator["keywords"]
+        prev_sentence = info_communicator["prev_sentence_with_context"]
+        summary = info_communicator["summary"]
+        cur_p_i = info_communicator["cur_p_i"]
+        paragraph_summary = info_communicator["paragraph_summary"]
+
+        paragraph = paragraphs[cur_p_i]
+        
+        while sentence not in paragraph:
+            info_communicator["cur_p_i"] += 1 
+            paragraph = paragraphs[info_communicator["cur_p_i"]] 
+            paragraph_summary = None
+
+        # first paragraph
+        if not paragraph_summary: 
+            res = asyncio.run(ask(ask_question(get_keywords_paragraph_no_prev(paragraph, summary))))
+            paragraph_summary, keywords = extract_summary_and_keywords(res)
+            info_communicator["paragraph_summary"] = paragraph_summary
+            info_communicator["keywords"] = keywords
+        # switched to new paragraph
+        elif info_communicator["cur_p_i"] != cur_p_i: 
+            res = asyncio.run(ask(ask_question(get_keywords_paragraph(paragraph, summary, paragraph_summary))))
+            paragraph_summary, keywords = extract_summary_and_keywords(res)
+            info_communicator["paragraph_summary"] = paragraph_summary
+            info_communicator["keywords"] = keywords
+
+        if prev_sentence:
+            sentence_with_context = asyncio.run(ask(ask_question(disambiguate_based_on_keywords(keywords, sentence, prev_sentence, summary, paragraph_summary))))
+        else: 
+            sentence_with_context = asyncio.run(ask(ask_question(disambiguate_based_on_keywords_no_prev(keywords, sentence, summary, paragraph_summary))))
+
+        info_communicator["prev_sentence_with_context"] = sentence_with_context
 
         # EXTRACTING EXTERNAL RESOURCE
         if len(source_text) == 0: 
@@ -114,7 +142,19 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             "processingText": "No source text provided. Searching the web.", 
             "processingTextState": 5
             }) + "\n\n")
-            external_si, source_text, link = get_external_source_text(sentence_with_context, 0)[:500]
+            query = asyncio.run(ask(ask_question(get_google_prompt(sentence_with_context))))
+
+            yield ("data: " + json.dumps({
+            "messageType": "sentenceProcessingText",
+            "sentenceIndex": sentence_index,
+            "processingText": "No source text provided. Searching the web for " + str(query), 
+            "processingTextState": 5
+            }) + "\n\n")
+            res = get_external_source_text(query, 0, sentence)
+            if res: 
+                external_si, source_text, link = res[0], res[1][:500], res[2]
+            else: 
+                source_text = ""
         else:
             external_si = None 
             link = None
@@ -146,7 +186,6 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             while not extracted: 
                 try:
                     claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence, sentence_with_context)), max_tokens=500))
-                    print(claims_response)
                     claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
                     extracted = True 
                 except: 
@@ -184,6 +223,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
         # provide short answers and classifications for all claims
         for i in range(len(enumerted_claim_dicts)):
             claim_index, claim_dict = enumerted_claim_dicts[i]
+            claim_query = None
 
             claim_dict["processingText"] = "Analysing sentence based on " + (link if link else "source text") + "."
             yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
@@ -197,7 +237,11 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
                 li = 0 
                 while li <=5 and updated_claim_dict['type'] == 3:
-                    res = get_external_source_text(claim_dict["claim"], li) 
+                    if not claim_query: 
+                        claim_query = asyncio.run(ask(ask_question(get_google_prompt(claim_dict["claim"]))))
+                        print("HHHHHHHHHHHHJJJJJJJJJ")
+                        print(claim_query)
+                    res = get_external_source_text(claim_query, li, sentence) 
                     if res is not None: 
                         li, local_source_text, local_link =res[:500]
                         claim_dict["processingText"] = "Analysing sentence based on " + local_link + "."
@@ -259,6 +303,4 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             filtered_enum_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)
     else:
-        print("AAAAAA")
-        print(sentence)
-        print(sentence_classification)
+        print("")
