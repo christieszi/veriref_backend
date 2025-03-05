@@ -183,7 +183,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 "explanation": "Could not access source",
                 "references": None,
                 "sentenceParts": sentence,
-                "processingText": ""
+                "processingText": "",
+                "otherSourcesConsidered": None
             }
             yield ("data: " + json.dumps({
                 "messageType": "claimNoResource",
@@ -216,10 +217,12 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 "type": 5,
                 "explanation": None,
                 "references": None,
+                "textFromLink": None, 
+                "otherSourcesConsidered": None,
                 "processingText": "Waiting to be processed"
                 } for claim in claims]),
                 "sentenceIndex": sentence_index,
-                "processingText": ""
+                "processingText": "",
             }) + "\n\n")
         else: 
             claims_and_parts = [(claim['claim'], claim['sentenceParts']) for claim in claims]
@@ -232,16 +235,28 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 "references": None,
                 "sentenceParts": parts, 
                 "processingText": "Waiting to be processed",
-                "textFromLink": None
+                "textFromLink": None, 
+                "otherSourcesConsidered": None
             } for (claim, parts) in claims_and_parts]
     
         
         enumerted_claim_dicts = list(enumerate(claim_dicts)) 
 
+        def compare_classifications(a, b, order):
+            order_map = {num: idx for idx, num in enumerate(order)}
+            return (order_map[a] > order_map[b]) - (order_map[a] < order_map[b])
+        order = [2, 1, 3]
+        
         # provide short answers and classifications for all claims
         for i in range(len(enumerted_claim_dicts)):
             claim_index, claim_dict = enumerted_claim_dicts[i]
             claim_query = None
+
+            cur_class = None
+            cur_link = None
+            cur_source_text = None
+            cur_answer = None
+            cur_considered = []
 
             claim_dict["processingText"] = "Analysing sentence based on " + (link if link else "source text") + "."
             yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
@@ -250,19 +265,35 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
 
             local_external_si, local_source_text, local_link = external_si, source_text, link 
 
-            if local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
-                claim_dict["processingText"] = "Did not find an answer in " + link + ". Searching the web again."
+            # if local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
+            if local_external_si is not None and local_external_si <= 5:
+                claim_dict["processingText"] = "Analysed based on " + link + ". Searching the web for more evidence."
                 yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
                 li = 1
-                while li < len(res) and updated_claim_dict['type'] == 3:   
-                        local_link, local_source_text = res[li] 
-                        local_source_text = local_source_text[:600]
-                        claim_dict["processingText"] = "Analysing sentence based on " + local_link + "."
-                        yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
-                        updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
-                        li += 1
+                # while li < len(res) and updated_claim_dict['type'] == 3:   
+                cur_class = updated_claim_dict['type']
+                cur_link = link 
+                cur_source_text = source_text
+                cur_answer = updated_claim_dict["answer"]
+                cur_considered = []
+                while li < len(res):
+                    local_link, local_source_text = res[li] 
+                    local_source_text = local_source_text[:600]
+                    claim_dict["processingText"] = "Analysing sentence based on " + local_link + "."
+                    yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
+                    updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
+                    li += 1
+                    if compare_classifications(updated_claim_dict['type'], cur_class, order) < 0: 
+                        cur_considered.append(local_link + " - " + cur_answer)
+                        cur_class = updated_claim_dict['type'] 
+                        cur_link = local_link 
+                        cur_source_text = local_source_text 
+                        cur_answer = updated_claim_dict["answer"]
+                    else: 
+                        cur_considered.append(local_link + " - " + claim_dict["answer"])
 
-                if updated_claim_dict['type'] == 3:
+
+                if cur_class == 3:
                     li = 0 
                     claim_query = asyncio.run(ask(ask_question(get_google_prompt(claim_dict["claim"]))))
                     local_res = get_external_source_text(claim_query, li, sentence) 
@@ -273,15 +304,35 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                         yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
                         updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
                         li += 1
+                        if compare_classifications(updated_claim_dict['type'], cur_class, order) < 0: 
+                            cur_considered.append(local_link + " - " + cur_answer)
+                            cur_class = updated_claim_dict['type'] 
+                            cur_link = local_link 
+                            cur_source_text = local_source_text 
+                            cur_answer = updated_claim_dict["answer"]
+                        else: 
+                            cur_considered.append(local_link + " - " + claim_dict["answer"])
+
+                local_link = cur_link
+                local_source_text = cur_source_text
+
 
             text_from_link = None 
 
             if local_link:
                 updated_claim_dict["references"] = local_link
-                text_from_link = local_source_text
+                text_from_link = local_source_text 
+                claim_dict["answer"] = cur_answer 
+                claim_dict["type"] = cur_class
+
             elif link:
                 local_link = link
                 text_from_link = source_text
+
+            if len(cur_considered) == 0: 
+                claim_dict["otherSourcesConsidered"] = None 
+            else: 
+                claim_dict["otherSourcesConsidered"] = " ".join(f"{i+1}. {item}" for i, item in enumerate(cur_considered))
 
             claim_dict["textFromLink"] = text_from_link
             claim_dict["processingText"] = "Explaining the claim based on " + local_link if local_link else "source text provided" + "."
