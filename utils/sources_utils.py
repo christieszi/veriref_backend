@@ -158,7 +158,7 @@ def get_external_source_text(query, starting_index, sentence):
     links = None
     linky = None 
     text_ret = None
-    extracted_data = {}
+    extracted_data = []
 
     sentence_cleaned = " ".join(sentence.split())
 
@@ -189,13 +189,22 @@ def get_external_source_text(query, starting_index, sentence):
         for link in links:
             driver.get(link)
             time.sleep(3)  # Allow time for the page to load
+            try:
+                if driver.find_elements(By.XPATH, "//button[contains(text(), 'Accept')]" or "//button[contains(text(), 'Submit')]" or  "//button[contains(text(), 'Consent')]" or "//button[contains(text(), 'consent')]"):
+                    continue
+            except:
+                pass
+        
             paragraphs = driver.find_elements(By.TAG_NAME, "p")
-            combined_text = "\n".join([p.text for p in paragraphs[:5] if p.text.strip()])
+            combined_text = "\n".join([p.text for p in paragraphs[:7] if p.text.strip()])
             text_cleaned = " ".join(combined_text.split())
+
+            
 
             if not (sentence_cleaned in text_cleaned):
                 clean_link = get_clean_bing_links(driver, link)
-                extracted_data[clean_link] = combined_text
+
+                extracted_data.append((clean_link, combined_text))
 
     except Exception as e:
         print(f"An error occurred: {e}")

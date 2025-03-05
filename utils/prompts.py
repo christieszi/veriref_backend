@@ -52,22 +52,23 @@ def replace_pronouns(sentence, source_text):
     '''.format(sentence=sentence, source_text=source_text)
     return res
 
+
+    # Ensure each extracted claim is fully self-contained and can be understood on its own without other claims.
+    #     Use explicit names and complete concepts from the contextualized sentence.
+    #     Make sure that each claim comes with an explicit context.
+    #     Do not use pronouns, 'this', 'that', 'these', 'those', or 'the' instead of full description. Use full names and complete concrete descriptions instead.
+
 def split_claims_prompt(sentence, sentence_with_context):
     res =   '''
-    Your task is to extract all key claims from the given original sentence:
+    Your task is to extract all key claims, encapsulating the meaning of the given original sentence:
 
     Original sentence: "{sentence}"
     Contextualized sentence: "{sentence_with_context}"
     Instructions:
 
-    Extract only the most important and fundamental claims.
-        If a claim can be broken down into simpler, meaningful claims, do so.
-        Do not include trivial, redundant, or overlapping claims.
-
-    Ensure each extracted claim is fully self-contained.
-        Use explicit names and complete concepts from the contextualized sentence.
-        Make sure that each claim comes with an explicit context.
-        Do not use pronouns, 'this', 'that', 'these', 'those', or 'the' instead of full description. Use full names and complete concrete descriptions instead.
+    Extract only the most important and fundamental claims that do not overlap in meaning.
+    
+    Replace all ambigious details of each claim (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions from the contextualized sentence so that the claim can be understood in full without any context.
 
     Map each claim to the exact reference word combinations in the original sentence.
         Each claim must be linked to specific word combinations as they appear in the original sentence.
@@ -97,8 +98,6 @@ def split_claims_prompt(sentence, sentence_with_context):
             "word_combinations": "revolutionized physics."
         }}
     ]
-
-    Make sure the claims are independent, precise, and do not assume knowledge of the original sentence structure.
     '''.format(sentence=sentence, sentence_with_context=sentence_with_context)
 
     return res
@@ -152,7 +151,7 @@ def disambiguate_based_on_keywords(keywords, sentence, prev_sentence_with_contex
     return '''
     Given the context for the sentence charcterised as in terms of keywords: '{keywords}'
     and the previous sentence: '{prev_sentence_with_context}'.
-    Replace all ambigious details of the sentence (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions so that the sentence can be understood in full without any context:
+    Replace all ambigious details of the sentence (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions so that the sentence can be understood in full without any context.
     The sentence is: '{sentence}'. 
     It is taken from a text with summary: '{paragraph_summary}'.
     Return only the disambiguated sentence without any extra information. 
@@ -161,7 +160,7 @@ def disambiguate_based_on_keywords(keywords, sentence, prev_sentence_with_contex
 def disambiguate_based_on_keywords_no_prev(keywords, sentence, summary, paragraph_summary):
     return '''
     Given the context for the sentence charcterised as in terms of keywords: '{keywords}.
-    Replace all ambigious details of the sentence (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions so that the sentence can be understood in full without any context:
+    Replace all ambigious details of the sentence (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions so that the sentence can be understood in full without any context.
     The sentence is: '{sentence}'. 
     It is taken from a text with summary: '{paragraph_summary}'.
     Return only the disambiguated sentence without any extra information. 

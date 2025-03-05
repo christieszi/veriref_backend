@@ -109,8 +109,6 @@ def launch_processing_job(job_id):
             "sentences": [{"sentence": sentence,"claims": [],"sources": [], "processingText": "Waiting to be processed", "processingTextState": 5} for sentence, _ in sentences_with_citations.items()]
         }) + "\n\n") 
 
-        print("SHHHHHHHHHHHH")
-
         cur_p_i = 0
         info_communicator = {"prev_sentence_with_context": None, 
                              "keywords": keywords, 
