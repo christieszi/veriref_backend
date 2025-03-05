@@ -80,8 +80,15 @@ def launch_processing_job(job_id):
             "messageState": 5,
         }) + "\n\n")
 
-        res = asyncio.run(ask(ask_question(get_keywords(original_text))))
-        summary, keywords = extract_summary_and_keywords(res)
+        extracted = False 
+        while not extracted: 
+            try:
+                res = asyncio.run(ask(ask_question(get_keywords(original_text))))
+                summary, keywords = extract_summary_and_keywords(res)
+                extracted = True 
+            except: 
+                extracted = False
+        
 
         yield("data: " + json.dumps({
             "messageType": "generalMessage",
