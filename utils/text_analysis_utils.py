@@ -2,6 +2,7 @@ import ast
 import re
 import json
 import fitz
+from .sources_utils import extract_body_part
 
 def process_sentence_parts(sentence_parts):
     sentence_parts_clean = re.search(r'\[([^\[\]]*)\]', sentence_parts).group(1)
@@ -155,6 +156,7 @@ def extract_paragraphs_from_pdf(pdf_path):
     
     for page in doc:
         text = page.get_text("text")
+        text = extract_body_part(text)
         page_paragraphs = text.split("\n\n")  # Splitting by double newline to identify paragraphs
         paragraphs.extend([p.strip() for p in page_paragraphs if p.strip()])
     

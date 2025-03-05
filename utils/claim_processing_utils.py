@@ -109,7 +109,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
 
         paragraph = paragraphs[cur_p_i]
         
-        while sentence not in paragraph:
+        while sentence[:-1].strip() not in paragraph:
             info_communicator["cur_p_i"] += 1 
             paragraph = paragraphs[info_communicator["cur_p_i"]] 
             paragraph_summary = None

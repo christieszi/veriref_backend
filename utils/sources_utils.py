@@ -11,6 +11,15 @@ import json
 load_dotenv()
 api_key = os.getenv('GOOGLE_API_KEY')
 
+def extract_body_part(text): 
+    ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
+    if ref_match:
+        body_text = text[:ref_match.start()]
+    else:
+        body_text = text
+
+    return body_text
+
 def extract_references(text):
     ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
     if ref_match:

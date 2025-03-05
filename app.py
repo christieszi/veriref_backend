@@ -216,7 +216,9 @@ def process_inputs():
             return render_template('upload.html', error=f"Error deleting file: {e}")
     else:
         text_to_verify = text_input
-        paragraphs = text_to_verify
+        body_text = extract_body_part(text_to_verify)
+        paragraphs = [p.strip() for p in body_text.splitlines() if p.strip()]
+        print(len(paragraphs))
 
     doc_references, sentences_with_citations, original_text = extract_references(text_to_verify)
     job_id = str(uuid.uuid4())
