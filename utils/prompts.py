@@ -67,6 +67,7 @@ def split_claims_prompt(sentence, sentence_with_context):
     Instructions:
 
     Extract only the most important and fundamental claims that do not overlap in meaning.
+    Do not split dverbial clauses into separate claims. Keep the conditional meaning. 
     
     Replace all ambigious details of each claim (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions from the contextualized sentence so that the claim can be understood in full without any context.
 
