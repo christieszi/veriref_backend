@@ -164,7 +164,6 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             }) + "\n\n")
             res = get_external_source_text(query, 0, sentence)
             if len(res) != 0: 
-                print("RES LEN = " + str(len(res)))
                 link, source_text = res[0]
                 source_text = source_text[:1000]
                 external_si = 0
@@ -232,8 +231,10 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 "explanation": None,
                 "references": None,
                 "sentenceParts": parts, 
-                "processingText": "Waiting to be processed"
+                "processingText": "Waiting to be processed",
+                "textFromLink": None
             } for (claim, parts) in claims_and_parts]
+    
         
         enumerted_claim_dicts = list(enumerate(claim_dicts)) 
 
@@ -273,12 +274,16 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                         updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
                         li += 1
 
+            text_from_link = None 
 
             if local_link:
                 updated_claim_dict["references"] = local_link
+                text_from_link = local_source_text
             elif link:
                 local_link = link
+                text_from_link = source_text
 
+            claim_dict["textFromLink"] = text_from_link
             claim_dict["processingText"] = "Explaining the claim based on " + local_link if local_link else "source text provided" + "."
             enumerted_claim_dicts[i] = (claim_index, updated_claim_dict)
             yield from yield_claim_data("claimAnswer", claim_dict, sentence_index, claim_index)
@@ -291,7 +296,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             claim_index, claim_dict = filtered_enum_dicts[i]
 
             if claim_dict["references"] is not None:
-                local_source_text = get_text_from_paragraphs(claim_dict["references"])
+                local_source_text = claim_dict["textFromLink"]
                 local_link = claim_dict["references"]
             else: 
                 local_source_text = source_text
@@ -317,11 +322,12 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 references = claim_dict["references"] 
                 claim_dict["references"] = None
                 yield from yield_claim_data("claimReferences", claim_dict, sentence_index, claim_index)
-                local_source_text = get_text_from_paragraphs(references)
+                local_source_text = claim_dict["textFromLink"]
                 local_link = references
             else: 
                 local_source_text = source_text
-                local_link = None
+                local_link = None 
+            
 
             updated_claim_dict = get_claim_references(local_source_text, claim_dict, local_link)
             filtered_enum_dicts[i] = updated_claim_dict

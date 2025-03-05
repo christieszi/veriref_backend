@@ -201,7 +201,7 @@ def get_external_source_text(query, starting_index, sentence):
 
             
 
-            if not (sentence_cleaned in text_cleaned):
+            if len(text_cleaned.strip()) != 0 and (not (sentence_cleaned in text_cleaned)):
                 clean_link = get_clean_bing_links(driver, link)
 
                 extracted_data.append((clean_link, combined_text))
