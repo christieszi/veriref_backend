@@ -1,29 +1,29 @@
-from .model_utils import ask_question, mistral_stream, mistral
+from .new_model_utils import ask
 import asyncio
-from .prompts import *
+from .new_prompts import *
 import json
 from .text_analysis_utils import extract_claims_and_word_combinations, extract_summary_and_keywords
 from .sources_utils import get_external_source_text, get_text_from_paragraphs
 
-async def ask(prompt,stream=False, max_tokens=200):
+# Old ask
+# async def ask(prompt,stream=False, max_tokens=200):
 
-    sampling_params = {
-        "max_tokens": max_tokens,
-        "temperature":1,
-    }
-    if stream:
+#     sampling_params = {
+#         "max_tokens": max_tokens,
+#         "temperature":1,
+#     }
+#     if stream:
         
-        async for line in mistral_stream(prompt=prompt,sampling_params=sampling_params,stream=True):
-            text=line.decode('utf-8')
-            print(text,end='',flush=True)
-    else:
-        result = await mistral(prompt,sampling_params=sampling_params)
-        return result['text']
-    
+#         async for line in mistral_stream(prompt=prompt,sampling_params=sampling_params,stream=True):
+#             text=line.decode('utf-8')
+#             print(text,end='',flush=True)
+#     else:
+#         result = await mistral(prompt,sampling_params=sampling_params)
+#         return result['text']
 
 def get_claim_classification(source_text, claim_dict):
     claim = claim_dict['claim']
-    answer = asyncio.run(ask(ask_question(short_response(claim, source_text[:600]))))
+    answer = asyncio.run(ask(short_response(claim, source_text[:600])))
     answer = answer.lstrip()
     claim_dict['answer'] = answer
 
@@ -42,11 +42,11 @@ def get_claim_explanation(source_text, claim_dict):
     claim = claim_dict['claim']
     claim_type = claim_dict['type'] 
     if claim_type == 1: 
-        explanation = asyncio.run(ask(ask_question(explain_correct(claim, source_text[:600]))))
+        explanation = asyncio.run(ask(explain_correct(claim, source_text[:600])))
     elif claim_type == 2:
-        explanation = asyncio.run(ask(ask_question(explain_incorrect(claim, source_text[:600]))))
+        explanation = asyncio.run(ask(explain_incorrect(claim, source_text[:600])))
     else:
-        explanation = asyncio.run(ask(ask_question(explain_not_given(claim, source_text[:600]))))
+        explanation = asyncio.run(ask(explain_not_given(claim, source_text[:600])))
     
     claim_dict['explanation'] = explanation
     claim_dict['references'] = None
@@ -58,9 +58,9 @@ def get_claim_references(source_text, claim_dict, link):
     claim_type = claim_dict['type'] 
     references = "" if link is None else "See source: " + link + "\n"
     if claim_type == 1: 
-        references += asyncio.run(ask(ask_question(reference_sentences_correct(claim, source_text[:600]))))
+        references += asyncio.run(ask(reference_sentences_correct(claim, source_text[:600])))
     elif claim_type == 2:
-        references += asyncio.run(ask(ask_question(reference_sentences_incorrect(claim, source_text[:600])))) 
+        references += asyncio.run(ask(reference_sentences_incorrect(claim, source_text[:600])))
     elif link is None:
         references = None
     
@@ -84,7 +84,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
         "processingTextState": 5
     }) + "\n\n")
 
-    sentence_classification = asyncio.run(ask(ask_question(is_a_sentence_to_check(sentence))))
+    sentence_classification = asyncio.run(ask(is_a_sentence_to_check(sentence)))
 
     yield ("data: " + json.dumps({
         "messageType": "sentenceProcessingText",
@@ -119,7 +119,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             extracted_keywords = False
             while not extracted_keywords: 
                 try:
-                    res = asyncio.run(ask(ask_question(get_keywords_paragraph_no_prev(paragraph, summary))))
+                    res = asyncio.run(ask(get_keywords_paragraph_no_prev(paragraph, summary)))
                     paragraph_summary, keywords = extract_summary_and_keywords(res)
                     info_communicator["paragraph_summary"] = paragraph_summary
                     info_communicator["keywords"] = keywords
@@ -131,7 +131,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             extracted_keywords = False
             while not extracted_keywords: 
                 try:
-                    res = asyncio.run(ask(ask_question(get_keywords_paragraph(paragraph, summary, paragraph_summary))))
+                    res = asyncio.run(ask(get_keywords_paragraph(paragraph, summary, paragraph_summary)))
                     paragraph_summary, keywords = extract_summary_and_keywords(res)
                     info_communicator["paragraph_summary"] = paragraph_summary
                     info_communicator["keywords"] = keywords
@@ -140,9 +140,9 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                     extracted_keywords = False
 
         if prev_sentence:
-            sentence_with_context = asyncio.run(ask(ask_question(disambiguate_based_on_keywords(keywords, sentence, prev_sentence, summary, paragraph_summary))))
+            sentence_with_context = asyncio.run(ask(disambiguate_based_on_keywords(keywords, sentence, prev_sentence, summary, paragraph_summary)))
         else: 
-            sentence_with_context = asyncio.run(ask(ask_question(disambiguate_based_on_keywords_no_prev(keywords, sentence, summary, paragraph_summary))))
+            sentence_with_context = asyncio.run(ask(disambiguate_based_on_keywords_no_prev(keywords, sentence, summary, paragraph_summary)))
 
         info_communicator["prev_sentence_with_context"] = sentence_with_context
 
@@ -154,7 +154,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             "processingText": "No source text provided. Searching the web.", 
             "processingTextState": 5
             }) + "\n\n")
-            query = asyncio.run(ask(ask_question(get_google_prompt(sentence_with_context))))
+            query = asyncio.run(ask(get_google_prompt(sentence_with_context)))
 
             yield ("data: " + json.dumps({
             "messageType": "sentenceProcessingText",
@@ -202,7 +202,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             extracted = False 
             while not extracted: 
                 try:
-                    claims_response = asyncio.run(ask(ask_question(split_claims_prompt(sentence, sentence_with_context)), max_tokens=500))
+                    claims_response = asyncio.run(ask(split_claims_prompt(sentence, sentence_with_context), max_tokens=500))
                     claims_and_parts = extract_claims_and_word_combinations(claims_response, sentence) 
                     extracted = True 
                 except: 
@@ -295,7 +295,7 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
 
                 if cur_class == 3:
                     li = 0 
-                    claim_query = asyncio.run(ask(ask_question(get_google_prompt(claim_dict["claim"]))))
+                    claim_query = asyncio.run(ask(get_google_prompt(claim_dict["claim"])))
                     local_res = get_external_source_text(claim_query, li, sentence) 
                     while li < len(local_res) and updated_claim_dict['type'] == 3:
                         local_link, local_source_text = local_res[li] 

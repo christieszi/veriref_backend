@@ -20,12 +20,12 @@ def get_keywords(text):
 
             Always format your accurate response as json, containing: 
             "summary": The short summary of the text in maximum 2-4 sentences.
-            "keywors": List of strings which a keywords capturing the meaning of the text.
+            "keywords": List of strings which a keywords capturing the meaning of the text.
 
             Example output formatting: 
             {{
                 "summary": "The text describes Albert Einstaein's biography, specifically the creation of the theory of relativity.",
-                "keywors": ["Albert Einstein", "The theory of relativity"]
+                "keywords": ["Albert Einstein", "The theory of relativity"]
             }}
             '''
         },
@@ -159,7 +159,7 @@ def explain_correct(claim, source_text):
         {
             "role": "user",
             "content": '''
-            Based only on the following text '{source_text}' explain why the following claim '{claim}' is incorrect.
+            Based only on the following text '{source_text}' explain why the following claim '{claim}' is correct.
             '''.format(claim = claim, source_text = source_text)
         },
     ]
@@ -306,14 +306,14 @@ def get_keywords_paragraph(paragraph, summary, paragraph_summary):
             "content": '''You are a text analysing agent that always provides short summaries of paragraphs and extracts main keywords such as names, terms, events, places, and concepts from the paragraph, capturing its meaning.
             You always format your response as a JSON entry, containing: 
                 "summary": The short summary of the text in maximum 2-4 sentences.
-                "keywors": List of strings which a keywords capturing the meaning of the text.
+                "keywords": List of strings which a keywords capturing the meaning of the text.
 
             You always return only the json without any extra information.  
 
             Example output: 
             {{
                 "summary": "The text describes Albert Einstaein's biography, specifically the creation of the theory of relativity.",
-                "word_combinations": ["Albert Einstein", "The theory of relativity"]
+                "keywords": ["Albert Einstein", "The theory of relativity"]
             }}
             '''
         },
@@ -340,7 +340,7 @@ def get_keywords_paragraph_no_prev(paragraph, summary):
             "content": '''You are a text analysing agent that always provides short summaries of paragraphs and extracts main keywords such as names, terms, events, places, and concepts from the paragraph, capturing its meaning.
             You always format your response as a JSON entry, containing: 
                 "summary": The short summary of the text in maximum 2-4 sentences.
-                "keywors": List of strings which a keywords capturing the meaning of the text.
+                "keywords": List of strings which a keywords capturing the meaning of the text.
 
             You always return only the json without any extra information.  
 
@@ -383,7 +383,7 @@ def get_google_prompt(claim):
 
             Generate one Google search query:
             A keyword-based search that captures the main idea but allows for variations in wording.
-            '''.format(paragraph=claim)
+            '''.format(claim=claim)
         },
     ]
     

@@ -29,20 +29,20 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.urandom(24)
 
-async def ask(prompt,stream=False, max_tokens=200):
+# async def ask(prompt,stream=False, max_tokens=200):
 
-    sampling_params = {
-        "max_tokens": max_tokens,
-        "temperature":1,
-    }
-    if stream:
+#     sampling_params = {
+#         "max_tokens": max_tokens,
+#         "temperature":1,
+#     }
+#     if stream:
         
-        async for line in mistral_stream(prompt=prompt,sampling_params=sampling_params,stream=True):
-            text=line.decode('utf-8')
-            print(text,end='',flush=True)
-    else:
-        result = await mistral(prompt,sampling_params=sampling_params)
-        return result['text']
+#         async for line in mistral_stream(prompt=prompt,sampling_params=sampling_params,stream=True):
+#             text=line.decode('utf-8')
+#             print(text,end='',flush=True)
+#     else:
+#         result = await mistral(prompt,sampling_params=sampling_params)
+#         return result['text']
 
 def extract_text_from_pdf(pdf_path):
     text = ''
@@ -80,14 +80,18 @@ def launch_processing_job(job_id):
             "messageState": 5,
         }) + "\n\n")
 
+        print("HERE")
+
         extracted = False 
         while not extracted: 
-            try:
-                res = asyncio.run(ask(ask_question(get_keywords(original_text))))
-                summary, keywords = extract_summary_and_keywords(res)
-                extracted = True 
-            except: 
-                extracted = False
+            print("THERE")
+            # try:
+            res = asyncio.run(new_model_utils.ask(get_keywords(original_text)))
+            print(res)
+            summary, keywords = extract_summary_and_keywords(res)
+            extracted = True 
+            # except: 
+            #     extracted = False
         
 
         yield("data: " + json.dumps({
@@ -244,7 +248,7 @@ def process_prompt():
     claim = request.json['claim']['claim']
     prompt = request.json['prompt']
 
-    output = asyncio.run(ask(ask_question("Given input text :'" + source_text + "'. Given claim: '" + claim + "'. " + prompt)))
+    output = asyncio.run(ask("Given input text :'" + source_text + "'. Given claim: '" + claim + "'. " + prompt))
     return jsonify({"output": output})
 
 @app.route('/add_source', methods=['POST'])
