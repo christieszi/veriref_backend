@@ -169,7 +169,7 @@ def get_external_source_text(query, starting_index, sentence):
         options.add_argument("--headless")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--no-sandbox")
-        service = Service("geckodriver")  # Replace with the actual path
+        service = Service("/app/geckodriver")  # Replace with the actual path
         driver = webdriver.Firefox(service=service, options=options)
 
     links = None
