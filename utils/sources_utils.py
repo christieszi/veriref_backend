@@ -171,10 +171,10 @@ def get_external_source_text(query, starting_index, sentence):
         options.add_argument("--no-sandbox")
 
         # Heroku paths to Firefox and Geckodriver
-        options.binary_location = "/app/.heroku/firefox/bin/firefox"
-        geckodriver_path = "/app/.heroku/geckodriver/bin/geckodriver"
+        options.binary_location = "/opt/firefox/firefox"
+        geckodriver_path = "/usr/local/bin/geckodriver"
 
-        driver = webdriver.Firefox(options=options, executable_path=geckodriver_path)
+        driver = webdriver.Firefox(executable_path=geckodriver_path, options=options)
 
         print("YEEEE")
 
