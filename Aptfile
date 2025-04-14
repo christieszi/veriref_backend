@@ -1,1 +1,4 @@
 firefox
+libgtk-3-0
+libdbus-glib-1-2
+libasound2
