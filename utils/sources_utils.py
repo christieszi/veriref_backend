@@ -173,8 +173,9 @@ def get_external_source_text(query, starting_index, sentence):
         # Heroku paths to Firefox and Geckodriver
         options.binary_location = "/opt/firefox/firefox"
         geckodriver_path = "/usr/local/bin/geckodriver"
+        service = Service(geckodriver_path)
 
-        driver = webdriver.Firefox(executable_path=geckodriver_path, options=options)
+        driver = webdriver.Firefox(service=service, options=options)
 
         print("YEEEE")
 
