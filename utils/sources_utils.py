@@ -141,6 +141,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import time
 
 def get_clean_bing_links(driver, link):
@@ -166,14 +167,22 @@ def get_external_source_text(query, starting_index, sentence):
         print("FIREFOX PATH:", os.popen("which firefox").read())
         print("GECKODRIVER PATH:", os.popen("which geckodriver").read())
 
-        options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--no-sandbox")
+        options = webdriver.FirefoxOptions()
+        
+        # enable trace level for debugging 
+        options.log.level = "trace"
 
-        # Use the dynamic path Heroku sets
-        service = Service("/app/vendor/geckodriver/geckodriver")
-        driver = webdriver.Firefox(service=service, options=options)
+        options.add_argument("-remote-debugging-port=9224")
+        options.add_argument("-headless")
+        options.add_argument("-disable-gpu")
+        options.add_argument("-no-sandbox")
+
+        binary = FirefoxBinary('/app/vendor/firefox/firefox')
+
+        driver = webdriver.Firefox(
+            firefox_binary=binary,
+            executable_path=os.environ.get('GECKODRIVER_PATH'),
+            options=options)
 
         print("YEEEE")
 
