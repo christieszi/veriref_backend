@@ -155,7 +155,6 @@ def get_clean_bing_links(driver, link):
     return clean_link
 
 def get_external_source_text(query, starting_index, sentence):
-    query=query[2:-1]
     print("QUERY")
     print(query)
     options = Options()
@@ -204,10 +203,12 @@ def get_external_source_text(query, starting_index, sentence):
             except:
                 pass
         
+            headings = driver.find_elements(By.XPATH, "//h1 | //h2")
             paragraphs = driver.find_elements(By.TAG_NAME, "p")
-            combined_text = "\n".join([p.text for p in paragraphs[:7] if p.text.strip()])
-            text_cleaned = " ".join(combined_text.split())
 
+            elements = headings + paragraphs
+            combined_text = "\n".join([el.text for el in elements[:20] if el.text.strip()])
+            text_cleaned = " ".join(combined_text.split())
             
 
             if len(text_cleaned.strip()) != 0 and (not (sentence_cleaned in text_cleaned)):

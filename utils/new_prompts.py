@@ -372,6 +372,7 @@ def get_google_prompt(claim):
             "role": "system",
             "content": '''You are an assistant agent that helps users to generate an effective keyword-based Google search query.
             Ypu always return only the query without any extra information.
+            Never use site:. 
             '''
         },
         {

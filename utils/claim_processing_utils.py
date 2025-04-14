@@ -264,6 +264,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
             updated_claim_dict = get_claim_classification(source_text, claim_dict)
 
             local_external_si, local_source_text, local_link = external_si, source_text, link 
+            print("REEEEEES")
+            print(local_source_text)
 
             # if local_external_si is not None and updated_claim_dict['type'] == 3 and local_external_si <= 5:
             if local_external_si is not None and local_external_si <= 5:
@@ -279,6 +281,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                 while li < len(res):
                     local_link, local_source_text = res[li] 
                     local_source_text = local_source_text[:600]
+                    print("REEEEEES")
+                    print(local_source_text)
                     claim_dict["processingText"] = "Analysing sentence based on " + local_link + "."
                     yield from yield_claim_data("claimProcessingText", claim_dict, sentence_index, claim_index)
                     updated_claim_dict = get_claim_classification(local_source_text, claim_dict)
@@ -297,6 +301,8 @@ def process_sentence(claims, source_text, sentence, sentence_index, original_tex
                     li = 0 
                     claim_query = asyncio.run(ask(get_google_prompt(claim_dict["claim"])))
                     local_res = get_external_source_text(claim_query, li, sentence) 
+                    print("REEEEEES")
+                    print(local_res)
                     while li < len(local_res) and updated_claim_dict['type'] == 3:
                         local_link, local_source_text = local_res[li] 
                         local_source_text = local_source_text[:600]
