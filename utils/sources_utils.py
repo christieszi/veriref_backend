@@ -170,7 +170,7 @@ def get_external_source_text(query, starting_index, sentence):
         options.add_argument("--no-sandbox")
 
         # Use the dynamic path Heroku sets
-        service = Service("/app/.apt/usr/bin/geckodriver")
+        service = Service("/app/.heroku/geckodriver")
         driver = webdriver.Firefox(service=service, options=options)
 
         print("YEEEE")
