@@ -135,6 +135,8 @@ def get_text_from_paragraphs(link):
 #     return None
 
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
@@ -168,7 +170,11 @@ def get_external_source_text(query, starting_index, sentence):
         driver = webdriver.Firefox(service=service, options=options)
     else: 
         print("YOOOOOO")
-        driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
+        binary = FirefoxBinary(os.environ.get('FIREFOX_BIN'))
+        driver = webdriver.Firefox(
+            firefox_binary=binary,
+            executable_path=os.environ.get('GECKODRIVER_PATH'),
+            options=options)
 
     links = None
     linky = None 
