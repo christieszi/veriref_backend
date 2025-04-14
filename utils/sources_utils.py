@@ -10,6 +10,7 @@ import json
 
 load_dotenv()
 api_key = os.getenv('GOOGLE_API_KEY')
+local = int(os.getenv('LOCAL'))
 
 def extract_body_part(text): 
     ref_match = re.search(r'(?:References:|References)\s*(.*)', text, re.DOTALL)
@@ -155,13 +156,17 @@ def get_clean_bing_links(driver, link):
     return clean_link
 
 def get_external_source_text(query, starting_index, sentence):
-    print("QUERY")
-    print(query)
     options = Options()
     options.add_argument("--headless")  # Disable headless mode to see what's happening
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     
-    service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
-    driver = webdriver.Firefox(service=service, options=options)
+    if local: 
+        service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
+        driver = webdriver.Firefox(service=service, options=options)
+    else: 
+        service = Service(GeckoDriverManager().install())
+        driver = webdriver.Firefox(service=service, options=options)
 
     links = None
     linky = None 
@@ -198,23 +203,24 @@ def get_external_source_text(query, starting_index, sentence):
             driver.get(link)
             time.sleep(3)  # Allow time for the page to load
             try:
-                if driver.find_elements(By.XPATH, "//button[contains(text(), 'Accept')]" or "//button[contains(text(), 'Submit')]" or  "//button[contains(text(), 'Consent')]" or "//button[contains(text(), 'consent')]"):
-                    continue
+                accept_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Accept all') or contains(text(), 'Accept')]"))
+                )
+                accept_button.click()
+                time.sleep(2)
             except:
                 pass
         
-            headings = driver.find_elements(By.XPATH, "//h1 | //h2")
-            paragraphs = driver.find_elements(By.TAG_NAME, "p")
+            text_elements = driver.find_elements(By.XPATH, "//p | //li | //blockquote | //div[contains(@class, 'quote') or contains(@class, 'quoteText')]")
 
-            elements = headings + paragraphs
-            combined_text = "\n".join([el.text for el in elements[:20] if el.text.strip()])
-            text_cleaned = " ".join(combined_text.split())
+            combined_text = "\n".join([el.text for el in text_elements if el.text.strip()])
+            text_cleaned = " ".join(combined_text.split())[:4000]
             
 
             if len(text_cleaned.strip()) != 0 and (not (sentence_cleaned in text_cleaned)):
                 clean_link = get_clean_bing_links(driver, link)
 
-                extracted_data.append((clean_link, combined_text))
+                extracted_data.append((clean_link, text_cleaned)) 
 
     except Exception as e:
         print(f"An error occurred: {e}")

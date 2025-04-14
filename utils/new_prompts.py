@@ -116,7 +116,7 @@ def short_response(claim, source_text):
     messages =  [
         {
             "role": "system",
-            "content": '''You are a text analysing agent that classifies claims as correct or incorrect based only on an input text provided without using any extra information.
+            "content": '''You are a text analysing and reasoning agent that concludes whether claims are correct or incorrect based on an input text provided without using any extra information.
             If it is not possible to conclude whether the claim is correct or not based on the given text, you must return 'Cannot Say'. 
             You always return 'correct', 'incorrect', or 'cannot say'. 
             '''
@@ -124,30 +124,30 @@ def short_response(claim, source_text):
         {
             "role": "user",
             "content": '''
-            Based only on the following text '{source_text}' say whether the following claim '{claim}' is correct or incorrect? 
+            Given the following source text '{source_text}' conclude whether the following claim '{claim}' is correct or incorrect? 
             '''.format(claim = claim, source_text = source_text)
         },
     ]
     return messages 
 
-def short_response(claim, source_text):
-    messages =  [
-        {
-            "role": "system",
-            "content": '''You are a text analysing agent that classifies claims as correct or incorrect based only on an input text provided without using any extra information.
-            If it is not possible to conclude whether the claim is correct or not based on the given text, you must return 'Cannot Say'. 
-            You always return 'correct', 'incorrect', or 'cannot say'. 
-            '''
-        },
-        {
-            "role": "user",
-            "content": '''
-            Based only on the following text '{source_text}' say whether the following claim '{claim}' is correct or incorrect? 
-            '''.format(claim = claim, source_text = source_text)
-        },
-    ]
+# def short_response(claim, source_text):
+#     messages =  [
+#         {
+#             "role": "system",
+#             "content": '''You are a text analysing agent that classifies claims as correct or incorrect based only on an input text provided without using any extra information.
+#             If it is not possible to conclude whether the claim is correct or not based on the given text, you must return 'Cannot Say'. 
+#             You always return 'correct', 'incorrect', or 'cannot say'. 
+#             '''
+#         },
+#         {
+#             "role": "user",
+#             "content": '''
+#             Based only on the following text '{source_text}' say whether the following claim '{claim}' is correct or incorrect? 
+#             '''.format(claim = claim, source_text = source_text)
+#         },
+#     ]
 
-    return messages 
+#     return messages 
 
 def explain_correct(claim, source_text):
     messages =  [
@@ -261,6 +261,7 @@ def disambiguate_based_on_keywords(keywords, sentence, prev_sentence_with_contex
             "content": '''You are a text analysing agent that is always provided with a sentence from some text, keywords, describing the context of the sentence, previous sentence, and the summary of the paragraph.
             You always replace all ambigious details of the sentence (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions so that the sentence can be understood in full without any context.
             You always return only the disambiguated sentence without any extra information.
+            You never use these, those, this, that, etc. in your responses.
             '''
         },
         {
@@ -284,6 +285,7 @@ def disambiguate_based_on_keywords_no_prev(keywords, sentence, summary, paragrap
             "content": '''You are a text analysing agent that is always provided with a sentence from some text, keywords, describing the context of the sentence, and the summary of the paragraph.
             You always replace all ambigious details of the sentence (like using 'the' to refer to previous description or pronouns or this, that, these, those) with complete concepts and descriptions so that the sentence can be understood in full without any context.
             You always return only the disambiguated sentence without any extra information.
+            You never use these, those, this, that, etc. in your responses.
             '''
         },
         {
@@ -367,10 +369,38 @@ def get_keywords_paragraph_no_prev(paragraph, summary):
     return messages 
 
 def get_google_prompt(claim):
+    messages = [
+        {
+            "role": "system",
+            "content": '''You are a helpful assistant that reformulates factual claims into concise and effective Google search queries.
+Your goal is to create a keyword-based search query that will help verify the truth of the given claim.
+Always return only the query without any extra text or formatting. Do not include "site:" in the query.
+
+Your queries should:
+- Focus on the main entities and concepts in the claim.
+- Avoid excessive specificity—use general keywords where appropriate to broaden results.
+- Aim for high relevance, not necessarily verbatim phrasing.
+- Be short (about 5-10 words).
+'''
+        },
+        {
+            "role": "user",
+            "content": '''
+Claim: "{claim}"
+
+Generate one concise Google search query that helps fact-check this claim.
+'''.format(claim=claim)
+        },
+    ]
+
+    return messages
+
+
+def get_google_prompt_old(claim):
     messages =  [
         {
             "role": "system",
-            "content": '''You are an assistant agent that helps users to generate an effective keyword-based Google search query.
+            "content": '''You are an assistant agent that helps users to generate short and effective keyword-based Google search queries.
             Ypu always return only the query without any extra information.
             Never use site:. 
             '''
@@ -382,8 +412,9 @@ def get_google_prompt(claim):
 
             '{claim}'
 
-            Generate one Google search query:
+            Generate one short and efficient Google search query:
             A keyword-based search that captures the main idea but allows for variations in wording.
+            Make sure to add some variability of the results returned.
             '''.format(claim=claim)
         },
     ]
