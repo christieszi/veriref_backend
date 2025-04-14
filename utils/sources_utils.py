@@ -135,17 +135,11 @@ def get_text_from_paragraphs(link):
 #     return None
 
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 import time
-
-from urllib.parse import urlparse, parse_qs, unquote
 
 def get_clean_bing_links(driver, link):
     driver.execute_script("window.open(arguments[0]);", link)  # Open link in new tab
@@ -159,6 +153,8 @@ def get_clean_bing_links(driver, link):
 def get_external_source_text(query, starting_index, sentence):
     
     if local: 
+        from selenium.webdriver.firefox.service import Service
+        from selenium.webdriver.firefox.options import Options
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--disable-dev-shm-usage")
@@ -167,12 +163,15 @@ def get_external_source_text(query, starting_index, sentence):
         driver = webdriver.Firefox(service=service, options=options)
     else: 
         print("YOOOOOO")
-        
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(options=chrome_options)
+
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
+
+        # Use the dynamic path Heroku sets
+        service = Service("/app/.apt/usr/bin/geckodriver")
+        driver = webdriver.Firefox(service=service, options=options)
 
         print("YEEEE")
 
