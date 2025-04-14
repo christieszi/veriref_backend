@@ -135,15 +135,12 @@ def get_text_from_paragraphs(link):
 #     return None
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.firefox import GeckoDriverManager
 import time
 
 from urllib.parse import urlparse, parse_qs, unquote
@@ -158,23 +155,22 @@ def get_clean_bing_links(driver, link):
     return clean_link
 
 def get_external_source_text(query, starting_index, sentence):
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--width=1920")
-    options.add_argument("--height=1080")
     
     if local: 
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
         service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
         driver = webdriver.Firefox(service=service, options=options)
     else: 
         print("YOOOOOO")
-        binary = FirefoxBinary(os.environ.get('FIREFOX_BIN'))
-        driver = webdriver.Firefox(
-            firefox_binary=binary,
-            executable_path=os.environ.get('GECKODRIVER_PATH'),
-            options=options)
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
     links = None
     linky = None 
