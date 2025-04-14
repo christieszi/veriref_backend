@@ -268,26 +268,3 @@ def get_data_from_knowledge_graph(query):
             return element['result']["detailedDescription"]["url"]
     
     return None
-
-from scholarly import scholarly
-
-def search_google_scholar(query, num_results=5):
-    search_results = scholarly.search_pubs(query)
-    results = []
-
-    for _ in range(num_results):
-        try:
-            result = next(search_results)
-            bib = result.get('bib', {})
-
-            results.append({
-                'title': bib.get('title', None),
-                'author': bib.get('author', None),
-                'year': bib.get('pub_year', None),
-                'abstract': bib.get('abstract', None), 
-                'url': result.get('pub_url', None)
-            })
-        except StopIteration:
-            break
-
-    return results
