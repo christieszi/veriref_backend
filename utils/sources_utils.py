@@ -141,6 +141,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 import time
 
 from urllib.parse import urlparse, parse_qs, unquote
@@ -164,13 +166,15 @@ def get_external_source_text(query, starting_index, sentence):
         service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
         driver = webdriver.Firefox(service=service, options=options)
     else: 
-        print("YOOOOOO")
-        options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--no-sandbox")
-        service = Service("/app/geckodriver")  # Replace with the actual path
-        driver = webdriver.Firefox(service=service, options=options)
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.binary_location = "/usr/bin/chromium-browser"
+
+        service = Service("/usr/bin/chromedriver")
+        driver = webdriver.Chrome(service=service, options=chrome_options)
 
     links = None
     linky = None 
