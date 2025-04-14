@@ -164,25 +164,17 @@ def get_external_source_text(query, starting_index, sentence):
         driver = webdriver.Firefox(service=service, options=options)
     else: 
         print("YOOOOOO")
-        print("FIREFOX PATH:", os.popen("which firefox").read())
-        print("GECKODRIVER PATH:", os.popen("which geckodriver").read())
 
-        options = webdriver.FirefoxOptions()
-        
-        # enable trace level for debugging 
-        options.log.level = "trace"
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
 
-        options.add_argument("-remote-debugging-port=9224")
-        options.add_argument("-headless")
-        options.add_argument("-disable-gpu")
-        options.add_argument("-no-sandbox")
+        # Heroku paths to Firefox and Geckodriver
+        options.binary_location = "/app/.heroku/firefox/bin/firefox"
+        geckodriver_path = "/app/.heroku/geckodriver/bin/geckodriver"
 
-        binary = FirefoxBinary('/app/vendor/firefox/firefox')
-
-        driver = webdriver.Firefox(
-            firefox_binary=binary,
-            executable_path=os.environ.get('GECKODRIVER_PATH'),
-            options=options)
+        driver = webdriver.Firefox(options=options, executable_path=geckodriver_path)
 
         print("YEEEE")
 
