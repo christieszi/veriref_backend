@@ -163,6 +163,8 @@ def get_external_source_text(query, starting_index, sentence):
         driver = webdriver.Firefox(service=service, options=options)
     else: 
         print("YOOOOOO")
+        print("FIREFOX PATH:", os.popen("which firefox").read())
+        print("GECKODRIVER PATH:", os.popen("which geckodriver").read())
 
         options = Options()
         options.add_argument("--headless")
@@ -170,7 +172,7 @@ def get_external_source_text(query, starting_index, sentence):
         options.add_argument("--no-sandbox")
 
         # Use the dynamic path Heroku sets
-        service = Service("/app/.heroku/geckodriver")
+        service = Service("/app/vendor/geckodriver/geckodriver")
         driver = webdriver.Firefox(service=service, options=options)
 
         print("YEEEE")
