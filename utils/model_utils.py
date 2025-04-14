@@ -12,7 +12,7 @@ login(token = huggingface_token)
 
 # Load variables from .env file
 
-tokenizer = MistralTokeniser.from_pretrained("mistralai/Mistral-Small-Instruct-2409")
+tokenizer = MistralTokeniser.from_pretrained("mistralai/Mistral-Large-Instruct-2411")
 
 def TokensPrompt(tokens):
     return {"prompt_token_ids":tokens}
@@ -58,7 +58,7 @@ async def mistral_stream(prompt, stream=False, sampling_params=None, url=mistral
             else:
                 raise Exception(f"Error: {response.status}, {await response.text()}")
 
-tokenizer = MistralTokeniser.from_pretrained("mistralai/Mistral-Small-Instruct-2409")
+tokenizer = MistralTokeniser.from_pretrained("mistralai/Mistral-Large-Instruct-2411")
 def ask_question(question):
     
     messages= [

@@ -1,6 +1,8 @@
 import ast
 import re
 import json
+import fitz
+from .sources_utils import extract_body_part
 
 def process_sentence_parts(sentence_parts):
     sentence_parts_clean = re.search(r'\[([^\[\]]*)\]', sentence_parts).group(1)
@@ -55,7 +57,6 @@ def map_colours_to_sentence(sentence, mappings):
     return coloured_parts
 
 def extract_claims_and_word_combinations(data, sentence):
-    print(data)
     data = data.strip()
     if data[0] == "[" and data[-1] == "]":
         match = data
@@ -69,6 +70,16 @@ def extract_claims_and_word_combinations(data, sentence):
     print(pairs)
     return pairs
 
+def extract_summary_and_keywords(data):
+    data = data.strip()
+    if data[0] == "{" and data[-1] == "}":
+        match = data
+    else:
+        match = re.search(r'\{.*\}', data, re.DOTALL).group(0)
+
+    parsed_data = json.loads(match)
+
+    return parsed_data["summary"], parsed_data["keywords"]
 
 def process_unifinished_output(text):
     lines = text.splitlines()
@@ -138,3 +149,57 @@ def longest_common_substring(s1, s2):
     # Extract the longest common substring
     longest_substring = s1[end_index_s1 - max_length:end_index_s1]
     return longest_substring
+
+def extract_paragraphs_from_pdf(pdf_path):
+    doc = fitz.open(pdf_path)
+    paragraphs = []
+    
+    for page in doc:
+        text = page.get_text("text")
+        text = extract_body_part(text)
+        page_paragraphs = text.split("\n\n")  # Splitting by double newline to identify paragraphs
+        paragraphs.extend([p.strip() for p in page_paragraphs if p.strip()])
+    
+    return paragraphs
+
+def extract_text_part(text: str, first_sentence: str, last_sentence: str) -> str:
+    """
+    Extracts the part of the text encapsulated between the given first and last sentences.
+    """
+    print("FIRST")
+    print(first_sentence)
+    print("LAST")
+    print(last_sentence)
+    pattern = re.escape(first_sentence) + r"(.*?)" + re.escape(last_sentence)
+    match = re.search(pattern, text, re.DOTALL)
+    
+    if match:
+        print("MATCH")
+        res = match.group(1).strip()
+        print(res)
+        return res
+    else:
+        return None  # Return empty string if no match is found
+
+def process_text_parts(data, original_text):
+    data = data.strip()
+    print("DATAAAAA")
+    print(data)
+    if data[0] == "[" and data[-1] == "]":
+        match = data
+    else:
+        match = re.search(r'\[.*\]', data, re.DOTALL).group(0)
+
+    res = json.loads(match)
+    print(res)
+    print("ZEROOOOOO")
+    print(res[0])
+    text_parts = []
+
+    for part in res: 
+        text_part = extract_text_part(original_text, part['first sentence'], part['last sentence'])
+        if text_part: 
+            text_parts.append(text_part, part['keywords'])
+
+    print(text_parts)
+    return text_parts
