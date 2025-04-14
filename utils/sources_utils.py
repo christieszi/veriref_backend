@@ -157,14 +157,17 @@ def get_clean_bing_links(driver, link):
 
 def get_external_source_text(query, starting_index, sentence):
     options = Options()
-    options.add_argument("--headless")  # Disable headless mode to see what's happening
-    options.add_argument("--no-sandbox")
+    options.add_argument("--headless")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--width=1920")
+    options.add_argument("--height=1080")
     
     if local: 
         service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
         driver = webdriver.Firefox(service=service, options=options)
     else: 
+        print("YOOOOOO")
         driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
 
     links = None
