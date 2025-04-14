@@ -28,12 +28,12 @@ RUN apt-get update && apt-get install -y \
 # Install Firefox
 RUN curl -sSL https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US -o /tmp/firefox.tar.bz2 \
     && mkdir -p /opt/firefox \
-    && tar -xjf /tmp/firefox.tar.bz2 -C /opt/firefox \
+    && tar -xjf /tmp/firefox.tar.bz2 -C firefox \
     && rm /tmp/firefox.tar.bz2
 
 # Install Geckodriver (latest version)
 RUN curl -sSL https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-linux64.tar.gz -o /tmp/geckodriver.tar.gz \
-    && tar -xzf /tmp/geckodriver.tar.gz -C /usr/local/bin \
+    && tar -xzf /tmp/geckodriver.tar.gz -C geckodriver \
     && rm /tmp/geckodriver.tar.gz
 
 # Set environment variables
