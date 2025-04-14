@@ -166,13 +166,15 @@ def get_external_source_text(query, starting_index, sentence):
         service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
         driver = webdriver.Firefox(service=service, options=options)
     else: 
-        chrome_options = Options()
-        chrome_options.binary_location = "/usr/bin/chromium"
+        print("YOOOOOO")
+        
+        chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        driver = webdriver.Chrome(options=chrome_options)
 
-        driver = webdriver.Chrome(service=Service("/usr/lib/chromium/chromedriver"), options=chrome_options)
+        print("YEEEE")
 
     links = None
     linky = None 
