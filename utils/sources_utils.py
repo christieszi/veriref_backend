@@ -165,8 +165,7 @@ def get_external_source_text(query, starting_index, sentence):
         service = Service("/opt/homebrew/bin/geckodriver")  # Replace with the actual path
         driver = webdriver.Firefox(service=service, options=options)
     else: 
-        service = Service(GeckoDriverManager().install())
-        driver = webdriver.Firefox(service=service, options=options)
+        driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
 
     links = None
     linky = None 
