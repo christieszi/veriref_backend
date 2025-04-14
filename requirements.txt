@@ -7,7 +7,7 @@ Flask-Cors==5.0.0
 fpdf==1.7.2
 google==3.0.0
 huggingface-hub==0.26.2
-mistral_common==1.4.4
+mistral_common==1.5.3
 PyMuPDF==1.25.1
 python-dotenv==1.0.1
 regex==2023.12.25
