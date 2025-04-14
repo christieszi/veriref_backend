@@ -139,6 +139,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 import time
 
 def get_clean_bing_links(driver, link):
@@ -153,8 +155,6 @@ def get_clean_bing_links(driver, link):
 def get_external_source_text(query, starting_index, sentence):
     
     if local: 
-        from selenium.webdriver.firefox.service import Service
-        from selenium.webdriver.firefox.options import Options
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--disable-dev-shm-usage")
